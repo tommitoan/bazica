@@ -12,7 +12,7 @@ Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, d
 With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
 
 ```
-import "github.com/tommitoan/go-bazi-calculator"
+import "github.com/tommitoan/bazica"
 ```
 
 to your code, and then `go [build|run|test]` will automatically fetch the necessary dependencies.
@@ -20,5 +20,5 @@ to your code, and then `go [build|run|test]` will automatically fetch the necess
 Otherwise, run the following Go command to install the `gin` package:
 
 ```sh
-$ go get -u github.com/tommitoan/go-bazi-calculator
+$ go get -u github.com/tommitoan/bazica
 ```
