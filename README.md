@@ -1,4 +1,4 @@
-# Bazica (Ba-zi Calculator)
+# Bazica (Ba-zi Calculator) - In Progress 🚧
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
 
 ## Getting started
