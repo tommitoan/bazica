@@ -2,6 +2,7 @@ package datasvc
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 )
@@ -33,24 +34,29 @@ type SolarTerms struct {
 	WinterSolstice     string `json:"winter_solstice"`
 }
 
-func ReadJSONFile() {
+func ReadJSONFile(fileToRead string) {
+
+	file, err := os.Open(fileToRead)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
 
 	// Open the JSON file
-	data, err := os.ReadFile("1900.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Create an instance of the SolarTerms struct
-	var solarTerms SolarTerms
-
-	// Unmarshal the JSON data into the struct
-	err = json.Unmarshal(data, &solarTerms)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Access the data from the struct
-	log.Println("Minor Cold:", solarTerms.MinorCold)
-	log.Println("Major Cold:", solarTerms.MajorCold)
+	decoder := json.NewDecoder(file)
+	fmt.Println(decoder)
+	fmt.Println("hello")
+	//
+	//// Create an instance of the SolarTerms struct
+	//var solarTerms SolarTerms
+	//
+	//// Unmarshal the JSON data into the struct
+	//err = json.Unmarshal(data, &solarTerms)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//
+	//// Access the data from the struct
+	//log.Println("Minor Cold:", solarTerms.MinorCold)
+	//log.Println("Major Cold:", solarTerms.MajorCold)
 }

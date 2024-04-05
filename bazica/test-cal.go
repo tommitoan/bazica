@@ -5,9 +5,14 @@ import (
 	"bazica/models"
 )
 
+const (
+	YearToRead = "1950"
+	FileToRead = "internal/datasvc/solar-terms-data/" + YearToRead + ".json"
+)
+
 func CalTest() {
 
-	svc.ReadJSONFile()
+	svc.ReadJSONFile(FileToRead)
 	tigerValue := models.Tiger
 	println(tigerValue)
 
