@@ -10,6 +10,10 @@ import (
 	"strconv"
 )
 
+type DataSvc struct {
+	Solar SolarTerms
+}
+
 type SolarTerms struct {
 	MinorCold          string `json:"minor_cold"`
 	MajorCold          string `json:"major_cold"`
@@ -37,7 +41,7 @@ type SolarTerms struct {
 	WinterSolstice     string `json:"winter_solstice"`
 }
 
-func GetSolarTermsByYear(prefix, year string) (*SolarTerms, error) {
+func (dsvc *DataSvc) GetSolarTermsByYearV2(prefix, year string) (*SolarTerms, error) {
 	// Handle year from 1900 -> 2100 only
 	i, err := strconv.Atoi(year)
 	if err != nil {
