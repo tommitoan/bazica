@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 type SolarTerms struct {
@@ -38,8 +39,18 @@ type SolarTerms struct {
 
 func GetSolarTermsByYear(year string) (*SolarTerms, error) {
 
-	fileToRead := "internal/datasvc/solar-terms-data/" + year + ".json"
+	// Handle year from 1900 -> 2100 only
+	i, err := strconv.Atoi(year)
+	if err != nil {
+		panic(err)
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "Something wrong")
+	}
+	if i < 1900 || i > 2100 {
+		return nil, toerr.NewValidationError(http.StatusBadRequest, "Year not found")
+	}
+
 	// Open file
+	fileToRead := "internal/datasvc/solar-terms-data/" + year + ".json"
 	file, err := os.Open(fileToRead)
 	if err != nil {
 		return nil, toerr.NewValidationError(http.StatusInternalServerError, "File not found")
@@ -56,21 +67,4 @@ func GetSolarTermsByYear(year string) (*SolarTerms, error) {
 	json.Unmarshal(byteValue, &solarTerm)
 
 	return &solarTerm, nil
-	// Open the JSON file
-	//decoder := json.NewDecoder(file)
-	//fmt.Println(decoder)
-	//fmt.Println("hello")
-	//
-	//// Create an instance of the SolarTerms struct
-	//var solarTerms SolarTerms
-	//
-	//// Unmarshal the JSON data into the struct
-	//err = json.Unmarshal(data, &solarTerms)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//// Access the data from the struct
-	//log.Println("Minor Cold:", solarTerms.MinorCold)
-	//log.Println("Major Cold:", solarTerms.MajorCold)
 }

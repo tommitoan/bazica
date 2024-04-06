@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	slt, _ := datasvc.GetSolarTermsByYear("1995")
+	slt, _ := datasvc.GetSolarTermsByYear("2101")
 
 	fmt.Println(slt.AutumnEquinox)
 	//println(models.Tiger)
