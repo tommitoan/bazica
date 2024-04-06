@@ -1,12 +1,15 @@
 package main
 
 import (
-	"bazica/bazica"
+	"bazica/internal/datasvc"
+	"fmt"
 )
 
 func main() {
-	bazica.CalTest()
+	slt, _ := datasvc.GetSolarTermsByYear("1995")
+
+	fmt.Println(slt.AutumnEquinox)
 	//println(models.Tiger)
 	//println(models.Tiger.String())
-
+	//fmt.Println(solartermsvc.GetSolarTermByYear("1900"))
 }

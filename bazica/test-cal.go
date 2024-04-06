@@ -3,6 +3,7 @@ package bazica
 import (
 	svc "bazica/internal/datasvc"
 	"bazica/models"
+	"fmt"
 )
 
 const (
@@ -10,9 +11,11 @@ const (
 	FileToRead = "internal/datasvc/solar-terms-data/" + YearToRead + ".json"
 )
 
-func CalTest() {
+func ReadSolarTerms() {
 
-	svc.ReadJSONFile(FileToRead)
+	abc, _ := svc.GetSolarTermsByYear("1950")
+
+	fmt.Println(abc.ColdDew, abc.AutumnEquinox)
 	tigerValue := models.Tiger
 	println(tigerValue)
 

@@ -1,9 +1,11 @@
 package datasvc
 
 import (
+	"bazica/internal/toerr"
 	"encoding/json"
-	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -34,18 +36,30 @@ type SolarTerms struct {
 	WinterSolstice     string `json:"winter_solstice"`
 }
 
-func ReadJSONFile(fileToRead string) {
+func GetSolarTermsByYear(year string) (*SolarTerms, error) {
 
+	fileToRead := "internal/datasvc/solar-terms-data/" + year + ".json"
+	// Open file
 	file, err := os.Open(fileToRead)
 	if err != nil {
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "File not found")
 		log.Fatal(err)
 	}
 	defer file.Close()
 
+	// Read as byte array
+	byteValue, err := io.ReadAll(file)
+	if err != nil {
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "Can't read file")
+	}
+	var solarTerm SolarTerms
+	json.Unmarshal(byteValue, &solarTerm)
+
+	return &solarTerm, nil
 	// Open the JSON file
-	decoder := json.NewDecoder(file)
-	fmt.Println(decoder)
-	fmt.Println("hello")
+	//decoder := json.NewDecoder(file)
+	//fmt.Println(decoder)
+	//fmt.Println("hello")
 	//
 	//// Create an instance of the SolarTerms struct
 	//var solarTerms SolarTerms
