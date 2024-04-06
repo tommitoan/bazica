@@ -1,4 +1,4 @@
-package toerr
+package bazica
 
 import (
 	"errors"

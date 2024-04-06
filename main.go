@@ -1,4 +1,4 @@
-package main
+package bazica
 
 import (
 	solar_terms_data "bazica/internal/datasvc/solar-terms-data"
