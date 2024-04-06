@@ -1,4 +1,4 @@
-package bazica
+package models
 
 import (
 	"fmt"

@@ -1,4 +1,4 @@
-package bazica
+package datasvc
 
 import (
 	"testing"
@@ -20,7 +20,7 @@ func TestGetSolarTermsByYear(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, gotErr := GetSolarTermsByYear("", tt.year)
+			_, gotErr := GetSolarTermsByYear("solar-terms-data/", tt.year)
 			if gotErr != tt.expectedErr {
 				t.Errorf("%s: got = %v, expect = %v", tt.name, gotErr, tt.expectedErr)
 				return
