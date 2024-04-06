@@ -13,6 +13,7 @@ import (
 
 type BazicaSvc struct {
 	DataSvc *datasvc.DataSvc
+	Solar   *datasvc.SolarTerms
 }
 
 func (bzc *BazicaSvc) GetSolarTermsByYear(prefix, year string) (*datasvc.SolarTerms, error) {
