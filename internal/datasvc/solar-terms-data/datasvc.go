@@ -1,10 +1,13 @@
-package datasvc
+package solar_terms_data
 
 import (
+	"bazica/internal/toerr"
 	"encoding/json"
-	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
+	"strconv"
 )
 
 type SolarTerms struct {
@@ -34,29 +37,34 @@ type SolarTerms struct {
 	WinterSolstice     string `json:"winter_solstice"`
 }
 
-func ReadJSONFile(fileToRead string) {
+func GetSolarTermsByYear(prefix, year string) (*SolarTerms, error) {
 
+	// Handle year from 1900 -> 2100 only
+	i, err := strconv.Atoi(year)
+	if err != nil {
+		panic(err)
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "Something wrong")
+	}
+	if i < 1900 || i > 2100 {
+		return nil, toerr.NewValidationError(http.StatusBadRequest, "Year not found")
+	}
+
+	// Open file
+	fileToRead := prefix + year + ".json"
 	file, err := os.Open(fileToRead)
 	if err != nil {
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "File not found")
 		log.Fatal(err)
 	}
 	defer file.Close()
 
-	// Open the JSON file
-	decoder := json.NewDecoder(file)
-	fmt.Println(decoder)
-	fmt.Println("hello")
-	//
-	//// Create an instance of the SolarTerms struct
-	//var solarTerms SolarTerms
-	//
-	//// Unmarshal the JSON data into the struct
-	//err = json.Unmarshal(data, &solarTerms)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//// Access the data from the struct
-	//log.Println("Minor Cold:", solarTerms.MinorCold)
-	//log.Println("Major Cold:", solarTerms.MajorCold)
+	// Read as byte array
+	byteValue, err := io.ReadAll(file)
+	if err != nil {
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "Can't read file")
+	}
+	var solarTerm SolarTerms
+	json.Unmarshal(byteValue, &solarTerm)
+
+	return &solarTerm, nil
 }
