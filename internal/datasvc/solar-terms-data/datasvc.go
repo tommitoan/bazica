@@ -1,7 +1,7 @@
 package bazica
 
 import (
-	"bazica/internal/toerr"
+	toerr "bazica/internal/toerr"
 	"encoding/json"
 	"io"
 	"log"

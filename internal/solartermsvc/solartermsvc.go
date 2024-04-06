@@ -1,4 +1,4 @@
-package solartermsvc
+package bazica
 
 //
 //import (
