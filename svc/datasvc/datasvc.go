@@ -2,7 +2,7 @@ package datasvc
 
 import (
 	"encoding/json"
-	toerr "github.com/tommitoan/bazica/internal/toerr"
+	toerr "github.com/tommitoan/bazica/svc/toerr"
 	"io"
 	"log"
 	"net/http"

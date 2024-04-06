@@ -2,8 +2,8 @@ package bazica
 
 import (
 	"encoding/json"
-	"github.com/tommitoan/bazica/internal/datasvc"
-	toerr "github.com/tommitoan/bazica/internal/toerr"
+	"github.com/tommitoan/bazica/svc/datasvc"
+	toerr "github.com/tommitoan/bazica/svc/toerr"
 	"io"
 	"log"
 	"net/http"
@@ -13,6 +13,7 @@ import (
 
 type BazicaSvc struct {
 	DataSvc *datasvc.DataSvc
+	Solar   *datasvc.SolarTerms
 }
 
 func (bzc *BazicaSvc) GetSolarTermsByYear(prefix, year string) (*datasvc.SolarTerms, error) {
@@ -30,9 +31,12 @@ func (bzc *BazicaSvc) GetSolarTermsByYear(prefix, year string) (*datasvc.SolarTe
 	fileToRead := prefix + year + ".json"
 	file, err := os.Open(fileToRead)
 	if err != nil {
-		return nil, toerr.NewValidationError(http.StatusInternalServerError, "File not found")
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "Error when open file")
 		log.Fatal(err)
+	} else if file == nil {
+		return nil, toerr.NewValidationError(http.StatusInternalServerError, "Wrong path")
 	}
+
 	defer file.Close()
 
 	// Read as byte array
