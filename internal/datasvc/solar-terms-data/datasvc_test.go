@@ -1,4 +1,4 @@
-package solar_terms_data
+package bazica
 
 import (
 	"testing"
