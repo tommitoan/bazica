@@ -1,4 +1,4 @@
-package datasvc
+package solar_terms_data
 
 import (
 	"bazica/internal/toerr"
@@ -37,7 +37,7 @@ type SolarTerms struct {
 	WinterSolstice     string `json:"winter_solstice"`
 }
 
-func GetSolarTermsByYear(year string) (*SolarTerms, error) {
+func GetSolarTermsByYear(prefix, year string) (*SolarTerms, error) {
 
 	// Handle year from 1900 -> 2100 only
 	i, err := strconv.Atoi(year)
@@ -50,7 +50,7 @@ func GetSolarTermsByYear(year string) (*SolarTerms, error) {
 	}
 
 	// Open file
-	fileToRead := "internal/datasvc/solar-terms-data/" + year + ".json"
+	fileToRead := prefix + year + ".json"
 	file, err := os.Open(fileToRead)
 	if err != nil {
 		return nil, toerr.NewValidationError(http.StatusInternalServerError, "File not found")

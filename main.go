@@ -1,12 +1,15 @@
 package main
 
 import (
-	"bazica/internal/datasvc"
+	solar_terms_data "bazica/internal/datasvc/solar-terms-data"
 	"fmt"
 )
 
 func main() {
-	slt, _ := datasvc.GetSolarTermsByYear("2101")
+	path := "internal/datasvc/solar-terms-data/"
+	yearToCheck := "1995"
+
+	slt, _ := solar_terms_data.GetSolarTermsByYear(path, yearToCheck)
 
 	fmt.Println(slt.AutumnEquinox)
 	//println(models.Tiger)

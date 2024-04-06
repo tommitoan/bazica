@@ -1,8 +1,7 @@
 package bazica
 
 import (
-	svc "bazica/internal/datasvc"
-	"bazica/models"
+	svc "bazica/internal/datasvc/solar-terms-data"
 	"fmt"
 )
 
