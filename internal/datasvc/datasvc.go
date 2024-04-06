@@ -1,8 +1,8 @@
-package bazica
+package datasvc
 
 import (
-	toerr "bazica/internal/toerr"
 	"encoding/json"
+	toerr "github.com/tommitoan/bazica/internal/toerr"
 	"io"
 	"log"
 	"net/http"
@@ -38,7 +38,6 @@ type SolarTerms struct {
 }
 
 func GetSolarTermsByYear(prefix, year string) (*SolarTerms, error) {
-
 	// Handle year from 1900 -> 2100 only
 	i, err := strconv.Atoi(year)
 	if err != nil {

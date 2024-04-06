@@ -1,4 +1,4 @@
-package bazica
+package coresvc
 
 type CoreSvc struct {
 }
