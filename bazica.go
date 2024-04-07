@@ -3,6 +3,7 @@ package bazica
 import (
 	"embed"
 	"encoding/json"
+	"fmt"
 	"github.com/tommitoan/bazica/svc/datasvc"
 	toerr "github.com/tommitoan/bazica/svc/toerr"
 	"io"
@@ -18,6 +19,7 @@ var dataDir embed.FS
 type BazicaSvc struct {
 	DataSvc *datasvc.DataSvc
 	Solar   *datasvc.SolarTerms
+	dataDir embed.FS
 }
 
 func (bzc *BazicaSvc) GetSolarTermsByYear(prefix, year string) (*datasvc.SolarTerms, error) {
@@ -54,7 +56,7 @@ func (bzc *BazicaSvc) GetSolarTermsByYear(prefix, year string) (*datasvc.SolarTe
 	return &solarTerm, nil
 }
 
-func (bzc *BazicaSvc) GetSolarTermsByYearV3(prefix, year string) (*datasvc.SolarTerms, error) {
+func (bzc *BazicaSvc) GetSolarTermsByYearV3(year string) (*datasvc.SolarTerms, error) {
 	// Handle year from 1900 -> 2100 only
 	i, err := strconv.Atoi(year)
 	if err != nil {
@@ -67,6 +69,14 @@ func (bzc *BazicaSvc) GetSolarTermsByYearV3(prefix, year string) (*datasvc.Solar
 
 	// Open file
 	fileToRead := year + ".json"
+
+	fmt.Println(dataDir)
+	files, err := dataDir.ReadDir("svc/datasvc/solar-terms-data/") // Replace with desired directory
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println("Available files:", files)
 
 	file, err := dataDir.Open(fileToRead)
 	if err != nil {
