@@ -13,6 +13,11 @@ import (
 	"strconv"
 )
 
+const (
+	PrefixLocal  = "svc/datasvc/solar-terms-data/"
+	PrefixVendor = "vendor/github.com/tommitoan/bazica/svc/datasvc/solar-terms-data/"
+)
+
 //go:embed svc/datasvc/solar-terms-data/*
 var dataDir embed.FS
 
