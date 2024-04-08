@@ -1,4 +1,4 @@
-# Bazica (Ba-zi Calculator) - In Progress 🚧
+# Bazica (Ba-zi Calculator) [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE) - <In Progress 🚧>  
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
 
 ## Getting started
