@@ -2,6 +2,7 @@ package datasvc
 
 import (
 	"encoding/json"
+	"fmt"
 	toerr "github.com/tommitoan/bazica/svc/toerr"
 	"io"
 	"log"
@@ -9,6 +10,11 @@ import (
 	"os"
 	"strconv"
 )
+
+type CombinedData struct {
+	Year string     `json:"year"` // Year extracted from filename
+	Data SolarTerms `json:"data"` // Data for the specific year
+}
 
 type DataSvc struct {
 	Year  string
@@ -72,3 +78,38 @@ func (dsvc *DataSvc) GetSolarTermsByYearV2(prefix, year string) (*SolarTerms, er
 
 	return &solarTerm, nil
 }
+
+func (dsvc *DataSvc) GetSolarTermsByYearV3(prefix, year string) (*SolarTerms, error) {
+	// Assuming the combined JSON file is named "combined.json"
+	data, err := os.ReadFile("combined.json")
+	if err != nil {
+		fmt.Println("Error reading combined JSON:", err)
+		return nil, err
+	}
+
+	var combinedData map[string]CombinedData // Declare as map
+
+	err = json.Unmarshal(data, &combinedData)
+	if err != nil {
+		fmt.Println("Error unmarshalling combined JSON:", err)
+		return nil, err
+	}
+
+	fmt.Println("Successfully unmarshalled data!")
+
+	// Get data for a specific year (example: 2000)
+	yearData, ok := combinedData[year] // Check if key exists
+
+	if ok {
+		fmt.Println("Data for year", year, ":")
+		fmt.Println("  Year:", yearData.Year)
+		fmt.Println("  Data:", yearData.Data)
+	} else {
+		fmt.Println("Year", year, "not found in combined data.")
+	}
+
+	fmt.Println("Solar Terms for year:", yearData.Year)
+	return nil, nil
+}
+
+var combinedData CombinedData

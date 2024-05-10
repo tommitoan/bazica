@@ -18,9 +18,6 @@ const (
 	PrefixVendor   = "vendor/github.com/tommitoan/bazica/svc/datasvc/solar-terms-data/"
 )
 
-//go:embed svc/datasvc/solar-terms-data/*
-var dataDir embed.FS
-
 type BazicaSvc struct {
 	DataSvc *datasvc.DataSvc
 	Solar   *datasvc.SolarTerms

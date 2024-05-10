@@ -8,14 +8,19 @@ package main
 //	"strconv"
 //)
 //
+//type CombinedData struct {
+//	Year string            `json:"year"` // Year extracted from filename
+//	Data map[string]string `json:"data"` // Data for the specific year
+//}
+//
 //func main() {
-//	// Define the output filename
-//	outputFile := "solar-term.json"
+//	// Define the output filename for combined data
+//	outputFile := "combined-5.json"
 //
-//	// Define a slice to hold the combined data
-//	var combinedData []interface{}
+//	// Define a slice to hold the combined data (for each year)
+//	var combinedData []CombinedData
 //
-//	// Loop through the JSON files (1900.json to 2100.json)
+//	// Loop through the JSON filenames (1900.json to 2100.json)
 //	for i := 1900; i <= 2100; i++ {
 //		// Create the filename based on the loop counter
 //		filename := "svc/datasvc/solar-terms-data/" + strconv.Itoa(i) + ".json"
@@ -27,7 +32,7 @@ package main
 //			continue
 //		}
 //
-//		// Unmarshal the JSON data
+//		// Unmarshal the JSON data into a map
 //		var jsonData map[string]string
 //		err = json.Unmarshal(data, &jsonData)
 //		if err != nil {
@@ -35,18 +40,14 @@ package main
 //			continue
 //		}
 //
-//		// Extract the year from the filename
-//		year, err := strconv.Atoi(filename[29:33])
-//		if err != nil {
-//			fmt.Println("Error parsing year from filename:", filename, err)
-//			continue
+//		// Create a CombinedData struct for this year
+//		yearData := CombinedData{
+//			Year: strconv.Itoa(i),
+//			Data: jsonData,
 //		}
 //
-//		// Add "year" key with extracted year value
-//		jsonData["year"] = strconv.Itoa(year)
-//
-//		// Append the data to the combined slice
-//		combinedData = append(combinedData, jsonData)
+//		// Append the data to the combinedData slice
+//		combinedData = append(combinedData, yearData)
 //	}
 //
 //	// Marshal the combined data back to JSON format
@@ -63,5 +64,5 @@ package main
 //		return
 //	}
 //
-//	fmt.Println("Successfully combined JSON files into", outputFile)
+//	fmt.Println("Successfully wrote combined data to", outputFile)
 //}

@@ -10,12 +10,12 @@ package main
 //
 //func main() {
 //	// Define the output filename
-//	outputFile := "solar-term.json"
+//	outputFile := "combined.json"
 //
-//	// Define a slice to hold the combined data
-//	var combinedData []interface{}
+//	// Define a map to hold the combined data (year as string key, data as map)
+//	combinedData := make(map[string]map[string]string)
 //
-//	// Loop through the JSON files (1900.json to 2100.json)
+//	// Loop through the JSON filenames (1900.json to 2100.json)
 //	for i := 1900; i <= 2100; i++ {
 //		// Create the filename based on the loop counter
 //		filename := "svc/datasvc/solar-terms-data/" + strconv.Itoa(i) + ".json"
@@ -27,7 +27,7 @@ package main
 //			continue
 //		}
 //
-//		// Unmarshal the JSON data
+//		// Unmarshal the JSON data into a map
 //		var jsonData map[string]string
 //		err = json.Unmarshal(data, &jsonData)
 //		if err != nil {
@@ -36,17 +36,10 @@ package main
 //		}
 //
 //		// Extract the year from the filename
-//		year, err := strconv.Atoi(filename[29:33])
-//		if err != nil {
-//			fmt.Println("Error parsing year from filename:", filename, err)
-//			continue
-//		}
+//		year := strconv.Itoa(i)
 //
-//		// Add "year" key with extracted year value
-//		jsonData["year"] = strconv.Itoa(year)
-//
-//		// Append the data to the combined slice
-//		combinedData = append(combinedData, jsonData)
+//		// Add data for the year to the combined map
+//		combinedData[year] = jsonData
 //	}
 //
 //	// Marshal the combined data back to JSON format
@@ -64,4 +57,13 @@ package main
 //	}
 //
 //	fmt.Println("Successfully combined JSON files into", outputFile)
+//
+//	// Example: Access data for a specific year (assuming data exists)
+//	yearToAccess := "1900"
+//	dataForYear, ok := combinedData[yearToAccess]
+//	if !ok {
+//		fmt.Println("Data not found for year:", yearToAccess)
+//		return
+//	}
+//	fmt.Println("Data for year", yearToAccess, ":", dataForYear)
 //}
