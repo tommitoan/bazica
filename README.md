@@ -1,13 +1,14 @@
-# Bazica (Ba-zi Calculator) [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE) - <In Progress 🚧>  
+[![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
+# Bazica (Ba-zi Calculator) - (In Progress 🚧)
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
 
-## Getting started
+# Getting started with bazica
 
-### Prerequisites
+## Prerequisites
 
 - **[Go](https://go.dev/)**: any one of the **three latest major** [releases](https://go.dev/doc/devel/release) (we test it with these).
 
-### Getting Baca (Ba-zi Calculator)
+## Getting Bazica (Ba-zi Calculator)
 
 With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
 

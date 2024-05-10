@@ -11,6 +11,7 @@ import (
 )
 
 type DataSvc struct {
+	Year  string
 	Solar SolarTerms
 }
 

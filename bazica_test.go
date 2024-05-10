@@ -1,6 +1,7 @@
 package bazica
 
 import (
+	"embed"
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/tommitoan/bazica/svc/datasvc"
@@ -71,6 +72,42 @@ func TestBazicaSvc_GetSolarTermsByYear(t *testing.T) {
 				return
 			}
 
+		})
+	}
+}
+
+func TestBazicaSvc_GetAllSolarTerms(t *testing.T) {
+	type fields struct {
+		DataSvc *datasvc.DataSvc
+		Solar   *datasvc.SolarTerms
+		dataDir embed.FS
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		want    [200]datasvc.SolarTerms
+		wantErr assert.ErrorAssertionFunc
+	}{
+		// TODO: Add test cases.
+		{
+			name:    "happy case",
+			fields:  fields{},
+			want:    [200]datasvc.SolarTerms{},
+			wantErr: assert.NoError,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			bzc := &BazicaSvc{
+				DataSvc: tt.fields.DataSvc,
+				Solar:   tt.fields.Solar,
+				dataDir: tt.fields.dataDir,
+			}
+			got, err := bzc.GetAllSolarTerms()
+			if !tt.wantErr(t, err, fmt.Sprintf("GetAllSolarTerms()")) {
+				return
+			}
+			assert.Equalf(t, tt.want, got, "GetAllSolarTerms()")
 		})
 	}
 }

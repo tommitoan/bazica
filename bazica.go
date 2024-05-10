@@ -3,6 +3,7 @@ package bazica
 import (
 	"embed"
 	"encoding/json"
+	"fmt"
 	"github.com/tommitoan/bazica/svc/datasvc"
 	toerr "github.com/tommitoan/bazica/svc/toerr"
 	"io"
@@ -59,4 +60,22 @@ func (bzc *BazicaSvc) GetSolarTermsByYear(prefix, year string) (*datasvc.SolarTe
 	json.Unmarshal(byteValue, &solarTerm)
 
 	return &solarTerm, nil
+}
+
+func (bzc *BazicaSvc) GetAllSolarTerms() ([10]datasvc.DataSvc, error) {
+	var solarterms [10]datasvc.DataSvc
+
+	for i, _ := range solarterms {
+		year := i + 1900
+		rep, _ := bzc.GetSolarTermsByYear(PrefixInternal, fmt.Sprint(year))
+
+		solarterms[i].Year = fmt.Sprint(year)
+		solarterms[i].Solar = *rep
+	}
+
+	for i, _ := range solarterms { // Iterate through the array
+		yearData := solarterms[i]
+		fmt.Print("{", yearData.Solar.PureBrightness, ",", yearData.Solar.AwakeningOfInsects, "},")
+	}
+	return solarterms, nil
 }
