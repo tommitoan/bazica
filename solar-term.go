@@ -58,7 +58,7 @@ func getSolarTermData(path string) map[string]CombinedData {
 		prefix = path
 	}
 
-	fileToRead := prefix + "internal/solar-term.json"
+	fileToRead := prefix + "pkg/solar-term.json"
 	data, err := os.ReadFile(fileToRead)
 
 	// Use slog directly from the beginning
