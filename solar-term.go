@@ -3,6 +3,7 @@ package bazica
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log/slog"
 	"os"
 )
@@ -59,6 +60,12 @@ func getSolarTermData(path string) map[string]CombinedData {
 	}
 
 	fileToRead := prefix + "pkg/solar-term.json"
+
+	// Test wd
+	e, _ := os.Getwd()
+	fmt.Println("Now is getwd: ")
+	fmt.Println(e)
+
 	data, err := os.ReadFile(fileToRead)
 
 	// Use slog directly from the beginning
