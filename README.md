@@ -34,9 +34,28 @@ To use this module:
 
 Clone or copy this repository to your project directory.
 Access the JSON files located in the data folder.
-Please note: You'll need to manually copy the relevant JSON files from the data folder into your project to utilize the data within your application.
+Please note: You'll need to manually copy the relevant JSON files from the `data` folder into your project to utilize the data within your application.
 
-### 
+Example:
+```
+Before Install              
+├── your_project_folder
+│   ├── app
+│   ├── main.go
+│   ├── go.mod
+
+After Install and Clone `data` folder
+├── your_project_folder
+│   ├── app
+│   ├── data
+│   │   ├── solar-term.json
+│   │   ├── zodiac-signs.json
+│   │   ├── ...(updated)...
+│   ├── main.go
+│   ├── go.mod
+```
+
+### NOTE
 https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/
 
 For a given date and time of birth, the Hsia Calendar is used to obtain the Heavenly Stems and Earthly Branches with which to construct the Four Pillars of Destiny (四柱) of a person. The Four Pillars of Destiny are also known as the Ba Zi (八字), literally the Eight Characters of a person's birth. In ancient China, one use of this form of divination was to select a suitable marriage partner.
