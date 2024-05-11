@@ -1,3 +1,3 @@
-module github.com/tommitoan/bazica/v2
+module github.com/tommitoan/bazica
 
 go 1.21.4
