@@ -1,4 +1,4 @@
-module github.com/tommitoan/bazica
+module github.com/tommitoan/bazica/v1
 
 go 1.21.4
 
@@ -7,6 +7,7 @@ require (
 	github.com/rollbar/rollbar-go v1.4.5
 	github.com/rs/zerolog v1.32.0
 	github.com/stretchr/testify v1.9.0
+	github.com/tommitoan/bazica v0.1.9
 )
 
 require (

@@ -66,7 +66,6 @@ func (bzc *BazicaSvc) GetAllSolarTerms() ([10]datasvc.DataSvc, error) {
 		year := i + 1900
 		rep, _ := bzc.GetSolarTermsByYear(PrefixInternal, fmt.Sprint(year))
 
-		solarterms[i].Year = fmt.Sprint(year)
 		solarterms[i].Solar = *rep
 	}
 
