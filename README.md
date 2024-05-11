@@ -24,6 +24,18 @@ Otherwise, run the following Go command to install the `gin` package:
 $ go get -u github.com/tommitoan/bazica
 ```
 
+## Get Data (Important) ⚠️⚠️
+
+This module provides data related to solar terms, zodiac signs, and the 60-year era cycle.
+
+For your convenience, the data is also summarized in JSON files and located in the `data` folder.
+
+To use this module:
+
+Clone or copy this repository to your project directory.
+Access the JSON files located in the data folder.
+Please note: You'll need to manually copy the relevant JSON files from the data folder into your project to utilize the data within your application.
+
 ### 
 https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/
 

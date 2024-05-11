@@ -3,12 +3,11 @@ package bazica
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"log/slog"
 	"os"
 )
 
-const PrefixPathSolarTerm = ""
+var PrefixPath string
 
 type SolarTermYear struct {
 	MinorCold          string `json:"minor_cold"`
@@ -54,17 +53,12 @@ func GetSolarTermsByYear(year, path string) (SolarTermYear, error) {
 
 func getSolarTermData(path string) map[string]CombinedData {
 	// Assuming the combined JSON file is named "solar-term.json"
-	prefix := PrefixPathSolarTerm
+	prefix := PrefixPath
 	if path != "" {
 		prefix = path
 	}
 
-	fileToRead := prefix + "pkg/solar-term.json"
-
-	// Test wd
-	e, _ := os.Getwd()
-	fmt.Println("Now is getwd: ")
-	fmt.Println(e)
+	fileToRead := prefix + "data/solar-term.json"
 
 	data, err := os.ReadFile(fileToRead)
 
