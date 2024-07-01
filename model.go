@@ -1,5 +1,34 @@
 package bazica
 
+type Element struct {
+	Wood  Wood  `json:"wood"`
+	Fire  Fire  `json:"fire"`
+	Earth Earth `json:"earth"`
+	Metal Metal `json:"metal"`
+	Water Water `json:"water"`
+}
+
+type Wood struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+type Fire struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+type Earth struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+type Metal struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+type Water struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+
 type SolarTermYear struct {
 	MinorCold          string `json:"minor_cold"`
 	MajorCold          string `json:"major_cold"`
@@ -33,3 +62,7 @@ type CombinedData struct {
 }
 
 var combinedData map[string]CombinedData
+
+type LunarNewYearData struct {
+	LunarNewYearDates map[string]string `json:"lunarNewYearDates"`
+}
