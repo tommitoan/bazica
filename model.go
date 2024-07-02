@@ -1,5 +1,24 @@
 package bazica
 
+type YearPillar struct {
+	Year          int           `json:"year"`
+	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
+	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+}
+
+type HeavenlyStem struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+
+type EarthlyBranch struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+
+type Wood struct {
+}
+
 type SolarTermYear struct {
 	MinorCold          string `json:"minor_cold"`
 	MajorCold          string `json:"major_cold"`
@@ -33,3 +52,7 @@ type CombinedData struct {
 }
 
 var combinedData map[string]CombinedData
+
+type LunarNewYearData struct {
+	LunarNewYearDates map[string]string `json:"lunarNewYearDates"`
+}
