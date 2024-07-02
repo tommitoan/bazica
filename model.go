@@ -1,32 +1,22 @@
 package bazica
 
-type Element struct {
-	Wood  Wood  `json:"wood"`
-	Fire  Fire  `json:"fire"`
-	Earth Earth `json:"earth"`
-	Metal Metal `json:"metal"`
-	Water Water `json:"water"`
+type YearPillar struct {
+	Year          int           `json:"year"`
+	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
+	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+}
+
+type HeavenlyStem struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
+}
+
+type EarthlyBranch struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
 }
 
 type Wood struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
-}
-type Fire struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
-}
-type Earth struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
-}
-type Metal struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
-}
-type Water struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
 }
 
 type SolarTermYear struct {
