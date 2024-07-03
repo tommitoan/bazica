@@ -6,8 +6,8 @@ import (
 )
 
 func TestGetSolarTermData(t *testing.T) {
-	result, _ := GetSolarTermsByYear("2000", "")
-	
+	result, _ := GetSolarTermsByYear("2024", "")
+
 	fmt.Println(result)
 	fmt.Println(result.ColdDew)
 	fmt.Println(result.AwakeningOfInsects)

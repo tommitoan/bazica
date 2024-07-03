@@ -10,6 +10,7 @@ import (
 )
 
 func GetYearPillar(path, dateStr string) (*YearPillar, error) {
+	// convert solar date time to get lunar year
 	lunarYear, err := GetLunarYear(path, dateStr)
 	if err != nil {
 		return nil, err
@@ -17,40 +18,11 @@ func GetYearPillar(path, dateStr string) (*YearPillar, error) {
 
 	var yearPillar YearPillar
 	yearPillar.Year = lunarYear
+	stem := CalculateHeavenlyStem(lunarYear%10 - 3)
+	yearPillar.HeavenlyStem = stem
 
-	switch lunarYear % 10 {
-	case YangMetalValue:
-		yearPillar.HeavenlyStem.Name = YangMetalName
-		yearPillar.HeavenlyStem.Value = YangMetalValue
-	case YinMetalValue:
-		yearPillar.HeavenlyStem.Name = YinMetalName
-		yearPillar.HeavenlyStem.Value = YinMetalValue
-	case YangWaterValue:
-		yearPillar.HeavenlyStem.Name = YangWaterName
-		yearPillar.HeavenlyStem.Value = YangWaterValue
-	case YinWaterValue:
-		yearPillar.HeavenlyStem.Name = YinWaterName
-		yearPillar.HeavenlyStem.Value = YinWaterValue
-	case YangWoodValue:
-		yearPillar.HeavenlyStem.Name = YangWoodName
-		yearPillar.HeavenlyStem.Value = YangWoodValue
-	case YinWoodValue:
-		yearPillar.HeavenlyStem.Name = YinWoodName
-		yearPillar.HeavenlyStem.Value = YinWoodValue
-	case YangFireValue:
-		yearPillar.HeavenlyStem.Name = YangFireName
-		yearPillar.HeavenlyStem.Value = YangFireValue
-	case YinFireValue:
-		yearPillar.HeavenlyStem.Name = YinFireName
-		yearPillar.HeavenlyStem.Value = YinFireValue
-	case YangEarthValue:
-		yearPillar.HeavenlyStem.Name = YangEarthName
-		yearPillar.HeavenlyStem.Value = YangEarthValue
-	case YinEarthValue:
-		yearPillar.HeavenlyStem.Name = YinEarthName
-		yearPillar.HeavenlyStem.Value = YinEarthValue
-	}
-	switch (lunarYear - 3) % 12 {
+	// calculate earthly branch (1900 is Rat year)
+	switch (lunarYear - 5) % 12 {
 	case RatValue:
 		yearPillar.EarthlyBranch.Name = Rat
 		yearPillar.EarthlyBranch.Value = RatValue
@@ -93,17 +65,13 @@ func GetYearPillar(path, dateStr string) (*YearPillar, error) {
 }
 
 func GetLunarYear(path, dateStr string) (int, error) {
-	dateParts := strings.Split(dateStr, "T") // Split date and time (if present)
-	if len(dateParts) == 0 {
-		return 0, fmt.Errorf("invalid date string format")
-	}
-	dateStr = dateParts[0] // Extract only the date part (YYYY-MM-DD)
-
-	solarDate, err := time.Parse("2006-01-02 15:04:05.999999999-07:00", dateStr)
+	solarDate, err := GetDateFormat(dateStr)
 	if err != nil {
 		return 0, fmt.Errorf("error parsing date string: %v", err)
 	}
-	solarDate = solarDate.Add(-time.Hour) // Handle 00:00 to 00:59 still on Previous day (Rat hour)
+
+	// Handle 00:00 to 00:59 still on Previous day (Rat hour)
+	solarDate = solarDate.Add(-time.Hour)
 
 	solarYear := solarDate.Year()
 	solarMonth := solarDate.Month()
