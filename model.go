@@ -6,6 +6,12 @@ type YearPillar struct {
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
 }
 
+type MonthPillar struct {
+	Month         int           `json:"year"`
+	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
+	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+}
+
 type HeavenlyStem struct {
 	Name  string `json:"name"`
 	Value int    `json:"value"`
@@ -14,9 +20,6 @@ type HeavenlyStem struct {
 type EarthlyBranch struct {
 	Name  string `json:"name"`
 	Value int    `json:"value"`
-}
-
-type Wood struct {
 }
 
 type SolarTermYear struct {
@@ -45,6 +48,33 @@ type SolarTermYear struct {
 	MajorSnow          string `json:"major_snow"`
 	WinterSolstice     string `json:"winter_solstice"`
 }
+
+const (
+	MinorCold          = "minor_cold"
+	MajorCold          = "major_cold"
+	StartOfSpring      = "start_of_spring"
+	SpringShowers      = "spring_showers"
+	AwakeningOfInsects = "awakening_of_insects"
+	SpringEquinox      = "spring_equinox"
+	PureBrightness     = "pure_brightness"
+	GrainRain          = "grain_rain"
+	StartOfSummer      = "start_of_summer"
+	GrainBuds          = "grain_buds"
+	GrainInEar         = "grain_in_ear"
+	SummerSolstice     = "summer_solstice"
+	MinorHeat          = "minor_heat"
+	MajorHeat          = "major_heat"
+	StartOfAutumn      = "start_of_autumn"
+	EndOfHeat          = "end_of_heat"
+	WhiteDew           = "white_dew"
+	AutumnEquinox      = "autumn_equinox"
+	ColdDew            = "cold_dew"
+	Frost              = "frost"
+	StartOfWinter      = "start_of_winter"
+	MinorSnow          = "minor_snow"
+	MajorSnow          = "major_snow"
+	WinterSolstice     = "winter_solstice"
+)
 
 type CombinedData struct {
 	Year string        `json:"year"` // Year extracted from filename
