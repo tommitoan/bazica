@@ -1,4 +1,4 @@
-package bazica
+package model
 
 const (
 	YangWoodValue  = 1

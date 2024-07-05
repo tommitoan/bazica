@@ -1,22 +1,18 @@
 package bazica
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/tommitoan/bazica/model"
 	"log/slog"
+	"os"
 	"time"
 )
 
-func DetectSolarTerm(path, input string) (string, error) {
-	// Parse the timestamp string (updated layout)
-	dt, err := time.Parse("2006-01-02 15:04:05.999999999-07:00", input)
-	if err != nil {
-		fmt.Println("Error parsing time:", err)
-		return "", err
-	}
-
+func GetSolarTerm(path string, dateTime time.Time) (string, error) {
 	// Extract the year
-	yearStr := fmt.Sprint(dt.Year())
+	yearStr := fmt.Sprint(dateTime.Year())
 	result, err := GetSolarTermsByYear(yearStr, path)
 	if err != nil {
 		fmt.Println(err)
@@ -24,7 +20,7 @@ func DetectSolarTerm(path, input string) (string, error) {
 	}
 
 	// Use the correctly parsed time object when calling findSolarTerm
-	term, err := findSolarTerm(dt.Format("2006-01-02 15:04:05.999999999-07:00"), result)
+	term, err := findSolarTerm(dateTime.Format("2006-01-02 15:04:05.999999999-07:00"), result)
 	if err != nil {
 		return "", errors.New(fmt.Sprintf("Error finding solar term: %v", err))
 	} else {
@@ -32,7 +28,7 @@ func DetectSolarTerm(path, input string) (string, error) {
 	}
 }
 
-func findSolarTerm(inputTime string, data SolarTermYear) (string, error) {
+func findSolarTerm(inputTime string, data model.SolarTermYear) (string, error) {
 	t, err := time.Parse("2006-01-02 15:04:05.999999999-07:00", inputTime)
 	if err != nil {
 		return "", fmt.Errorf("invalid input time format: %v", err)
@@ -71,15 +67,12 @@ func findSolarTerm(inputTime string, data SolarTermYear) (string, error) {
 
 	var previousTermName string
 	for i, term := range termList {
-		slog.Info("Checking Solar Term", "term", term.name, "termTime", term.time)
-
 		if t.After(term.time) && (i+1 == len(termList) || t.Before(termList[i+1].time)) {
 			slog.Info("Solar Term Found", "term", term.name)
 			return term.name, nil // Return the name if the time falls within this term
 		}
 		if i > 0 {
 			previousTermName = termList[i-1].name // Keep track of the previous term (except for the first term)
-			slog.Info("Updating Previous Term", "previousTermName", previousTermName)
 		}
 	}
 	// Handle the case where input time is before the first term in the list
@@ -95,4 +88,50 @@ func mustParseTime(timeStr string) time.Time {
 		panic("invalid time format in solar term data: " + err.Error())
 	}
 	return t
+}
+
+var PrefixPath string
+
+func GetSolarTermsByYear(year string, path ...string) (model.SolarTermYear, error) {
+	var prefix string
+	if len(path) != 0 {
+		prefix = path[0]
+	}
+	data := getSolarTermData(prefix)
+	if data == nil {
+		return model.SolarTermYear{}, errors.New("Cannot find solar term data for year " + year)
+	}
+	return data[year].Data, nil
+}
+
+func getSolarTermData(path string) map[string]model.CombinedData {
+	// Assuming the combined JSON file is named "solar-term.json"
+	prefix := PrefixPath
+	if path != "" {
+		prefix = path
+	}
+
+	fileToRead := prefix + "data/solar-term.json"
+
+	data, err := os.ReadFile(fileToRead)
+
+	// Use slog directly from the beginning
+	if err != nil {
+		slog.Error("Error reading combined JSON", "error", err)
+		return nil
+	}
+
+	err = json.Unmarshal(data, &model.TempCombinedData)
+	if err != nil {
+		slog.Error("Error unmarshalling combined JSON", "error", err)
+		return nil
+	}
+
+	// Check if combinedData is nil (optional)
+	if model.TempCombinedData == nil {
+		slog.Warn("combinedData is nil. Check JSON structure and struct definition.")
+		return nil
+	} else {
+		return model.TempCombinedData
+	}
 }
