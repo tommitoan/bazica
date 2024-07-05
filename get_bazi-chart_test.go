@@ -60,8 +60,8 @@ func TestGetFourPillarChart(t *testing.T) {
 					Day:           8,
 				},
 				HourPillar: &model.HourPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YangFireName, Value: model.YangFireValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Rat, Value: model.RatValue},
+					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
+					EarthlyBranch: model.EarthlyBranch{Name: model.Pig, Value: model.PigValue},
 					Hour:          model.TimeOfDay{Hour: 22, Minute: 05},
 				},
 			},

@@ -15,7 +15,11 @@ func GetHourPillar(dayPillar *model.DayPillar, dateTime time.Time) (*model.HourP
 
 	// Get earthly branch
 	dateHour := dateTime.Hour()
-	branch := CalculateEarthlyBranch(roundInt(dateHour / 2))
+	valueToGetBranch := (math.Round(float64(dateHour) / 2)) - 1
+	if valueToGetBranch < 1 {
+		valueToGetBranch = valueToGetBranch + 12
+	}
+	branch := CalculateEarthlyBranch(int(valueToGetBranch))
 	hourPillar.EarthlyBranch = branch
 
 	// Get heavenly stem

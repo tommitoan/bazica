@@ -1,13 +1,13 @@
 [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
 # Bazica (Ba-zi Chart Calculator) 
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
-
+___
 # Getting started with bazica 
 ## Prerequisites
 
 - **[Go](https://go.dev/)**: any one of the **three latest major** [releases](https://go.dev/doc/devel/release) (we test it with these).
 
-## Getting Bazica (Ba-zi Chart Calculator)
+## Importing Bazica
 
 With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
 
@@ -25,6 +25,7 @@ go get -u github.com/tommitoan/bazica@v1.0.0
 go mod vendor # For fetching full model
 ```
 
+___
 ## Get Data (Important) ⚠️⚠️
 
 This module provides data related to solar terms, zodiac signs, and the 60-year era cycle.
@@ -56,6 +57,7 @@ After Install and Clone `data` folder
 │   ├── go.mod
 ```
 
+___
 ## How to use
 
 ```go
@@ -83,20 +85,37 @@ func main() {
 }
 }
 ```
+___
+## References
+
+This project drew inspiration and information from the following sources:
+
+* **[Thời Gian](https://www.thoigian.com.vn/)** - A comprehensive resource for understanding the Vietnamese calendar system.
+* **[Chinese Fortune Calendar](https://www.chinesefortunecalendar.com/)** - Provided insights into the Chinese calendar, calculations, and cultural significance.
+
+
 ### NOTE
 https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/
 
-For a given date and time of birth, the Hsia Calendar is used to obtain the Heavenly Stems and Earthly Branches with which to construct the Four Pillars of Destiny (四柱) of a person. The Four Pillars of Destiny are also known as the Ba Zi (八字), literally the Eight Characters of a person's birth. In ancient China, one use of this form of divination was to select a suitable marriage partner.
+For a given date and time of birth, the Hsia Calendar is used to obtain the Heavenly Stems and Earthly Branches with which to construct the Four Pillars of Destiny (四柱) of a person. 
+The Four Pillars of Destiny are also known as the Ba Zi (八字), literally the Eight Characters of a person's birth. 
+In ancient China, one use of this form of divination was to select a suitable marriage partner.
 
-The Four Pillars of Destiny are the Year Pillar, the Month Pillar, the Day Pillar and the Hour Pillar. Each Pillar is made up of two components, namely the Heavenly Stem and the Earthly Branch, both of which are read from the Hsia Calendar.
+The Four Pillars of Destiny are the Year Pillar, the Month Pillar, the Day Pillar and the Hour Pillar. 
+Each Pillar is made up of two components, namely the Heavenly Stem and the Earthly Branch, both of which are read from the Hsia Calendar.
 
 The Hsia Calendar is also used in various types of Feng Shui, or Chinese Geomancy, such as the Flying Star Feng Shui.
 
-A ba zi chart done with mixed Lunar & Seasonal (Xia) Calendar will look like this:- 
+A ba zi chart done with mixed Lunar & Seasonal (Solar Term) Calendar will look like this:- 
 
-Year: Ji-Chou (Ox) - (Lunar Calendar Year)
-Month: Yi-Chou - (Seasonal-Xia Calendar Month)
-Day: Xin-Wei - (Lunar Calendar Day) 
+```
+Date time: 2024-07-05 22:00 UTC+7 (Vietnam)  
+
+Year: Yang Wood - Dragon (Lunar Calendar Year)  
+Month: Yang Metal - Horse (Solar-Term Calendar Month)  
+Day: Yang Metal - Horse (Lunar Calendar Day)   
+Hour: Yin Wood - Pig (Zodiac Hour)
+```
 
 ### Note: Ho Chi Minh City 1975
 Ho Chi Minh City (formerly Saigon) has gone through time zone changes throughout history. Notably:
