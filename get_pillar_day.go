@@ -1,16 +1,17 @@
 package bazica
 
 import (
+	"github.com/tommitoan/bazica/model"
 	"time"
 )
 
-func GetDayPillar(dateTime time.Time, loc *time.Location) (*DayPillar, error) {
-	var dayPillar DayPillar
+func GetDayPillar(dateTime time.Time, loc *time.Location) (*model.DayPillar, error) {
+	var dayPillar model.DayPillar
 	dayPillar.Day = dateTime.Day()
 
 	// From 23:00 is new day (Rat hour)
 	dateTime = dateTime.Add(time.Hour)
-	
+
 	milestone := time.Date(1900, 1, 1, 0, 0, 0, 0, loc)
 	num := dateTime.Sub(milestone).Hours() / 24.0
 

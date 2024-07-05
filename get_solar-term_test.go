@@ -16,7 +16,7 @@ func TestDetectSolarTerm(t *testing.T) {
 
 	loc, err := time.LoadLocation(location)
 	dateTime := time.Date(birthYear, birthMonth, birthDay, birthHour, birthMinute, 0, 0, loc)
-	str, err := DetectSolarTerm("", dateTime)
+	str, err := GetSolarTerm("", dateTime)
 	if err != nil {
 		t.Errorf("%s", err)
 	}

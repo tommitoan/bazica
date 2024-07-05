@@ -1,13 +1,16 @@
 package bazica
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/tommitoan/bazica/model"
 	"log/slog"
+	"os"
 	"time"
 )
 
-func DetectSolarTerm(path string, dateTime time.Time) (string, error) {
+func GetSolarTerm(path string, dateTime time.Time) (string, error) {
 	// Extract the year
 	yearStr := fmt.Sprint(dateTime.Year())
 	result, err := GetSolarTermsByYear(yearStr, path)
@@ -25,7 +28,7 @@ func DetectSolarTerm(path string, dateTime time.Time) (string, error) {
 	}
 }
 
-func findSolarTerm(inputTime string, data SolarTermYear) (string, error) {
+func findSolarTerm(inputTime string, data model.SolarTermYear) (string, error) {
 	t, err := time.Parse("2006-01-02 15:04:05.999999999-07:00", inputTime)
 	if err != nil {
 		return "", fmt.Errorf("invalid input time format: %v", err)
@@ -85,4 +88,50 @@ func mustParseTime(timeStr string) time.Time {
 		panic("invalid time format in solar term data: " + err.Error())
 	}
 	return t
+}
+
+var PrefixPath string
+
+func GetSolarTermsByYear(year string, path ...string) (model.SolarTermYear, error) {
+	var prefix string
+	if len(path) != 0 {
+		prefix = path[0]
+	}
+	data := getSolarTermData(prefix)
+	if data == nil {
+		return model.SolarTermYear{}, errors.New("Cannot find solar term data for year " + year)
+	}
+	return data[year].Data, nil
+}
+
+func getSolarTermData(path string) map[string]model.CombinedData {
+	// Assuming the combined JSON file is named "solar-term.json"
+	prefix := PrefixPath
+	if path != "" {
+		prefix = path
+	}
+
+	fileToRead := prefix + "data/solar-term.json"
+
+	data, err := os.ReadFile(fileToRead)
+
+	// Use slog directly from the beginning
+	if err != nil {
+		slog.Error("Error reading combined JSON", "error", err)
+		return nil
+	}
+
+	err = json.Unmarshal(data, &model.TempCombinedData)
+	if err != nil {
+		slog.Error("Error unmarshalling combined JSON", "error", err)
+		return nil
+	}
+
+	// Check if combinedData is nil (optional)
+	if model.TempCombinedData == nil {
+		slog.Warn("combinedData is nil. Check JSON structure and struct definition.")
+		return nil
+	} else {
+		return model.TempCombinedData
+	}
 }

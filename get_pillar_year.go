@@ -3,20 +3,21 @@ package bazica
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/tommitoan/bazica/model"
 	"log/slog"
 	"os"
 	"strings"
 	"time"
 )
 
-func GetYearPillar(path string, dateTime time.Time) (*YearPillar, error) {
+func GetYearPillar(path string, dateTime time.Time) (*model.YearPillar, error) {
 	// convert solar date time to get lunar year
 	lunarYear, err := GetLunarYear(path, dateTime)
 	if err != nil {
 		return nil, err
 	}
 
-	var yearPillar YearPillar
+	var yearPillar model.YearPillar
 	yearPillar.Year = lunarYear
 	stem := CalculateHeavenlyStem(lunarYear%10 - 3)
 	yearPillar.HeavenlyStem = stem
@@ -55,7 +56,7 @@ func GetLunarYear(path string, dateTime time.Time) (int, error) {
 	return lunarYear, nil
 }
 
-func getNewYearData(path string) *LunarNewYearData {
+func getNewYearData(path string) *model.LunarNewYearData {
 	// Assuming the combined JSON file is named "solar-term.json"
 	prefix := PrefixPath
 	if path != "" {
@@ -72,7 +73,7 @@ func getNewYearData(path string) *LunarNewYearData {
 		return nil
 	}
 
-	var lunarData *LunarNewYearData
+	var lunarData *model.LunarNewYearData
 	err = json.Unmarshal(data, &lunarData)
 	if err != nil {
 		slog.Error("Error unmarshalling combined JSON", "error", err)

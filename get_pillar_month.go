@@ -1,13 +1,16 @@
 package bazica
 
-import "time"
+import (
+	"github.com/tommitoan/bazica/model"
+	"time"
+)
 
-func GetMonthPillar(path string, yearPillar *YearPillar, dateTime time.Time) (*MonthPillar, error) {
-	var monthPillar MonthPillar
+func GetMonthPillar(path string, yearPillar *model.YearPillar, dateTime time.Time) (*model.MonthPillar, error) {
+	var monthPillar model.MonthPillar
 	monthPillar.Month = int(dateTime.Month())
 
 	// Detect solar term
-	termName, err := DetectSolarTerm(path, dateTime)
+	termName, err := GetSolarTerm(path, dateTime)
 	if err != nil {
 		return nil, err
 	}

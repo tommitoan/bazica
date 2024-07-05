@@ -1,13 +1,14 @@
 package bazica
 
 import (
+	"github.com/tommitoan/bazica/model"
 	"math"
 	"time"
 )
 
-func GetHourPillar(dayPillar *DayPillar, dateTime time.Time) (*HourPillar, error) {
-	var hourPillar HourPillar
-	hourPillar.Hour = TimeOfDay{
+func GetHourPillar(dayPillar *model.DayPillar, dateTime time.Time) (*model.HourPillar, error) {
+	var hourPillar model.HourPillar
+	hourPillar.Hour = model.TimeOfDay{
 		Hour:   dateTime.Hour(),
 		Minute: dateTime.Minute(),
 	}
