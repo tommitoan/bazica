@@ -1,14 +1,13 @@
 [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
-# Bazica (Ba-zi Calculator) - (In Progress 🚧)
+# Bazica (Ba-zi Chart Calculator) 
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
 
-# Getting started with bazica
-
+# Getting started with bazica 
 ## Prerequisites
 
 - **[Go](https://go.dev/)**: any one of the **three latest major** [releases](https://go.dev/doc/devel/release) (we test it with these).
 
-## Getting Bazica (Ba-zi Calculator)
+## Getting Bazica (Ba-zi Chart Calculator)
 
 With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
 
@@ -18,10 +17,12 @@ import "github.com/tommitoan/bazica"
 
 to your code, and then `go [build|run|test]` will automatically fetch the necessary dependencies.
 
-Otherwise, run the following Go command to install the `gin` package:
+Otherwise, run the following Go command to install the `bazica` package:
 
 ```sh
-$ go get -u github.com/tommitoan/bazica
+go get -u github.com/tommitoan/bazica@v1.0.0
+
+go mod vendor # For fetching full model
 ```
 
 ## Get Data (Important) ⚠️⚠️
@@ -55,6 +56,33 @@ After Install and Clone `data` folder
 │   ├── go.mod
 ```
 
+## How to use
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/tommitoan/bazica"
+	"time"
+)
+
+func main() {
+	// Input time
+	now := time.Now()
+	// Input location
+	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
+
+	chart, err := bazica.GetBaziChart("", now, loc)
+	if err != nil {
+		fmt.Println(err)
+	}
+	jsonData, _ := json.Marshal(chart)
+	fmt.Println(string(jsonData))
+}
+}
+```
 ### NOTE
 https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/
 
