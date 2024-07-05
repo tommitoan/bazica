@@ -1,4 +1,8 @@
+[![GitHub release](https://img.shields.io/github/tag/tommitoan/bazica.svg?label=latest)](https://github.com/tommitoan/bazica/releases)
+[![Go Reference](https://pkg.go.dev/badge/github.com/tommitoan/bazica.svg)](https://pkg.go.dev/github.com/tommitoan/bazica)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tommitoan/bazica)](https://goreportcard.com/report/github.com/tommitoan/bazica)
 [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
+
 # Bazica (Ba-zi Chart Calculator) 
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
 ___
@@ -20,7 +24,7 @@ to your code, and then `go [build|run|test]` will automatically fetch the necess
 Otherwise, run the following Go command to install the `bazica` package:
 
 ```sh
-go get -u github.com/tommitoan/bazica@v1.0.0
+go get -u github.com/tommitoan/bazica@latest
 
 go mod vendor # For fetching full model
 ```
@@ -86,6 +90,19 @@ func main() {
 }
 ```
 ___
+## Note
+### Data Input Limitations:
+Due to the specific calculations and algorithms used in this package, it is currently designed to handle date inputs ranging from January 1, 1900, to December 31, 2100.   
+Dates before 1900 or after 2100 may fall outside the scope of supported calendar systems or lead to inaccurate results.
+
+If you require calculations for dates outside this range, please consider alternative libraries or solutions.
+
+###  Ho Chi Minh City 1975
+Ho Chi Minh City (formerly Saigon) has gone through time zone changes throughout history. Notably:  
+Before 1975: South Vietnam (including Saigon) used UTC+8.  
+After 1975: The unified Vietnam adopted UTC+7.
+
+___
 ## References
 
 This project drew inspiration and information from the following sources:
@@ -94,7 +111,8 @@ This project drew inspiration and information from the following sources:
 * **[Chinese Fortune Calendar](https://www.chinesefortunecalendar.com/)** - Provided insights into the Chinese calendar, calculations, and cultural significance.
 
 
-### NOTE
+
+### Document
 https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/
 
 For a given date and time of birth, the Hsia Calendar is used to obtain the Heavenly Stems and Earthly Branches with which to construct the Four Pillars of Destiny (四柱) of a person. 
@@ -117,9 +135,4 @@ Day: Yang Metal - Horse (Lunar Calendar Day)
 Hour: Yin Wood - Pig (Zodiac Hour)
 ```
 
-### Note: Ho Chi Minh City 1975
-Ho Chi Minh City (formerly Saigon) has gone through time zone changes throughout history. Notably:
-
-Before 1975: South Vietnam (including Saigon) used UTC+8.
-After 1975: The unified Vietnam adopted UTC+7.
 
