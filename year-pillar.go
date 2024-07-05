@@ -9,9 +9,9 @@ import (
 	"time"
 )
 
-func GetYearPillar(path, dateStr string) (*YearPillar, error) {
+func GetYearPillar(path string, dateTime time.Time) (*YearPillar, error) {
 	// convert solar date time to get lunar year
-	lunarYear, err := GetLunarYear(path, dateStr)
+	lunarYear, err := GetLunarYear(path, dateTime)
 	if err != nil {
 		return nil, err
 	}
@@ -22,60 +22,19 @@ func GetYearPillar(path, dateStr string) (*YearPillar, error) {
 	yearPillar.HeavenlyStem = stem
 
 	// calculate earthly branch (1900 is Rat year)
-	switch (lunarYear - 5) % 12 {
-	case RatValue:
-		yearPillar.EarthlyBranch.Name = Rat
-		yearPillar.EarthlyBranch.Value = RatValue
-	case OxValue:
-		yearPillar.EarthlyBranch.Name = Ox
-		yearPillar.EarthlyBranch.Value = OxValue
-	case TigerValue:
-		yearPillar.EarthlyBranch.Name = Tiger
-		yearPillar.EarthlyBranch.Value = TigerValue
-	case RabbitValue:
-		yearPillar.EarthlyBranch.Name = Rabbit
-		yearPillar.EarthlyBranch.Value = RabbitValue
-	case DragonValue:
-		yearPillar.EarthlyBranch.Name = Dragon
-		yearPillar.EarthlyBranch.Value = DragonValue
-	case SnakeValue:
-		yearPillar.EarthlyBranch.Name = Snake
-		yearPillar.EarthlyBranch.Value = SnakeValue
-	case HorseValue:
-		yearPillar.EarthlyBranch.Name = Horse
-		yearPillar.EarthlyBranch.Value = HorseValue
-	case GoatValue:
-		yearPillar.EarthlyBranch.Name = Goat
-		yearPillar.EarthlyBranch.Value = GoatValue
-	case MonkeyValue:
-		yearPillar.EarthlyBranch.Name = Monkey
-		yearPillar.EarthlyBranch.Value = MonkeyValue
-	case RoosterValue:
-		yearPillar.EarthlyBranch.Name = Rooster
-		yearPillar.EarthlyBranch.Value = RoosterValue
-	case DogValue:
-		yearPillar.EarthlyBranch.Name = Dog
-		yearPillar.EarthlyBranch.Value = DogValue
-	case PigValue:
-		yearPillar.EarthlyBranch.Name = Pig
-		yearPillar.EarthlyBranch.Value = PigValue
-	}
+	branch := CalculateEarthlyBranch((lunarYear - 5) % 12)
+	yearPillar.EarthlyBranch = branch
 
 	return &yearPillar, nil
 }
 
-func GetLunarYear(path, dateStr string) (int, error) {
-	solarDate, err := GetDateFormat(dateStr)
-	if err != nil {
-		return 0, fmt.Errorf("error parsing date string: %v", err)
-	}
+func GetLunarYear(path string, dateTime time.Time) (int, error) {
+	// From 23:00 is new day (Rat hour)
+	dateTime = dateTime.Add(time.Hour)
 
-	// Handle 00:00 to 00:59 still on Previous day (Rat hour)
-	solarDate = solarDate.Add(-time.Hour)
-
-	solarYear := solarDate.Year()
-	solarMonth := solarDate.Month()
-	solarDay := solarDate.Day()
+	solarYear := dateTime.Year()
+	solarMonth := dateTime.Month()
+	solarDay := dateTime.Day()
 
 	lunarData := getNewYearData(path)
 
@@ -120,14 +79,11 @@ func getNewYearData(path string) *LunarNewYearData {
 		return nil
 	}
 
-	slog.Info("Successfully unmarshalled data!")
-
 	// Check if combinedData is nil (optional)
 	if lunarData == nil {
 		slog.Warn("combinedData is nil. Check JSON structure and struct definition.")
 		return nil
 	} else {
-		slog.Info("combinedData contains data!")
 		return lunarData
 	}
 }

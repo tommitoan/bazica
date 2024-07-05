@@ -44,14 +44,11 @@ func getSolarTermData(path string) map[string]CombinedData {
 		return nil
 	}
 
-	slog.Info("Successfully unmarshalled data!")
-
 	// Check if combinedData is nil (optional)
 	if combinedData == nil {
 		slog.Warn("combinedData is nil. Check JSON structure and struct definition.")
 		return nil
 	} else {
-		slog.Info("combinedData contains data!")
 		return combinedData
 	}
 }

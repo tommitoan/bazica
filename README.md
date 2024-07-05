@@ -69,3 +69,10 @@ A ba zi chart done with mixed Lunar & Seasonal (Xia) Calendar will look like thi
 Year: Ji-Chou (Ox) - (Lunar Calendar Year)
 Month: Yi-Chou - (Seasonal-Xia Calendar Month)
 Day: Xin-Wei - (Lunar Calendar Day) 
+
+### Note: Ho Chi Minh City 1975
+Ho Chi Minh City (formerly Saigon) has gone through time zone changes throughout history. Notably:
+
+Before 1975: South Vietnam (including Saigon) used UTC+8.
+After 1975: The unified Vietnam adopted UTC+7.
+
