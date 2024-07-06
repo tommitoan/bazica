@@ -1,4 +1,4 @@
-package bazica
+package ultis
 
 import (
 	"encoding/json"

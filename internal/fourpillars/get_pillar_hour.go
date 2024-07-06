@@ -1,6 +1,7 @@
-package bazica
+package fourpillars
 
 import (
+	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
 	"math"
 	"time"
@@ -19,11 +20,11 @@ func GetHourPillar(dayPillar *model.DayPillar, dateTime time.Time) (*model.HourP
 	if valueToGetBranch < 1 {
 		valueToGetBranch = valueToGetBranch + 12
 	}
-	branch := CalculateEarthlyBranch(int(valueToGetBranch))
+	branch := ultis.CalculateEarthlyBranch(int(valueToGetBranch))
 	hourPillar.EarthlyBranch = branch
 
 	// Get heavenly stem
-	valueOfRatHour := GetStemRuleByFireRats(dayPillar.HeavenlyStem.Value)
+	valueOfRatHour := ultis.GetStemRuleByFireRats(dayPillar.HeavenlyStem.Value)
 	var stem int
 	diff := hourPillar.EarthlyBranch.Value - 11
 	if diff < 0 {
@@ -34,12 +35,8 @@ func GetHourPillar(dayPillar *model.DayPillar, dateTime time.Time) (*model.HourP
 		stem = stem - 10
 	}
 
-	heavenlyStem := CalculateHeavenlyStem(stem)
+	heavenlyStem := ultis.CalculateHeavenlyStem(stem)
 	hourPillar.HeavenlyStem = heavenlyStem
 
 	return &hourPillar, nil
-}
-
-func roundInt(x int) int {
-	return int(math.Round(float64(x)))
 }

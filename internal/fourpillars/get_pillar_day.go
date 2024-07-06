@@ -1,6 +1,7 @@
-package bazica
+package fourpillars
 
 import (
+	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
 	"time"
 )
@@ -17,12 +18,12 @@ func GetDayPillar(dateTime time.Time, loc *time.Location) (*model.DayPillar, err
 
 	// Get day stem
 	stemRule := (int(num) + 1) % 10
-	stem := CalculateHeavenlyStem(stemRule)
+	stem := ultis.CalculateHeavenlyStem(stemRule)
 	dayPillar.HeavenlyStem = stem
 
 	// Get day branch
 	branchRule := (int(num) - 3) % 12
-	branch := CalculateEarthlyBranch(branchRule)
+	branch := ultis.CalculateEarthlyBranch(branchRule)
 	dayPillar.EarthlyBranch = branch
 
 	return &dayPillar, nil

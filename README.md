@@ -80,7 +80,7 @@ func main() {
 	// Input location
 	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
 
-	chart, err := bazica.GetBaziChart("", now, loc)
+	chart, err := bazica.GetBaziChart(now, loc)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -1,6 +1,10 @@
 package model
 
 type BaziChart struct {
+	FourPillar FourPillars `json:"four_pillars"`
+}
+
+type FourPillars struct {
 	YearPillar  *YearPillar  `json:"year_pillar"`
 	MonthPillar *MonthPillar `json:"month_pillar"`
 	DayPillar   *DayPillar   `json:"day_pillar"`
