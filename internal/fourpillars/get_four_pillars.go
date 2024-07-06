@@ -1,12 +1,17 @@
-package bazica
+package fourpillars
 
 import (
 	"github.com/tommitoan/bazica/model"
 	"time"
 )
 
-func GetBaziChart(path string, dateTime time.Time, loc *time.Location) (*model.BaziChart, error) {
-	var baziChart model.BaziChart
+func GetFourPillars(dateTime time.Time, loc *time.Location, prefixPath ...string) (*model.FourPillars, error) {
+	var path string
+	if len(prefixPath) != 0 {
+		path = prefixPath[0]
+	}
+
+	var baziChart model.FourPillars
 
 	// Get Year pillar
 	yearPillar, err := GetYearPillar(path, dateTime)

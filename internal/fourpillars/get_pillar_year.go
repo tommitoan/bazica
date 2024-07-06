@@ -1,8 +1,9 @@
-package bazica
+package fourpillars
 
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
 	"log/slog"
 	"os"
@@ -19,11 +20,11 @@ func GetYearPillar(path string, dateTime time.Time) (*model.YearPillar, error) {
 
 	var yearPillar model.YearPillar
 	yearPillar.Year = lunarYear
-	stem := CalculateHeavenlyStem(lunarYear%10 - 3)
+	stem := ultis.CalculateHeavenlyStem(lunarYear%10 - 3)
 	yearPillar.HeavenlyStem = stem
 
 	// calculate earthly branch (1900 is Rat year)
-	branch := CalculateEarthlyBranch((lunarYear - 5) % 12)
+	branch := ultis.CalculateEarthlyBranch((lunarYear - 5) % 12)
 	yearPillar.EarthlyBranch = branch
 
 	return &yearPillar, nil
@@ -58,7 +59,7 @@ func GetLunarYear(path string, dateTime time.Time) (int, error) {
 
 func getNewYearData(path string) *model.LunarNewYearData {
 	// Assuming the combined JSON file is named "solar-term.json"
-	prefix := PrefixPath
+	prefix := ultis.PrefixPath
 	if path != "" {
 		prefix = path
 	}

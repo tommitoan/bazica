@@ -1,4 +1,4 @@
-package bazica
+package fourpillars
 
 import (
 	"bytes"
@@ -13,12 +13,12 @@ func TestGetFourPillarChart(t *testing.T) {
 	testCases := []struct {
 		loc                            string
 		year, month, day, hour, minute int
-		expectedChart                  *model.BaziChart
+		expectedChart                  *model.FourPillars
 		description                    string
 	}{
 		{"Asia/Ho_Chi_Minh",
 			1977, 7, 12, 23, 30,
-			&model.BaziChart{
+			&model.FourPillars{
 				YearPillar: &model.YearPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Snake, Value: model.SnakeValue},
@@ -43,7 +43,7 @@ func TestGetFourPillarChart(t *testing.T) {
 			"case 1"},
 		{"Asia/Ho_Chi_Minh",
 			1995, 6, 8, 22, 05,
-			&model.BaziChart{
+			&model.FourPillars{
 				YearPillar: &model.YearPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YinWoodName, Value: model.YinWoodValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Pig, Value: model.PigValue},
@@ -75,7 +75,7 @@ func TestGetFourPillarChart(t *testing.T) {
 		dateTime := time.Date(tc.year, time.Month(tc.month), tc.day, tc.hour, tc.minute, 0, 0, location)
 
 		// Get the chart
-		baziChart, err := GetBaziChart("", dateTime, location)
+		baziChart, err := GetFourPillars(dateTime, location)
 		if err != nil {
 			t.Errorf("Error for %s: %v", tc.description, err) // Include description in error message
 			continue                                          // Skip to next case if this one failed
