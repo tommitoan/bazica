@@ -12,6 +12,7 @@ func GetDayPillar(dateTime time.Time, loc *time.Location) (*model.DayPillar, err
 
 	// From 23:00 is new day (Rat hour)
 	dateTime = dateTime.Add(time.Hour)
+	dateTime = dateTime.In(loc)
 
 	milestone := time.Date(1900, 1, 1, 0, 0, 0, 0, loc)
 	num := dateTime.Sub(milestone).Hours() / 24.0
