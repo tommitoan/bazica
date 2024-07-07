@@ -18,6 +18,9 @@ func GetDayPillar(dateTime time.Time, loc *time.Location) (*model.DayPillar, err
 
 	// Get day stem
 	stemRule := (int(num) + 1) % 10
+	if stemRule < 1 {
+		stemRule = stemRule + 10
+	}
 	stem := ultis.CalculateHeavenlyStem(stemRule)
 	dayPillar.HeavenlyStem = stem
 
