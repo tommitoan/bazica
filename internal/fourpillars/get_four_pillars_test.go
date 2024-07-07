@@ -9,6 +9,7 @@ import (
 )
 
 func TestGetFourPillarChart(t *testing.T) {
+	var path = "../../"
 	// Test Cases: Each case defines a birthdate, expected chart, and (optionally) a description.
 	testCases := []struct {
 		loc                            string
@@ -75,7 +76,7 @@ func TestGetFourPillarChart(t *testing.T) {
 		dateTime := time.Date(tc.year, time.Month(tc.month), tc.day, tc.hour, tc.minute, 0, 0, location)
 
 		// Get the chart
-		baziChart, err := GetFourPillars(dateTime, location)
+		baziChart, err := GetFourPillars(dateTime, location, path)
 		if err != nil {
 			t.Errorf("Error for %s: %v", tc.description, err) // Include description in error message
 			continue                                          // Skip to next case if this one failed

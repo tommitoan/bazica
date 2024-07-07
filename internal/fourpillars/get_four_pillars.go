@@ -1,7 +1,9 @@
 package fourpillars
 
 import (
+	"encoding/json"
 	"github.com/tommitoan/bazica/model"
+	"log/slog"
 	"time"
 )
 
@@ -41,5 +43,7 @@ func GetFourPillars(dateTime time.Time, loc *time.Location, prefixPath ...string
 	}
 	baziChart.HourPillar = hourPillar
 
+	jsonData, _ := json.Marshal(baziChart)
+	slog.Info(string(jsonData))
 	return &baziChart, nil
 }
