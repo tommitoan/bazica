@@ -20,11 +20,19 @@ func GetYearPillar(path string, dateTime time.Time) (*model.YearPillar, error) {
 
 	var yearPillar model.YearPillar
 	yearPillar.Year = lunarYear
-	stem := ultis.CalculateHeavenlyStem(lunarYear%10 - 3)
+	stemValue := lunarYear%10 - 3
+	if stemValue < 1 {
+		stemValue = stemValue + 10
+	}
+	stem := ultis.CalculateHeavenlyStem(stemValue)
 	yearPillar.HeavenlyStem = stem
 
 	// calculate earthly branch (1900 is Rat year)
-	branch := ultis.CalculateEarthlyBranch((lunarYear - 5) % 12)
+	branchValue := (lunarYear - 5) % 12
+	if branchValue < 1 {
+		branchValue = branchValue + 12
+	}
+	branch := ultis.CalculateEarthlyBranch(branchValue)
 	yearPillar.EarthlyBranch = branch
 
 	return &yearPillar, nil
