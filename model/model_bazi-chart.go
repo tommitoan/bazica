@@ -1,7 +1,7 @@
 package model
 
 type BaziChart struct {
-	FourPillar FourPillars `json:"four_pillars"`
+	FourPillar *FourPillars `json:"four_pillars"`
 }
 
 type FourPillars struct {

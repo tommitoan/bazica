@@ -1,13 +1,14 @@
 package bazica
 
 import (
-	"fmt"
 	"github.com/tommitoan/bazica/internal/fourpillars"
 	"github.com/tommitoan/bazica/model"
 	"time"
 )
 
 func GetBaziChart(dateTime time.Time, loc *time.Location, prefixPath ...string) (*model.BaziChart, error) {
+	var baziChart model.BaziChart
+
 	var path string
 	if len(prefixPath) != 0 {
 		path = prefixPath[0]
@@ -17,7 +18,7 @@ func GetBaziChart(dateTime time.Time, loc *time.Location, prefixPath ...string) 
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(fourPillar)
+	baziChart.FourPillar = fourPillar
 
-	return nil, nil
+	return &baziChart, nil
 }
