@@ -75,10 +75,15 @@ import (
 )
 
 func main() {
-	// Input time
-	now := time.Now()
-	// Input location
+	// Calculate current ba-zi chart
 	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
+	now := time.Now() 
+	
+	/* Example: 
+	Time to calculate: 1990-12-31 6:30 - Timezone: HoChiMinh / Vietnam
+	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
+	now := time.Date(1990, time.Month(12), 31, 6, 30, 0, 0, location)
+	*/
 
 	chart, err := bazica.GetBaziChart(now, loc)
 	if err != nil {
@@ -86,7 +91,6 @@ func main() {
 	}
 	jsonData, _ := json.Marshal(chart)
 	fmt.Println(string(jsonData))
-}
 }
 ```
 ___
