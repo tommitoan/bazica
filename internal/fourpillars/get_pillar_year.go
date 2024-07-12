@@ -19,7 +19,8 @@ func GetYearPillar(path string, dateTime time.Time) (*model.YearPillar, error) {
 	}
 
 	var yearPillar model.YearPillar
-	yearPillar.Year = lunarYear
+	yearPillar.Year = dateTime.Year()
+
 	stemValue := lunarYear%10 - 3
 	if stemValue < 1 {
 		stemValue = stemValue + 10
