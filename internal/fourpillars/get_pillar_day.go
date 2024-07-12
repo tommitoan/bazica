@@ -27,6 +27,9 @@ func GetDayPillar(dateTime time.Time, loc *time.Location) (*model.DayPillar, err
 
 	// Get day branch
 	branchRule := (int(num) - 3) % 12
+	if branchRule < 1 {
+		branchRule = branchRule + 12
+	}
 	branch := ultis.CalculateEarthlyBranch(branchRule)
 	dayPillar.EarthlyBranch = branch
 
