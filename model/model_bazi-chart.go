@@ -19,22 +19,11 @@ type FourPillars struct {
 }
 
 type LuckPillars struct {
-	LuckPillar0  *LuckPillar `json:"luck_pillar_0"`
-	LuckPillar1  *LuckPillar `json:"luck_pillar_1"`
-	LuckPillar2  *LuckPillar `json:"luck_pillar_2"`
-	LuckPillar3  *LuckPillar `json:"luck_pillar_3"`
-	LuckPillar4  *LuckPillar `json:"luck_pillar_4"`
-	LuckPillar5  *LuckPillar `json:"luck_pillar_5"`
-	LuckPillar6  *LuckPillar `json:"luck_pillar_6"`
-	LuckPillar7  *LuckPillar `json:"luck_pillar_7"`
-	LuckPillar8  *LuckPillar `json:"luck_pillar_8"`
-	LuckPillar9  *LuckPillar `json:"luck_pillar_9"`
-	LuckPillar10 *LuckPillar `json:"luck_pillar_10"`
-	LuckPillar11 *LuckPillar `json:"luck_pillar_11"`
-	LuckPillar12 *LuckPillar `json:"luck_pillar_12"`
+	LuckPillars []*LuckPillar `json:"luck_pillars"`
 }
 
 type LuckPillar struct {
+	Number        int           `json:"number"`
 	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
 	Year          int           `json:"year"`
