@@ -7,10 +7,7 @@ import (
 	"time"
 )
 
-func GetBaziChart(dateTime time.Time, loc *time.Location, prefixPath ...string) (*model.BaziChart, error) {
-	// TODO: ask gender for calculating luck pillars
-	var gender int = 1
-
+func GetBaziChart(dateTime time.Time, loc *time.Location, gender int, prefixPath ...string) (*model.BaziChart, error) {
 	var baziChart model.BaziChart
 
 	var path string
