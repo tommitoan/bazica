@@ -20,18 +20,19 @@ func GetSolarTerm(path string, dateTime time.Time) (string, error) {
 	}
 
 	// Use the correctly parsed time object when calling findSolarTerm
-	term, err := findSolarTerm(dateTime.Format("2006-01-02 15:04:05.999999999-07:00"), result)
+	term, passed, err := findSolarTerm(dateTime.Format("2006-01-02 15:04:05.999999999-07:00"), result)
 	if err != nil {
 		return "", errors.New(fmt.Sprintf("Error finding solar term: %v", err))
 	} else {
+		fmt.Println(passed)
 		return term, nil
 	}
 }
 
-func findSolarTerm(inputTime string, data model.SolarTermYear) (string, error) {
+func findSolarTerm(inputTime string, data model.SolarTermYear) (string, int, error) {
 	t, err := time.Parse("2006-01-02 15:04:05.999999999-07:00", inputTime)
 	if err != nil {
-		return "", fmt.Errorf("invalid input time format: %v", err)
+		return "", 0, fmt.Errorf("invalid input time format: %v", err)
 	}
 	slog.Info("Input Time", "time", t)
 
@@ -68,16 +69,20 @@ func findSolarTerm(inputTime string, data model.SolarTermYear) (string, error) {
 	var previousTermName string
 	for i, term := range termList {
 		if t.After(term.time) && (i+1 == len(termList) || t.Before(termList[i+1].time)) {
-			slog.Info("Solar Term Found", "term", term.name)
-			return term.name, nil // Return the name if the time falls within this term
+			timePassedMinutes := 0
+			if i > 0 {
+				timePassedMinutes = int(t.Sub(termList[i-1].time).Minutes())
+			}
+			slog.Info("Solar Term Found", "term", term.name, "timePassedMinutes", timePassedMinutes)
+			return term.name, timePassedMinutes, nil // Return the name and time passed if the time falls within this term
 		}
 		if i > 0 {
 			previousTermName = termList[i-1].name // Keep track of the previous term (except for the first term)
 		}
 	}
 	// Handle the case where input time is before the first term in the list
-	slog.Warn("Input time is before the first solar term", "previousTermName", previousTermName) // Changed to Warning as this isn't an error per se
-	return previousTermName, nil                                                                 // Return the last term of the previous year (or empty if there's none)
+	slog.Warn("Input time is before the first solar term", "previousTermName", previousTermName)
+	return previousTermName, 0, nil // Return the last term of the previous year (or empty if there's none) and time passed 0
 }
 
 // Helper function to parse time with timezone offset
