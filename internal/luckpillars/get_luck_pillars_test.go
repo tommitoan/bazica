@@ -43,7 +43,7 @@ func TestGetLuckPillars(t *testing.T) {
 					Hour:          model.TimeOfDay{Hour: 22, Minute: 05},
 				},
 			},
-			gender:     1,
+			gender:     0,
 			prefixPath: nil,
 		}, &model.LuckPillars{}, true},
 	}
