@@ -7,11 +7,43 @@ import (
 	"github.com/tommitoan/bazica/model"
 	"log/slog"
 	"os"
+	"slices"
 	"time"
 )
 
+var InititalTerms = []string{
+	model.MinorCold,
+	model.StartOfSpring,
+	model.AwakeningOfInsects,
+	model.PureBrightness,
+	model.StartOfSummer,
+	model.GrainInEar,
+	model.MinorHeat,
+	model.StartOfAutumn,
+	model.WhiteDew,
+	model.ColdDew,
+	model.StartOfWinter,
+	model.MajorSnow,
+}
+
+var MidpointTerms = []string{
+	model.MajorCold,
+	model.SpringShowers,
+	model.SpringEquinox,
+	model.GrainRain,
+	model.GrainBuds,
+	model.SummerSolstice,
+	model.MajorHeat,
+	model.EndOfHeat,
+	model.AutumnEquinox,
+	model.Frost,
+	model.MinorSnow,
+	model.WinterSolstice,
+}
+
 func GetSolarTerm(path string, dateTime time.Time) (string, error) {
 	// Extract the year
+
 	yearStr := fmt.Sprint(dateTime.Year())
 	result, err := GetSolarTermsByYear(yearStr, path)
 	if err != nil {
@@ -24,6 +56,9 @@ func GetSolarTerm(path string, dateTime time.Time) (string, error) {
 	if err != nil {
 		return "", errors.New(fmt.Sprintf("Error finding solar term: %v", err))
 	} else {
+		if passed == 0 {
+			slog.Warn("Time passed = 0")
+		}
 		fmt.Println(passed)
 		return term, nil
 	}
@@ -67,22 +102,29 @@ func findSolarTerm(inputTime string, data model.SolarTermYear) (string, int, err
 	}
 
 	var previousTermName string
+	timePassedMinutes := 0
+	//timeRemainingMinutes := 0
 	for i, term := range termList {
 		if t.After(term.time) && (i+1 == len(termList) || t.Before(termList[i+1].time)) {
-			timePassedMinutes := 0
-			if i > 0 {
-				timePassedMinutes = int(t.Sub(termList[i-1].time).Minutes())
-			}
 			slog.Info("Solar Term Found", "term", term.name, "timePassedMinutes", timePassedMinutes)
+			timePassedMinutes = int(t.Sub(term.time).Minutes())
+			if slices.Contains(MidpointTerms, term.name) {
+				timePassedMinutes += int(term.time.Sub(termList[i-1].time).Minutes())
+			}
+
 			return term.name, timePassedMinutes, nil // Return the name and time passed if the time falls within this term
 		}
 		if i > 0 {
 			previousTermName = termList[i-1].name // Keep track of the previous term (except for the first term)
+			timePassedMinutes = int(t.Sub(termList[i-1].time).Minutes())
+			if slices.Contains(MidpointTerms, previousTermName) {
+				timePassedMinutes += int(termList[i-1].time.Sub(termList[i-2].time).Minutes())
+			}
 		}
 	}
 	// Handle the case where input time is before the first term in the list
 	slog.Warn("Input time is before the first solar term", "previousTermName", previousTermName)
-	return previousTermName, 0, nil // Return the last term of the previous year (or empty if there's none) and time passed 0
+	return previousTermName, timePassedMinutes, nil // Return the last term of the previous year (or empty if there's none) and time passed 0
 }
 
 // Helper function to parse time with timezone offset
