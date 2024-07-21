@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func GetFourPillars(dateTime time.Time, loc *time.Location, prefixPath ...string) (*model.FourPillars, error) {
+func GetFourPillars(dateTime time.Time, loc *time.Location, prefixPath ...string) (*model.FourPillars, int, int, error) {
 	var path string
 	if len(prefixPath) != 0 {
 		path = prefixPath[0]
@@ -18,32 +18,32 @@ func GetFourPillars(dateTime time.Time, loc *time.Location, prefixPath ...string
 	// Get Year pillar
 	yearPillar, err := GetYearPillar(path, dateTime)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, err
 	}
 	fourPillars.YearPillar = yearPillar
 
 	// Get Month pillar
-	monthPillar, err := GetMonthPillar(path, yearPillar, dateTime)
+	monthPillar, passed, remaining, err := GetMonthPillar(path, yearPillar, dateTime)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, err
 	}
 	fourPillars.MonthPillar = monthPillar
 
 	// Get Day pillar
 	dayPillar, err := GetDayPillar(dateTime, loc)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, err
 	}
 	fourPillars.DayPillar = dayPillar
 
 	// Get Hour pillar
 	hourPillar, err := GetHourPillar(dayPillar, dateTime)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, err
 	}
 	fourPillars.HourPillar = hourPillar
 
 	jsonData, _ := json.Marshal(fourPillars)
 	slog.Info(string(jsonData))
-	return &fourPillars, nil
+	return &fourPillars, passed, remaining, nil
 }

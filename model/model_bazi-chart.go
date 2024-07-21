@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type BaziChart struct {
 	PersonalInfo *PersonalInfo `json:"personalInfo,omitempty"`
 	FourPillar   *FourPillars  `json:"four_pillars"`
@@ -7,8 +9,10 @@ type BaziChart struct {
 }
 
 type PersonalInfo struct {
-	Name   string `json:"name"`
-	Gender int    `json:"gender"`
+	Name          string `json:"name"`
+	Gender        int    `json:"gender"`
+	LuckPassed    int    `json:"luck_passed"`
+	LuckRemaining int    `json:"luck_remaining"`
 }
 
 type FourPillars struct {
@@ -26,8 +30,9 @@ type LuckPillar struct {
 	Number        int           `json:"number"`
 	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
-	Year          int           `json:"year"`
-	Age           int           `json:"age"`
+	YearStart     int           `json:"year_start"`
+	YearEnd       int           `json:"year_end"`
+	Time          time.Time     `json:"time"`
 }
 
 type YearPillar struct {
