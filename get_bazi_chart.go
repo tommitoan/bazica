@@ -20,8 +20,6 @@ func GetBaziChart(dateTime time.Time, loc *time.Location, gender int, prefixPath
 		return nil, err
 	}
 	baziChart.FourPillar = fourPillar
-	baziChart.PersonalInfo.LuckPassed = passed
-	baziChart.PersonalInfo.LuckRemaining = remaining
 
 	lucksPillar, err := luckpillars.GetLuckPillars(fourPillar, gender, passed, remaining, dateTime, path)
 	if err != nil {
