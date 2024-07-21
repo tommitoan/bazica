@@ -6,18 +6,23 @@ import (
 	"github.com/tommitoan/bazica/model"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func TestGetLuckPillars(t *testing.T) {
 	type args struct {
 		fourPillars *model.FourPillars
 		gender      int
+		passed      int
+		remaining   int
+		time        time.Time
 		prefixPath  []string
 	}
+
 	tests := []struct {
 		name    string
 		args    args
-		want    *model.LuckPillars
+		want    time.Time
 		wantErr bool
 	}{
 		{"happy case", args{
@@ -43,21 +48,23 @@ func TestGetLuckPillars(t *testing.T) {
 					Hour:          model.TimeOfDay{Hour: 22, Minute: 05},
 				},
 			},
-			gender:     0,
+			gender:     1,
+			passed:     4124,
+			remaining:  21429,
+			time:       time.Date(1995, time.June, 8, 22, 05, 0, 0, time.UTC),
 			prefixPath: nil,
-		}, &model.LuckPillars{}, true},
+		}, time.Date(1996, time.May, 18, 22, 05, 0, 0, time.UTC), false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetLuckPillars(tt.args.fourPillars, tt.args.gender, tt.args.prefixPath...)
+			got, err := GetLuckPillars(tt.args.fourPillars, tt.args.gender, tt.args.passed, tt.args.remaining, tt.args.time, tt.args.prefixPath...)
 			jsonData, _ := json.Marshal(got)
 			fmt.Println(string(jsonData))
-
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetLuckPillars() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if !reflect.DeepEqual(got.LuckPillars[1].Time, tt.want) {
 				t.Errorf("GetLuckPillars() got = %v, want %v", got, tt.want)
 			}
 		})

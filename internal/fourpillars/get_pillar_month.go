@@ -6,14 +6,14 @@ import (
 	"time"
 )
 
-func GetMonthPillar(path string, yearPillar *model.YearPillar, dateTime time.Time) (*model.MonthPillar, error) {
+func GetMonthPillar(path string, yearPillar *model.YearPillar, dateTime time.Time) (*model.MonthPillar, int, int, error) {
 	var monthPillar model.MonthPillar
 	monthPillar.Month = int(dateTime.Month())
 
 	// Detect solar term
-	termName, err := ultis.GetSolarTerm(path, dateTime)
+	termName, passed, remaining, err := ultis.GetSolarTerm(path, dateTime)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, err
 	}
 
 	// Get earthly branch
@@ -29,5 +29,5 @@ func GetMonthPillar(path string, yearPillar *model.YearPillar, dateTime time.Tim
 	heavenlyStem := ultis.CalculateHeavenlyStem(valueToCal)
 	monthPillar.HeavenlyStem = heavenlyStem
 
-	return &monthPillar, nil
+	return &monthPillar, passed, remaining, nil
 }
