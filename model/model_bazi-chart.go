@@ -9,10 +9,8 @@ type BaziChart struct {
 }
 
 type PersonalInfo struct {
-	Name          string `json:"name"`
-	Gender        int    `json:"gender"`
-	LuckPassed    int    `json:"luck_passed"`
-	LuckRemaining int    `json:"luck_remaining"`
+	Name   string `json:"name"`
+	Gender int    `json:"gender"`
 }
 
 type FourPillars struct {
