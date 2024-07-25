@@ -24,21 +24,41 @@ func TestGetFourPillarChart(t *testing.T) {
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Snake, Value: model.SnakeValue},
 					Year:          1977,
+					GanZhi: model.GanZhi{
+						Name:         "Earth in the Sand",
+						ElementName:  "Earth",
+						ElementValue: 5,
+					},
 				},
 				MonthPillar: &model.MonthPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Goat, Value: model.GoatValue},
 					Month:         7,
+					GanZhi: model.GanZhi{
+						Name:         "Milky Way Water",
+						ElementName:  "Water",
+						ElementValue: 1,
+					},
 				},
 				DayPillar: &model.DayPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YinMetalName, Value: model.YinMetalValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Goat, Value: model.GoatValue},
 					Day:           12,
+					GanZhi: model.GanZhi{
+						Name:         "Earth on the Roadside",
+						ElementName:  "Earth",
+						ElementValue: 5,
+					},
 				},
 				HourPillar: &model.HourPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YangEarthName, Value: model.YangEarthValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Rat, Value: model.RatValue},
 					Hour:          model.TimeOfDay{Hour: 23, Minute: 30},
+					GanZhi: model.GanZhi{
+						Name:         "Thunder Fire",
+						ElementName:  "Fire",
+						ElementValue: 2,
+					},
 				},
 			},
 			"case 1"},
@@ -49,21 +69,41 @@ func TestGetFourPillarChart(t *testing.T) {
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YinWoodName, Value: model.YinWoodValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Pig, Value: model.PigValue},
 					Year:          1995,
+					GanZhi: model.GanZhi{
+						Name:         "Fire on the Mountain",
+						ElementName:  "Fire",
+						ElementValue: 2,
+					},
 				},
 				MonthPillar: &model.MonthPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YangWaterName, Value: model.YangWaterValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Horse, Value: model.HorseValue},
 					Month:         6,
+					GanZhi: model.GanZhi{
+						Name:         "Willow Tree Wood",
+						ElementName:  "Wood",
+						ElementValue: 3,
+					},
 				},
 				DayPillar: &model.DayPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YangMetalName, Value: model.YangMetalValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Horse, Value: model.HorseValue},
 					Day:           8,
+					GanZhi: model.GanZhi{
+						Name:         "Earth on the Roadside",
+						ElementName:  "Earth",
+						ElementValue: 5,
+					},
 				},
 				HourPillar: &model.HourPillar{
 					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
 					EarthlyBranch: model.EarthlyBranch{Name: model.Pig, Value: model.PigValue},
 					Hour:          model.TimeOfDay{Hour: 22, Minute: 05},
+					GanZhi: model.GanZhi{
+						Name:         "Earth on the Roof",
+						ElementName:  "Earth",
+						ElementValue: 5,
+					},
 				},
 			},
 			"case 2"},

@@ -36,25 +36,35 @@ type LuckPillar struct {
 type YearPillar struct {
 	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+	GanZhi        GanZhi        `json:"gan_zhi"`
 	Year          int           `json:"year"`
 }
 
 type MonthPillar struct {
 	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+	GanZhi        GanZhi        `json:"gan_zhi"`
 	Month         int           `json:"month"`
 }
 
 type DayPillar struct {
 	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+	GanZhi        GanZhi        `json:"gan_zhi"`
 	Day           int           `json:"day"`
 }
 
 type HourPillar struct {
 	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+	GanZhi        GanZhi        `json:"gan_zhi"`
 	Hour          TimeOfDay     `json:"hour"`
+}
+
+type GanZhi struct {
+	Name         string `json:"name"`
+	ElementName  string `json:"element_name"`
+	ElementValue int    `json:"element_value"`
 }
 
 type TimeOfDay struct {
