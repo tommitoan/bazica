@@ -28,6 +28,7 @@ type LuckPillar struct {
 	Number        int           `json:"number"`
 	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
+	GanZhi        GanZhi        `json:"gan_zhi"`
 	YearStart     int           `json:"year_start"`
 	YearEnd       int           `json:"year_end"`
 	Time          time.Time     `json:"time"`

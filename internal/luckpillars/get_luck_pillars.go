@@ -5,6 +5,7 @@ import (
 	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
 	"log/slog"
+	"strings"
 	"time"
 )
 
@@ -38,6 +39,7 @@ func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining in
 	// Calculate the remaining 11 luck pillars (excluding age and year)
 	var branchValue int = fourPillars.MonthPillar.EarthlyBranch.Value
 	var stemValue int = fourPillars.MonthPillar.HeavenlyStem.Value
+
 	// pillar1
 	for i := 1; i < 12; i++ {
 		var luckPeriod time.Time
@@ -80,6 +82,18 @@ func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining in
 			YearStart:     luckPeriod.Year(),
 			YearEnd:       luckPeriod.Year() + 9,
 		}
+
+		var ganzhi, mainElement string
+		var valueElement int
+		var tempStemBranch strings.Builder
+		tempStemBranch.WriteString(tempLuckPillars.HeavenlyStem.Name)
+		tempStemBranch.WriteString(" ")
+		tempStemBranch.WriteString(tempLuckPillars.EarthlyBranch.Name)
+
+		ganzhi, mainElement, valueElement = ultis.GetGanzhi(tempStemBranch.String())
+		tempLuckPillars.GanZhi.Name = ganzhi
+		tempLuckPillars.GanZhi.ElementName = mainElement
+		tempLuckPillars.GanZhi.ElementValue = valueElement
 
 		luckPillars.LuckPillars = append(luckPillars.LuckPillars, tempLuckPillars)
 	}
