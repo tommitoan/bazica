@@ -77,15 +77,17 @@ import (
 func main() {
 	// Calculate current ba-zi chart
 	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
-	now := time.Now() 
+	now := time.Now()
+	gender := 0 // 0 = female & 1 = male
 	
 	/* Example: 
-	Time to calculate: 1990-12-31 6:30 - Timezone: HoChiMinh / Vietnam
+	Time to calculate: 1990-12-31 6:30 - Timezone: HoChiMinh / Vietnam - Gender: Male
 	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
-	now := time.Date(1990, time.Month(12), 31, 6, 30, 0, 0, location)
+	now := time.Date(1990, time.Month(12), 31, 6, 30, 0, 0, loc)
+	gender := 1
 	*/
 
-	chart, err := bazica.GetBaziChart(now, loc)
+	chart, err := bazica.GetBaziChart(now, loc, gender)
 	if err != nil {
 		fmt.Println(err)
 	}
