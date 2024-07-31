@@ -21,6 +21,18 @@ func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining in
 		YearStart:     dateTime.Year(),
 	}
 
+	var zeroGanzhi, zeroMainElement string
+	var zeroValueElement int
+	var zeroTempStemBranch strings.Builder
+	zeroTempStemBranch.WriteString(zeroLuckPillars.HeavenlyStem.Name)
+	zeroTempStemBranch.WriteString(" ")
+	zeroTempStemBranch.WriteString(zeroLuckPillars.EarthlyBranch.Name)
+
+	zeroGanzhi, zeroMainElement, zeroValueElement = ultis.GetGanzhi(zeroTempStemBranch.String())
+	zeroLuckPillars.GanZhi.Name = zeroGanzhi
+	zeroLuckPillars.GanZhi.ElementName = zeroMainElement
+	zeroLuckPillars.GanZhi.ElementValue = zeroValueElement
+
 	luckPillars.LuckPillars = append(luckPillars.LuckPillars, zeroLuckPillars)
 
 	// Get Dayun rule (Increment or Decrement) with Yin/Yang Male/Female by Year Stem
