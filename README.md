@@ -5,7 +5,16 @@
 
 # Bazica (Ba-zi Chart Calculator) 
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
-___
+
+<div align="center">
+  <img alt="Demo" src="./Images/img.png" />
+</div>
+
+<h3 align="center">
+  Demo Website<br/>
+  <a href="https://bazica.onrender.com/" target="_blank">bazica.onrender.com</a>
+</h3>
+
 # Getting started with bazica 
 ## Prerequisites
 
@@ -29,7 +38,6 @@ go get -u github.com/tommitoan/bazica@latest
 go mod vendor # For fetching full model
 ```
 
-___
 ## Get Data (Important) ⚠️⚠️
 
 This module provides data related to solar terms, zodiac signs, and the 60-year era cycle.
@@ -61,7 +69,6 @@ After Install and Clone `data` folder
 │   ├── go.mod
 ```
 
-___
 ## How to use
 
 ```go
@@ -95,7 +102,6 @@ func main() {
 	fmt.Println(string(jsonData))
 }
 ```
-___
 ## Note
 ### Data Input Limitations:
 Due to the specific calculations and algorithms used in this package, it is currently designed to handle date inputs ranging from January 1, 1900, to December 31, 2100.   
@@ -108,7 +114,6 @@ Ho Chi Minh City (formerly Saigon) has gone through time zone changes throughout
 Before 1975: South Vietnam (including Saigon) used UTC+8.  
 After 1975: The unified Vietnam adopted UTC+7.
 
-___
 ## References
 
 This project drew inspiration and information from the following sources:
