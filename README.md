@@ -15,12 +15,12 @@ Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, d
   <a href="https://bazica.onrender.com/" target="_blank">bazica.onrender.com</a>
 </h3>
 
-# Getting started with bazica 
-## Prerequisites
+## Getting started with bazica 
+### Prerequisites
 
 - **[Go](https://go.dev/)**: any one of the **three latest major** [releases](https://go.dev/doc/devel/release) (we test it with these).
 
-## Importing Bazica
+### Importing Bazica
 
 With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
 
@@ -120,7 +120,6 @@ This project drew inspiration and information from the following sources:
 
 * **[Thời Gian](https://www.thoigian.com.vn/)** - A comprehensive resource for understanding the Vietnamese calendar system.
 * **[Chinese Fortune Calendar](https://www.chinesefortunecalendar.com/)** - Provided insights into the Chinese calendar, calculations, and cultural significance.
-
 
 
 ### Document
