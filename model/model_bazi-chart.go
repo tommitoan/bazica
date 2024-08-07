@@ -39,6 +39,7 @@ type YearPillar struct {
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
 	GanZhi        GanZhi        `json:"gan_zhi"`
 	Year          int           `json:"year"`
+	LifeCycle     string        `json:"life_cycle"`
 }
 
 type MonthPillar struct {
@@ -46,6 +47,7 @@ type MonthPillar struct {
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
 	GanZhi        GanZhi        `json:"gan_zhi"`
 	Month         int           `json:"month"`
+	LifeCycle     string        `json:"life_cycle"`
 }
 
 type DayPillar struct {
@@ -53,6 +55,7 @@ type DayPillar struct {
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
 	GanZhi        GanZhi        `json:"gan_zhi"`
 	Day           int           `json:"day"`
+	LifeCycle     string        `json:"life_cycle"`
 }
 
 type HourPillar struct {
@@ -60,6 +63,7 @@ type HourPillar struct {
 	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
 	GanZhi        GanZhi        `json:"gan_zhi"`
 	Hour          TimeOfDay     `json:"hour"`
+	LifeCycle     string        `json:"life_cycle"`
 }
 
 type GanZhi struct {
