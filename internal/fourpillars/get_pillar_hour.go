@@ -24,7 +24,7 @@ func GetHourPillar(dayPillar *model.DayPillar, dateTime time.Time) (*model.HourP
 	hourPillar.EarthlyBranch = branch
 
 	// Get heavenly stem
-	valueOfRatHour := ultis.GetStemRuleByFireRats(dayPillar.HeavenlyStem.Value)
+	valueOfRatHour := ultis.GetStemRuleByFiveRats(dayPillar.HeavenlyStem.Value)
 	var stem int
 	diff := hourPillar.EarthlyBranch.Value - 11
 	if diff < 0 {

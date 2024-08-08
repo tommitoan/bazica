@@ -21,7 +21,7 @@ func GetMonthPillar(path string, yearPillar *model.YearPillar, dateTime time.Tim
 	monthPillar.EarthlyBranch = earthBranch
 
 	// Get heavenly stem
-	valueOfFirstMonth := ultis.GetStemRuleByFireTigers(yearPillar.HeavenlyStem.Value)
+	valueOfFirstMonth := ultis.GetStemRuleByFiveTigers(yearPillar.HeavenlyStem.Value)
 	valueToCal := (valueOfFirstMonth - 1) + monthPillar.EarthlyBranch.Value
 	if valueToCal > 10 {
 		valueToCal = valueToCal - 10

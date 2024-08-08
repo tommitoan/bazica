@@ -131,10 +131,41 @@ func ConvertTermToBranch(termName string) model.EarthlyBranch {
 	return earthlyBranch
 }
 
-// GetStemRuleByFireTigers use Five-tigers Seek to get the Stem of Tiger month base on Year's Stem
+func ConvertValueToLifeCycle(value int) string {
+	var lifeCycle string
+	switch value {
+	case 1:
+		lifeCycle = model.LC1
+	case 2:
+		lifeCycle = model.LC2
+	case 3:
+		lifeCycle = model.LC3
+	case 4:
+		lifeCycle = model.LC4
+	case 5:
+		lifeCycle = model.LC5
+	case 6:
+		lifeCycle = model.LC6
+	case 7:
+		lifeCycle = model.LC7
+	case 8:
+		lifeCycle = model.LC8
+	case 9:
+		lifeCycle = model.LC9
+	case 10:
+		lifeCycle = model.LC10
+	case 11:
+		lifeCycle = model.LC11
+	case 12:
+		lifeCycle = model.LC12
+	}
+	return lifeCycle
+}
+
+// GetStemRuleByFiveTigers use Five-tigers Seek to get the Stem of Tiger month base on Year's Stem
 // https://www.chinesefortunecalendar.com/Five-Tigers-Year-Month-Table.htm
 // (VN) Dùng Ngũ hổ độn (ngũ dần) để tính Can Tháng dựa trên Can Năm
-func GetStemRuleByFireTigers(yearValue int) int {
+func GetStemRuleByFiveTigers(yearValue int) int {
 	var stemValueOfFirstMonth int
 	switch yearValue {
 	case 1, 6:
@@ -151,10 +182,10 @@ func GetStemRuleByFireTigers(yearValue int) int {
 	return stemValueOfFirstMonth
 }
 
-// GetStemRuleByFireRats use Five-rats Seek to get the Stem of Rat hour base on Day's Stem
+// GetStemRuleByFiveRats use Five-rats Seek to get the Stem of Rat hour base on Day's Stem
 // https://www.chinesefortunecalendar.com/Five-Rats-Day-Hour-Table.htm
 // (VN) Dùng Ngũ tí độn để tính Can Giờ dựa trên Can Ngày
-func GetStemRuleByFireRats(dayValue int) int {
+func GetStemRuleByFiveRats(dayValue int) int {
 	var stemValueOfRatHour int
 	switch dayValue {
 	case 1, 6:
@@ -169,4 +200,30 @@ func GetStemRuleByFireRats(dayValue int) int {
 		stemValueOfRatHour = 9
 	}
 	return stemValueOfRatHour
+}
+
+// GetLifeCycleRule gets the Life Stages value of the Tiger branch
+// https://en.wikibooks.org/wiki/Ba_Zi/Life_Cycle
+// (VN) Tính Vòng tràng sinh dựa trên Can Ngày và 4 Chi
+func GetLifeCycleRule(dayValue int) int {
+	var lifeCycleValue int
+	switch dayValue {
+	case 1:
+		lifeCycleValue = 4
+	case 2:
+		lifeCycleValue = 5
+	case 3, 5:
+		lifeCycleValue = 1
+	case 4, 6:
+		lifeCycleValue = 8
+	case 7:
+		lifeCycleValue = 10
+	case 8:
+		lifeCycleValue = 11
+	case 9:
+		lifeCycleValue = 7
+	case 10:
+		lifeCycleValue = 2
+	}
+	return lifeCycleValue
 }
