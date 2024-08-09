@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
 
 <p align="center">
-  <img style="float: right;" src="./Images/bazica-gopher.png" width=200>
+  <img style="float: right;" src="./Images/bazica-gopher.png" width=400>
 </p>
 
 # Bazica (Ba-zi Chart Calculator) 
