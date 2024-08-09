@@ -3,6 +3,10 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/tommitoan/bazica)](https://goreportcard.com/report/github.com/tommitoan/bazica)
 [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
 
+<p align="center">
+  <img style="float: right;" src="./Images/bazica-gopher.png" alt="dblab logo" width=200>
+</p>
+
 # Bazica (Ba-zi Chart Calculator) 
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
 
@@ -12,7 +16,7 @@ Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, d
 
 <h3 align="center">
   Demo Website<br/>
-  <a href="https://bazica.onrender.com/" target="_blank">bazica.onrender.com</a>
+  <a href="https://bazica-web.tommitoan.com/" target="_blank">bazica-web.tommitoan.com</a>
 </h3>
 
 ## Getting started with bazica 
@@ -38,17 +42,18 @@ go get -u github.com/tommitoan/bazica@latest
 go mod vendor # For fetching full model
 ```
 
-## Get Data (Important) ⚠️⚠️
+## Get Data 
+
+> [!CAUTION]
+> You'll need to manually copy the relevant JSON files from the `data` folder into your project to utilize the data within your application.
 
 This module provides data related to solar terms, zodiac signs, and the 60-year era cycle.
 
 For your convenience, the data is also summarized in JSON files and located in the `data` folder.
 
-To use this module:
-
+To use this module:  
 Clone or copy this repository to your project directory.
 Access the JSON files located in the data folder.
-Please note: You'll need to manually copy the relevant JSON files from the `data` folder into your project to utilize the data within your application.
 
 Example:
 ```
@@ -62,9 +67,9 @@ After Install and Clone `data` folder
 ├── your_project_folder
 │   ├── app
 │   ├── data
+│   │   ├── lunar-new-year.json
 │   │   ├── solar-term.json
-│   │   ├── zodiac-signs.json
-│   │   ├── ...(updated)...
+│   │   ├── ...(updating)...
 │   ├── main.go
 │   ├── go.mod
 ```
