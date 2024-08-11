@@ -83,7 +83,7 @@ func GetGanzhi(sign string) (string, string, int) {
 		case strings.Contains(element, "earth"):
 			mainElement = "Earth"
 			valueElement = 5
-		case strings.Contains(element, "gold"):
+		case strings.Contains(element, "gold") || strings.Contains(element, "metal"):
 			mainElement = "Metal"
 			valueElement = 4
 		default:
