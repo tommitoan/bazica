@@ -71,19 +71,19 @@ func GetGanzhi(sign string) (string, string, int) {
 		mainElement := ""
 		valueElement := 0
 		switch {
-		case strings.Contains(element, "Fire"):
+		case strings.Contains(element, "fire"):
 			mainElement = "Fire"
 			valueElement = 2
-		case strings.Contains(element, "Wood"):
+		case strings.Contains(element, "wood"):
 			mainElement = "Wood"
 			valueElement = 3
-		case strings.Contains(element, "Water"):
+		case strings.Contains(element, "water"):
 			mainElement = "Water"
 			valueElement = 1
-		case strings.Contains(element, "Earth"):
+		case strings.Contains(element, "earth"):
 			mainElement = "Earth"
 			valueElement = 5
-		case strings.Contains(element, "Gold"):
+		case strings.Contains(element, "gold"):
 			mainElement = "Metal"
 			valueElement = 4
 		default:
