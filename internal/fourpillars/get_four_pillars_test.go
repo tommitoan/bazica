@@ -25,7 +25,7 @@ func TestGetFourPillarChart(t *testing.T) {
 					EarthlyBranch: model.EarthlyBranch{Name: model.Snake, Value: model.SnakeValue},
 					Year:          1977,
 					GanZhi: model.GanZhi{
-						Name:         "Earth in the Sand",
+						Name:         "Desert earth",
 						ElementName:  "Earth",
 						ElementValue: 5,
 					},
@@ -35,7 +35,7 @@ func TestGetFourPillarChart(t *testing.T) {
 					EarthlyBranch: model.EarthlyBranch{Name: model.Goat, Value: model.GoatValue},
 					Month:         7,
 					GanZhi: model.GanZhi{
-						Name:         "Milky Way Water",
+						Name:         "Sky water",
 						ElementName:  "Water",
 						ElementValue: 1,
 					},
@@ -45,7 +45,7 @@ func TestGetFourPillarChart(t *testing.T) {
 					EarthlyBranch: model.EarthlyBranch{Name: model.Goat, Value: model.GoatValue},
 					Day:           12,
 					GanZhi: model.GanZhi{
-						Name:         "Earth on the Roadside",
+						Name:         "Road earth",
 						ElementName:  "Earth",
 						ElementValue: 5,
 					},
@@ -55,7 +55,7 @@ func TestGetFourPillarChart(t *testing.T) {
 					EarthlyBranch: model.EarthlyBranch{Name: model.Rat, Value: model.RatValue},
 					Hour:          model.TimeOfDay{Hour: 23, Minute: 30},
 					GanZhi: model.GanZhi{
-						Name:         "Thunder Fire",
+						Name:         "Lightning fire",
 						ElementName:  "Fire",
 						ElementValue: 2,
 					},
@@ -70,7 +70,7 @@ func TestGetFourPillarChart(t *testing.T) {
 					EarthlyBranch: model.EarthlyBranch{Name: model.Pig, Value: model.PigValue},
 					Year:          1995,
 					GanZhi: model.GanZhi{
-						Name:         "Fire on the Mountain",
+						Name:         "Volcanic fire",
 						ElementName:  "Fire",
 						ElementValue: 2,
 					},
