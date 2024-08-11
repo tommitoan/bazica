@@ -78,11 +78,13 @@ type TimeOfDay struct {
 }
 
 type HeavenlyStem struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
+	Name      string `json:"name"`
+	Value     int    `json:"value"`
+	Character string `json:"character"`
 }
 
 type EarthlyBranch struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
+	Name      string `json:"name"`
+	Value     int    `json:"value"`
+	Character string `json:"character"`
 }
