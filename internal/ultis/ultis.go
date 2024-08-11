@@ -138,39 +138,63 @@ func ConvertTermToBranch(termName string) model.EarthlyBranch {
 	case model.StartOfSpring, model.SpringShowers:
 		earthlyBranch.Name = model.Tiger
 		earthlyBranch.Value = model.TigerValue
+		earthlyBranch.Character = model.TigerCharacter
+		earthlyBranch.Spelling = model.TigerSpelling
 	case model.AwakeningOfInsects, model.SpringEquinox:
 		earthlyBranch.Name = model.Rabbit
 		earthlyBranch.Value = model.RabbitValue
+		earthlyBranch.Character = model.RabbitCharacter
+		earthlyBranch.Spelling = model.RabbitSpelling
 	case model.PureBrightness, model.GrainRain:
 		earthlyBranch.Name = model.Dragon
 		earthlyBranch.Value = model.DragonValue
+		earthlyBranch.Character = model.DragonCharacter
+		earthlyBranch.Spelling = model.DragonSpelling
 	case model.StartOfSummer, model.GrainBuds:
 		earthlyBranch.Name = model.Snake
 		earthlyBranch.Value = model.SnakeValue
+		earthlyBranch.Character = model.SnakeCharacter
+		earthlyBranch.Spelling = model.SnakeSpelling
 	case model.GrainInEar, model.SummerSolstice:
 		earthlyBranch.Name = model.Horse
 		earthlyBranch.Value = model.HorseValue
+		earthlyBranch.Character = model.HorseCharacter
+		earthlyBranch.Spelling = model.HorseSpelling
 	case model.MinorHeat, model.MajorHeat:
 		earthlyBranch.Name = model.Goat
 		earthlyBranch.Value = model.GoatValue
+		earthlyBranch.Character = model.GoatCharacter
+		earthlyBranch.Spelling = model.GoatSpelling
 	case model.StartOfAutumn, model.EndOfHeat:
 		earthlyBranch.Name = model.Monkey
 		earthlyBranch.Value = model.MonkeyValue
+		earthlyBranch.Character = model.MonkeyCharacter
+		earthlyBranch.Spelling = model.MonkeySpelling
 	case model.WhiteDew, model.AutumnEquinox:
 		earthlyBranch.Name = model.Rooster
 		earthlyBranch.Value = model.RoosterValue
+		earthlyBranch.Character = model.RoosterCharacter
+		earthlyBranch.Spelling = model.RoosterSpelling
 	case model.ColdDew, model.Frost:
 		earthlyBranch.Name = model.Dog
 		earthlyBranch.Value = model.DogValue
+		earthlyBranch.Character = model.DogCharacter
+		earthlyBranch.Spelling = model.DogSpelling
 	case model.StartOfWinter, model.MinorSnow:
 		earthlyBranch.Name = model.Pig
 		earthlyBranch.Value = model.PigValue
+		earthlyBranch.Character = model.PigCharacter
+		earthlyBranch.Spelling = model.PigSpelling
 	case model.MajorSnow, model.WinterSolstice:
 		earthlyBranch.Name = model.Rat
 		earthlyBranch.Value = model.RatValue
+		earthlyBranch.Character = model.RatCharacter
+		earthlyBranch.Spelling = model.RatSpelling
 	case model.MinorCold, model.MajorCold:
 		earthlyBranch.Name = model.Ox
 		earthlyBranch.Value = model.OxValue
+		earthlyBranch.Character = model.OxCharacter
+		earthlyBranch.Spelling = model.OxSpelling
 	}
 	return earthlyBranch
 }
