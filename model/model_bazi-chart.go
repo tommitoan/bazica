@@ -81,10 +81,12 @@ type HeavenlyStem struct {
 	Name      string `json:"name"`
 	Value     int    `json:"value"`
 	Character string `json:"character"`
+	Spelling  string `json:"spelling"`
 }
 
 type EarthlyBranch struct {
 	Name      string `json:"name"`
 	Value     int    `json:"value"`
 	Character string `json:"character"`
+	Spelling  string `json:"spelling"`
 }

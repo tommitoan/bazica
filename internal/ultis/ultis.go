@@ -11,33 +11,53 @@ func CalculateHeavenlyStem(num int) model.HeavenlyStem {
 	case model.YangMetalValue:
 		heavenlyStem.Name = model.YangMetalName
 		heavenlyStem.Value = model.YangMetalValue
+		heavenlyStem.Character = model.YangMetalCharacter
+		heavenlyStem.Spelling = model.YangMetalSpelling
 	case model.YinMetalValue:
 		heavenlyStem.Name = model.YinMetalName
 		heavenlyStem.Value = model.YinMetalValue
+		heavenlyStem.Character = model.YinMetalCharacter
+		heavenlyStem.Spelling = model.YinMetalSpelling
 	case model.YangWaterValue:
 		heavenlyStem.Name = model.YangWaterName
 		heavenlyStem.Value = model.YangWaterValue
+		heavenlyStem.Character = model.YangWaterCharacter
+		heavenlyStem.Spelling = model.YangWaterSpelling
 	case model.YinWaterValue:
 		heavenlyStem.Name = model.YinWaterName
 		heavenlyStem.Value = model.YinWaterValue
+		heavenlyStem.Character = model.YinWaterCharacter
+		heavenlyStem.Spelling = model.YinWaterSpelling
 	case model.YangWoodValue:
 		heavenlyStem.Name = model.YangWoodName
 		heavenlyStem.Value = model.YangWoodValue
+		heavenlyStem.Character = model.YangWoodCharacter
+		heavenlyStem.Spelling = model.YangWoodSpelling
 	case model.YinWoodValue:
 		heavenlyStem.Name = model.YinWoodName
 		heavenlyStem.Value = model.YinWoodValue
+		heavenlyStem.Character = model.YinWoodCharacter
+		heavenlyStem.Spelling = model.YinWoodSpelling
 	case model.YangFireValue:
 		heavenlyStem.Name = model.YangFireName
 		heavenlyStem.Value = model.YangFireValue
+		heavenlyStem.Character = model.YangFireCharacter
+		heavenlyStem.Spelling = model.YangFireSpelling
 	case model.YinFireValue:
 		heavenlyStem.Name = model.YinFireName
 		heavenlyStem.Value = model.YinFireValue
+		heavenlyStem.Character = model.YinFireCharacter
+		heavenlyStem.Spelling = model.YinFireSpelling
 	case model.YangEarthValue:
 		heavenlyStem.Name = model.YangEarthName
 		heavenlyStem.Value = model.YangEarthValue
+		heavenlyStem.Character = model.YangEarthCharacter
+		heavenlyStem.Spelling = model.YangEarthSpelling
 	case model.YinEarthValue:
 		heavenlyStem.Name = model.YinEarthName
 		heavenlyStem.Value = model.YinEarthValue
+		heavenlyStem.Character = model.YinEarthCharacter
+		heavenlyStem.Spelling = model.YinEarthSpelling
 	}
 	return heavenlyStem
 }
@@ -49,39 +69,63 @@ func CalculateEarthlyBranch(num int) model.EarthlyBranch {
 	case model.TigerValue:
 		earthlyBranch.Name = model.Tiger
 		earthlyBranch.Value = model.TigerValue
+		earthlyBranch.Character = model.TigerCharacter
+		earthlyBranch.Spelling = model.TigerSpelling
 	case model.RabbitValue:
 		earthlyBranch.Name = model.Rabbit
 		earthlyBranch.Value = model.RabbitValue
+		earthlyBranch.Character = model.RabbitCharacter
+		earthlyBranch.Spelling = model.RabbitSpelling
 	case model.DragonValue:
 		earthlyBranch.Name = model.Dragon
 		earthlyBranch.Value = model.DragonValue
+		earthlyBranch.Character = model.DragonCharacter
+		earthlyBranch.Spelling = model.DragonSpelling
 	case model.SnakeValue:
 		earthlyBranch.Name = model.Snake
 		earthlyBranch.Value = model.SnakeValue
+		earthlyBranch.Character = model.SnakeCharacter
+		earthlyBranch.Spelling = model.SnakeSpelling
 	case model.HorseValue:
 		earthlyBranch.Name = model.Horse
 		earthlyBranch.Value = model.HorseValue
+		earthlyBranch.Character = model.HorseCharacter
+		earthlyBranch.Spelling = model.HorseSpelling
 	case model.GoatValue:
 		earthlyBranch.Name = model.Goat
 		earthlyBranch.Value = model.GoatValue
+		earthlyBranch.Character = model.GoatCharacter
+		earthlyBranch.Spelling = model.GoatSpelling
 	case model.MonkeyValue:
 		earthlyBranch.Name = model.Monkey
 		earthlyBranch.Value = model.MonkeyValue
+		earthlyBranch.Character = model.MonkeyCharacter
+		earthlyBranch.Spelling = model.MonkeySpelling
 	case model.RoosterValue:
 		earthlyBranch.Name = model.Rooster
 		earthlyBranch.Value = model.RoosterValue
+		earthlyBranch.Character = model.RoosterCharacter
+		earthlyBranch.Spelling = model.RoosterSpelling
 	case model.DogValue:
 		earthlyBranch.Name = model.Dog
 		earthlyBranch.Value = model.DogValue
+		earthlyBranch.Character = model.DogCharacter
+		earthlyBranch.Spelling = model.DogSpelling
 	case model.PigValue:
 		earthlyBranch.Name = model.Pig
 		earthlyBranch.Value = model.PigValue
+		earthlyBranch.Character = model.PigCharacter
+		earthlyBranch.Spelling = model.PigSpelling
 	case model.RatValue:
 		earthlyBranch.Name = model.Rat
 		earthlyBranch.Value = model.RatValue
+		earthlyBranch.Character = model.RatCharacter
+		earthlyBranch.Spelling = model.RatSpelling
 	case model.OxValue:
 		earthlyBranch.Name = model.Ox
 		earthlyBranch.Value = model.OxValue
+		earthlyBranch.Character = model.OxCharacter
+		earthlyBranch.Spelling = model.OxSpelling
 	}
 	return earthlyBranch
 }
