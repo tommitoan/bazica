@@ -11,7 +11,7 @@
 Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
 
 <div align="center">
-  <img alt="Demo" src="./Images/img.png" />
+  <img alt="Demo" src="./Images/bazica-screen.png" />
 </div>
 
 <h3 align="center">
