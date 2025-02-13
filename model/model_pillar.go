@@ -27,7 +27,7 @@ const (
 	YangWoodCharacter  = "甲"
 	YinWoodCharacter   = "乙"
 	YangFireCharacter  = "丙"
-	YinFireCharacter   = "了"
+	YinFireCharacter   = "丁"
 	YangEarthCharacter = "戊"
 	YinEarthCharacter  = "己"
 	YangMetalCharacter = "庚"
