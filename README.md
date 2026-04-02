@@ -15,8 +15,7 @@ Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, d
 </div>
 
 <h3 align="center">
-  Demo Website<br/>
-  <a href="https://bazica-web.tommitoan.com/" target="_blank">bazica-web.tommitoan.com</a>
+  <a href="https://bazica.onrender.com/" target="_blank">Live Demo</a>
 </h3>
 
 ## Getting started with bazica 
