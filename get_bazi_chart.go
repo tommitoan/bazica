@@ -1,11 +1,12 @@
 package bazica
 
 import (
+	"time"
+
 	"github.com/tommitoan/bazica/internal/fourpillars"
 	"github.com/tommitoan/bazica/internal/luckpillars"
 	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
-	"time"
 )
 
 func GetBaziChart(dateTime time.Time, loc *time.Location, gender int, prefixPath ...string) (*model.BaziChart, error) {
@@ -21,6 +22,7 @@ func GetBaziChart(dateTime time.Time, loc *time.Location, gender int, prefixPath
 		return nil, err
 	}
 	baziChart.FourPillar = ultis.GetLifeCycleFromFourPillar(fourPillar)
+	baziChart.ElementScore = ultis.GetElementScoreFromFourPillar(baziChart.FourPillar)
 
 	lucksPillar, err := luckpillars.GetLuckPillars(fourPillar, gender, passed, remaining, dateTime, path)
 	if err != nil {

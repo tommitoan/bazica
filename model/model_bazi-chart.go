@@ -6,6 +6,7 @@ type BaziChart struct {
 	PersonalInfo *PersonalInfo `json:"personalInfo,omitempty"`
 	FourPillar   *FourPillars  `json:"four_pillars"`
 	LuckPillars  *LuckPillars  `json:"luck_pillars"`
+	ElementScore *ElementScore `json:"element_score,omitempty"`
 }
 
 type PersonalInfo struct {
@@ -89,4 +90,17 @@ type EarthlyBranch struct {
 	Value     int    `json:"value"`
 	Character string `json:"character"`
 	Spelling  string `json:"spelling"`
+}
+
+type ElementScore struct {
+	StrictScore *FiveElements `json:"strict_score"`
+	FlexScore   *FiveElements `json:"flex_score"`
+}
+
+type FiveElements struct {
+	Wood  float64 `json:"wood"`
+	Fire  float64 `json:"fire"`
+	Earth float64 `json:"earth"`
+	Metal float64 `json:"metal"`
+	Water float64 `json:"water"`
 }
