@@ -22,29 +22,19 @@ type natalPillar struct {
 	ganZhi model.GanZhi
 }
 
-// Attach fills the Analysis fields of the four natal pillars and of the chart.
-// The legacy fields of chart are left untouched.
+// Attach fills the Analysis fields of the four natal pillars, of the luck
+// pillars (when present) and of the chart. The legacy fields of chart are left untouched.
 func Attach(chart *model.BaziChart) error {
-	fp := chart.FourPillar
-	if fp == nil || fp.YearPillar == nil || fp.MonthPillar == nil || fp.DayPillar == nil || fp.HourPillar == nil {
-		return fmt.Errorf("%w: four pillars are required", errInvalidPillar)
-	}
-	pillars := [4]natalPillar{
-		{fp.YearPillar.HeavenlyStem, fp.YearPillar.EarthlyBranch, fp.YearPillar.GanZhi},
-		{fp.MonthPillar.HeavenlyStem, fp.MonthPillar.EarthlyBranch, fp.MonthPillar.GanZhi},
-		{fp.DayPillar.HeavenlyStem, fp.DayPillar.EarthlyBranch, fp.DayPillar.GanZhi},
-		{fp.HourPillar.HeavenlyStem, fp.HourPillar.EarthlyBranch, fp.HourPillar.GanZhi},
-	}
-	for _, p := range pillars {
-		if !validStem(p.stem.Value) || !validBranch(p.branch.Value) {
-			return fmt.Errorf("%w: stem %d, branch %d", errInvalidPillar, p.stem.Value, p.branch.Value)
-		}
+	pillars, err := natalPillarsOf(chart)
+	if err != nil {
+		return err
 	}
 
 	analyses, err := analyzePillars(pillars)
 	if err != nil {
 		return err
 	}
+	fp := chart.FourPillar
 	fp.YearPillar.Analysis = analyses[0]
 	fp.MonthPillar.Analysis = analyses[1]
 	fp.DayPillar.Analysis = analyses[2]
@@ -55,7 +45,37 @@ func Attach(chart *model.BaziChart) error {
 		return err
 	}
 	chart.Analysis = chartAnalysis
-	return nil
+	return attachLuck(chart, pillars)
+}
+
+// natalPillarsOf reads and validates the four natal pillars of a chart.
+func natalPillarsOf(chart *model.BaziChart) ([4]natalPillar, error) {
+	var pillars [4]natalPillar
+	fp := chart.FourPillar
+	if fp == nil || fp.YearPillar == nil || fp.MonthPillar == nil || fp.DayPillar == nil || fp.HourPillar == nil {
+		return pillars, fmt.Errorf("%w: four pillars are required", errInvalidPillar)
+	}
+	pillars = [4]natalPillar{
+		{fp.YearPillar.HeavenlyStem, fp.YearPillar.EarthlyBranch, fp.YearPillar.GanZhi},
+		{fp.MonthPillar.HeavenlyStem, fp.MonthPillar.EarthlyBranch, fp.MonthPillar.GanZhi},
+		{fp.DayPillar.HeavenlyStem, fp.DayPillar.EarthlyBranch, fp.DayPillar.GanZhi},
+		{fp.HourPillar.HeavenlyStem, fp.HourPillar.EarthlyBranch, fp.HourPillar.GanZhi},
+	}
+	for _, p := range pillars {
+		if !validStem(p.stem.Value) || !validBranch(p.branch.Value) {
+			return pillars, fmt.Errorf("%w: stem %d, branch %d", errInvalidPillar, p.stem.Value, p.branch.Value)
+		}
+	}
+	return pillars, nil
+}
+
+// natalCells returns the four natal pillars as clash-rule cells.
+func natalCells(pillars [4]natalPillar) []cell {
+	cells := make([]cell, len(pillars))
+	for i, p := range pillars {
+		cells[i] = cell{p.stem.Value, p.branch.Value}
+	}
+	return cells
 }
 
 func analyzePillars(pillars [4]natalPillar) ([4]*model.PillarAnalysis, error) {
@@ -64,10 +84,7 @@ func analyzePillars(pillars [4]natalPillar) ([4]*model.PillarAnalysis, error) {
 	monthBranch := pillars[1].branch.Value
 	void := voidBranches(dayStem, dayBranch)
 
-	cells := make([]cell, len(pillars))
-	for i, p := range pillars {
-		cells[i] = cell{p.stem.Value, p.branch.Value}
-	}
+	cells := natalCells(pillars)
 
 	for i, p := range pillars {
 		nayin, ok := nayinTerms[p.ganZhi.Name]

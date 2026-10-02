@@ -92,3 +92,50 @@ type ChartAnalysis struct {
 	DayMasterStrength any `json:"day_master_strength"`
 	UsefulGod         any `json:"useful_god"`
 }
+
+// LuckPillarAnalysis holds the derived facts of one luck pillar. Ages are
+// nominal: the year of the year pillar counts as age 1.
+type LuckPillarAnalysis struct {
+	AgeStart             int           `json:"age_start"`
+	AgeEnd               int           `json:"age_end"`
+	TenGod               LocalizedTerm `json:"ten_god"`
+	Nayin                LocalizedTerm `json:"nayin"`
+	StemStageAtOwnBranch LocalizedTerm `json:"stem_stage_at_own_branch"`
+	// HiddenStems lists the stems hidden in the branch, main qi first, with
+	// their life stage at the luck pillar's own branch.
+	HiddenStems []LuckHiddenStem `json:"hidden_stems"`
+	// HeavenEarthClash is true when the luck pillar clashes with a natal pillar.
+	HeavenEarthClash bool `json:"heaven_earth_clash"`
+}
+
+// LuckHiddenStem is a stem hidden in a luck pillar's branch.
+type LuckHiddenStem struct {
+	HeavenlyStem     HeavenlyStem  `json:"heavenly_stem"`
+	TenGod           LocalizedTerm `json:"ten_god"`
+	StageAtOwnBranch LocalizedTerm `json:"stage_at_own_branch"`
+}
+
+// AnnualPillar is the pillar of one Gregorian year with its relation to the chart.
+type AnnualPillar struct {
+	Year int `json:"year"`
+	// NominalAge counts the year of the year pillar as 1.
+	NominalAge           int           `json:"nominal_age"`
+	HeavenlyStem         HeavenlyStem  `json:"heavenly_stem"`
+	EarthlyBranch        EarthlyBranch `json:"earthly_branch"`
+	GanZhi               GanZhi        `json:"gan_zhi"`
+	Nayin                LocalizedTerm `json:"nayin"`
+	TenGod               LocalizedTerm `json:"ten_god"`
+	StemStageAtOwnBranch LocalizedTerm `json:"stem_stage_at_own_branch"`
+	// LuckPillarNumber is the number of the luck pillar whose years contain
+	// this year, or nil when no luck pillar does.
+	LuckPillarNumber *int `json:"luck_pillar_number"`
+	// HeavenEarthClash is true when the year clashes with a natal pillar.
+	HeavenEarthClash bool `json:"heaven_earth_clash"`
+}
+
+// AnnualPillars is the result of GetAnnualPillars.
+type AnnualPillars struct {
+	FromYear      int            `json:"from_year"`
+	Count         int            `json:"count"`
+	AnnualPillars []AnnualPillar `json:"annual_pillars"`
+}

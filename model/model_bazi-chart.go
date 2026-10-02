@@ -40,6 +40,8 @@ type LuckPillar struct {
 	YearStart     int           `json:"year_start"`
 	YearEnd       int           `json:"year_end"`
 	Time          time.Time     `json:"time"`
+	// Analysis holds the derived facts of the luck pillar.
+	Analysis *LuckPillarAnalysis `json:"analysis"`
 }
 
 // YearPillar is the pillar of the lunar year the birth belongs to; Year is the Gregorian year.
