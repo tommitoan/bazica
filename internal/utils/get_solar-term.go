@@ -1,4 +1,4 @@
-package ultis
+package utils
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-var InititalTerms = []string{
+var InitialTerms = []string{
 	model.MinorCold,
 	model.StartOfSpring,
 	model.AwakeningOfInsects,
@@ -115,7 +115,7 @@ func findSolarTerm(t time.Time, terms, nextYear, previousYear []solarTermTime) (
 	// into the following year for the last terms of December.
 	nextInitial := func(i int) time.Time {
 		idx := i + 1
-		if slices.Contains(InititalTerms, terms[i].name) {
+		if slices.Contains(InitialTerms, terms[i].name) {
 			idx = i + 2
 		}
 		if idx < len(terms) {

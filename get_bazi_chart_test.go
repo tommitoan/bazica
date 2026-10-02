@@ -1,6 +1,7 @@
 package bazica
 
 import (
+	"encoding/json"
 	"errors"
 	"sync"
 	"testing"
@@ -58,6 +59,20 @@ func TestGetBaziChart(t *testing.T) {
 	}
 	if luck[1].YearStart != 1996 || luck[2].YearStart != 2006 {
 		t.Errorf("luck pillar years = %d, %d, want 1996, 2006", luck[1].YearStart, luck[2].YearStart)
+	}
+}
+
+func TestGetBaziChartJSONFieldNames(t *testing.T) {
+	chart, err := GetBaziChart(time.Date(1995, 6, 8, 22, 5, 0, 0, time.UTC), time.UTC, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := json.Marshal(chart.FourPillar.HourPillar.Hour)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := `{"hour":22,"minute":5}`; string(out) != want {
+		t.Errorf("hour JSON = %s, want %s", out, want)
 	}
 }
 

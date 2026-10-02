@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/internal/ultis"
+	"github.com/tommitoan/bazica/internal/utils"
 	"github.com/tommitoan/bazica/model"
 )
 
@@ -16,10 +16,10 @@ const (
 // chart builds the minimal four pillars the luck pillar calculation reads.
 func chart(yearStem, monthStem, monthBranch int) *model.FourPillars {
 	return &model.FourPillars{
-		YearPillar: &model.YearPillar{HeavenlyStem: ultis.CalculateHeavenlyStem(yearStem)},
+		YearPillar: &model.YearPillar{HeavenlyStem: utils.CalculateHeavenlyStem(yearStem)},
 		MonthPillar: &model.MonthPillar{
-			HeavenlyStem:  ultis.CalculateHeavenlyStem(monthStem),
-			EarthlyBranch: ultis.CalculateEarthlyBranch(monthBranch),
+			HeavenlyStem:  utils.CalculateHeavenlyStem(monthStem),
+			EarthlyBranch: utils.CalculateEarthlyBranch(monthBranch),
 		},
 	}
 }
