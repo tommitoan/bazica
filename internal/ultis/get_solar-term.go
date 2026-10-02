@@ -2,10 +2,8 @@ package ultis
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/tommitoan/bazica/model"
-	"log/slog"
 	"os"
 	"slices"
 	"time"
@@ -42,158 +40,154 @@ var MidpointTerms = []string{
 }
 
 func GetSolarTerm(path string, dateTime time.Time) (string, int, int, error) {
-	// Extract the year
-
-	yearStr := fmt.Sprint(dateTime.Year())
-	nextYear := fmt.Sprint(dateTime.Year() + 1)
-	previousYear := fmt.Sprint(dateTime.Year() - 1)
-	result, nextYearResult, previousYearResult, err := GetSolarTermsByYear(yearStr, nextYear, previousYear, path)
+	year := dateTime.Year()
+	current, next, previous, err := GetSolarTermsByYear(fmt.Sprint(year), fmt.Sprint(year+1), fmt.Sprint(year-1), path)
 	if err != nil {
-		fmt.Println(err)
+		return "", 0, 0, err
+	}
+	return findSolarTerm(dateTime, current, next, previous)
+}
+
+type solarTermTime struct {
+	name string
+	time time.Time
+}
+
+// parseSolarTerms returns the 24 solar terms of a year in calendar order.
+func parseSolarTerms(y model.SolarTermYear) ([]solarTermTime, error) {
+	raw := []struct{ name, value string }{
+		{model.MinorCold, y.MinorCold},
+		{model.MajorCold, y.MajorCold},
+		{model.StartOfSpring, y.StartOfSpring},
+		{model.SpringShowers, y.SpringShowers},
+		{model.AwakeningOfInsects, y.AwakeningOfInsects},
+		{model.SpringEquinox, y.SpringEquinox},
+		{model.PureBrightness, y.PureBrightness},
+		{model.GrainRain, y.GrainRain},
+		{model.StartOfSummer, y.StartOfSummer},
+		{model.GrainBuds, y.GrainBuds},
+		{model.GrainInEar, y.GrainInEar},
+		{model.SummerSolstice, y.SummerSolstice},
+		{model.MinorHeat, y.MinorHeat},
+		{model.MajorHeat, y.MajorHeat},
+		{model.StartOfAutumn, y.StartOfAutumn},
+		{model.EndOfHeat, y.EndOfHeat},
+		{model.WhiteDew, y.WhiteDew},
+		{model.AutumnEquinox, y.AutumnEquinox},
+		{model.ColdDew, y.ColdDew},
+		{model.Frost, y.Frost},
+		{model.StartOfWinter, y.StartOfWinter},
+		{model.MinorSnow, y.MinorSnow},
+		{model.MajorSnow, y.MajorSnow},
+		{model.WinterSolstice, y.WinterSolstice},
+	}
+	terms := make([]solarTermTime, 0, len(raw))
+	for _, r := range raw {
+		t, err := time.Parse(solarTermLayout, r.value)
+		if err != nil {
+			return nil, fmt.Errorf("%w: solar term %s: %v", model.ErrDataUnavailable, r.name, err)
+		}
+		terms = append(terms, solarTermTime{name: r.name, time: t})
+	}
+	return terms, nil
+}
+
+const solarTermLayout = "2006-01-02 15:04:05.999999999-07:00"
+
+// findSolarTerm locates the solar term containing t. It returns the term name,
+// the minutes elapsed since the preceding "initial" term (jie) and the minutes
+// remaining until the next one; both bound the current Ba-zi month.
+func findSolarTerm(t time.Time, currentYear, nextYear, previousYear model.SolarTermYear) (string, int, int, error) {
+	terms, err := parseSolarTerms(currentYear)
+	if err != nil {
 		return "", 0, 0, err
 	}
 
-	// Use the correctly parsed time object when calling findSolarTerm
-	term, passed, remaining, err := findSolarTerm(dateTime.Format("2006-01-02 15:04:05.999999999-07:00"), result, nextYearResult, previousYearResult)
-	if err != nil {
-		return "", 0, 0, errors.New(fmt.Sprintf("Error finding solar term: %v", err))
-	} else {
-		if passed == 0 || remaining == 0 {
-			slog.Error("Time passed/remaining = 0")
+	// nextInitial resolves the first initial term after index i, which wraps
+	// into the following year for the last terms of December.
+	nextInitial := func(i int) (time.Time, error) {
+		idx := i + 1
+		if slices.Contains(InititalTerms, terms[i].name) {
+			idx = i + 2
 		}
-		return term, passed, remaining, nil
-	}
-}
-
-func findSolarTerm(inputTime string, currentYearData, nextYearData, previousYearData model.SolarTermYear) (string, int, int, error) {
-	t, err := time.Parse("2006-01-02 15:04:05.999999999-07:00", inputTime)
-	if err != nil {
-		return "", 0, 0, fmt.Errorf("invalid input time format: %v", err)
-	}
-	slog.Info("Input Time", "time", t)
-
-	termList := []struct {
-		name string
-		time time.Time
-	}{
-		{"minor_cold", mustParseTime(currentYearData.MinorCold)},
-		{"major_cold", mustParseTime(currentYearData.MajorCold)},
-		{"start_of_spring", mustParseTime(currentYearData.StartOfSpring)},
-		{"spring_showers", mustParseTime(currentYearData.SpringShowers)},
-		{"awakening_of_insects", mustParseTime(currentYearData.AwakeningOfInsects)},
-		{"spring_equinox", mustParseTime(currentYearData.SpringEquinox)},
-		{"pure_brightness", mustParseTime(currentYearData.PureBrightness)},
-		{"grain_rain", mustParseTime(currentYearData.GrainRain)},
-		{"start_of_summer", mustParseTime(currentYearData.StartOfSummer)},
-		{"grain_buds", mustParseTime(currentYearData.GrainBuds)},
-		{"grain_in_ear", mustParseTime(currentYearData.GrainInEar)},
-		{"summer_solstice", mustParseTime(currentYearData.SummerSolstice)},
-		{"minor_heat", mustParseTime(currentYearData.MinorHeat)},
-		{"major_heat", mustParseTime(currentYearData.MajorHeat)},
-		{"start_of_autumn", mustParseTime(currentYearData.StartOfAutumn)},
-		{"end_of_heat", mustParseTime(currentYearData.EndOfHeat)},
-		{"white_dew", mustParseTime(currentYearData.WhiteDew)},
-		{"autumn_equinox", mustParseTime(currentYearData.AutumnEquinox)},
-		{"cold_dew", mustParseTime(currentYearData.ColdDew)},
-		{"frost", mustParseTime(currentYearData.Frost)},
-		{"start_of_winter", mustParseTime(currentYearData.StartOfWinter)},
-		{"minor_snow", mustParseTime(currentYearData.MinorSnow)},
-		{"major_snow", mustParseTime(currentYearData.MajorSnow)},
-		{"winter_solstice", mustParseTime(currentYearData.WinterSolstice)},
+		if idx < len(terms) {
+			return terms[idx].time, nil
+		}
+		following, err := parseSolarTerms(nextYear)
+		if err != nil {
+			return time.Time{}, err
+		}
+		return following[idx-len(terms)].time, nil
 	}
 
-	var previousTermName string
-	var timePassedMinutes, timeRemainingMinutes int
-	for i, term := range termList {
-		if t.After(term.time) && (i+1 == len(termList) || t.Before(termList[i+1].time)) {
-			slog.Info("Solar Term Found", "term", term.name, "timePassedMinutes", timePassedMinutes)
-			timePassedMinutes = int(t.Sub(term.time).Minutes())
-			if slices.Contains(MidpointTerms, term.name) {
-				timePassedMinutes += int(term.time.Sub(termList[i-1].time).Minutes())
-			}
-
-			if slices.Contains(InititalTerms, term.name) {
-				if term.name == model.MajorSnow {
-					minorColdNextYear := mustParseTime(nextYearData.MinorCold)
-
-					timeRemainingMinutes = int(termList[i+1].time.Sub(t).Minutes())
-					timeRemainingMinutes += int(minorColdNextYear.Sub(termList[i+1].time).Minutes())
-
-				} else {
-					timeRemainingMinutes = int(termList[i+1].time.Sub(t).Minutes())
-					timeRemainingMinutes += int(termList[i+2].time.Sub(termList[i+1].time).Minutes())
-				}
-			} else {
-				timeRemainingMinutes = int(termList[i+1].time.Sub(t).Minutes())
-			}
-
-			return term.name, timePassedMinutes, timeRemainingMinutes, nil // Return the name,time passed, time remaining if the time falls within this term
+	for i, term := range terms {
+		if t.Before(term.time) || (i+1 < len(terms) && !t.Before(terms[i+1].time)) {
+			continue
 		}
 
-		if i > 0 {
-			previousTermName = termList[i-1].name // Keep track of the previous term (except for the first term)
+		passed := int(t.Sub(term.time).Minutes())
+		if slices.Contains(MidpointTerms, term.name) {
+			passed += int(term.time.Sub(terms[i-1].time).Minutes())
 		}
+		boundary, err := nextInitial(i)
+		if err != nil {
+			return "", 0, 0, err
+		}
+		return term.name, passed, int(boundary.Sub(t).Minutes()), nil
 	}
-	// Handle the case where input time is before the first term in the list
-	slog.Warn(fmt.Sprintf("Input date precedes the first solar term of %d", t.Year()))
-	timePassedMinutes = int(t.Sub(mustParseTime(previousYearData.WinterSolstice)).Minutes() + mustParseTime(previousYearData.WinterSolstice).Sub(mustParseTime(previousYearData.MajorSnow)).Minutes())
-	timeRemainingMinutes = int(mustParseTime(currentYearData.MinorCold).Sub(t).Minutes())
 
-	return previousTermName, timePassedMinutes, timeRemainingMinutes, nil // Return the last term of the previous year (or empty if there's none) and time passed 0
-}
-
-// Helper function to parse time with timezone offset
-func mustParseTime(timeStr string) time.Time {
-	loc, _ := time.LoadLocation("UTC")
-	t, err := time.ParseInLocation("2006-01-02 15:04:05.999999999-07:00", timeStr, loc)
+	// t precedes the first term of the year: it still belongs to the month
+	// opened by Major Snow of the previous year.
+	previous, err := parseSolarTerms(previousYear)
 	if err != nil {
-		panic("invalid time format in solar term data: " + err.Error())
+		return "", 0, 0, err
 	}
-	return t
+	majorSnow := previous[len(previous)-2].time
+	passed := int(t.Sub(majorSnow).Minutes())
+	remaining := int(terms[0].time.Sub(t).Minutes())
+	return model.MajorSnow, passed, remaining, nil
 }
 
 var PrefixPath string
 
+// GetSolarTermsByYear returns the solar term data of the requested year and its
+// neighbours. A year without data yields model.ErrDateOutOfRange.
 func GetSolarTermsByYear(year, nextYear, previousYear string, path ...string) (model.SolarTermYear, model.SolarTermYear, model.SolarTermYear, error) {
 	var prefix string
 	if len(path) != 0 {
 		prefix = path[0]
 	}
-	data := getSolarTermData(prefix)
-	if data == nil {
-		return model.SolarTermYear{}, model.SolarTermYear{}, model.SolarTermYear{}, errors.New("Cannot find solar term data for year " + year)
+	data, err := getSolarTermData(prefix)
+	if err != nil {
+		return model.SolarTermYear{}, model.SolarTermYear{}, model.SolarTermYear{}, err
 	}
-	return data[year].Data, data[nextYear].Data, data[previousYear].Data, nil
+	var out [3]model.SolarTermYear
+	for i, y := range []string{year, nextYear, previousYear} {
+		entry, ok := data[y]
+		if !ok {
+			return model.SolarTermYear{}, model.SolarTermYear{}, model.SolarTermYear{}, fmt.Errorf("%w: no solar term data for %s", model.ErrDateOutOfRange, y)
+		}
+		out[i] = entry.Data
+	}
+	return out[0], out[1], out[2], nil
 }
 
-func getSolarTermData(path string) map[string]model.CombinedData {
-	// Assuming the combined JSON file is named "solar-term.json"
+func getSolarTermData(path string) (map[string]model.CombinedData, error) {
 	prefix := PrefixPath
 	if path != "" {
 		prefix = path
 	}
 
-	fileToRead := prefix + "data/solar-term.json"
-
-	data, err := os.ReadFile(fileToRead)
-
-	// Use slog directly from the beginning
+	data, err := os.ReadFile(prefix + "data/solar-term.json")
 	if err != nil {
-		slog.Error("Error reading combined JSON", "error", err)
-		return nil
+		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
 	}
 
-	err = json.Unmarshal(data, &model.TempCombinedData)
-	if err != nil {
-		slog.Error("Error unmarshalling combined JSON", "error", err)
-		return nil
+	if err := json.Unmarshal(data, &model.TempCombinedData); err != nil {
+		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
 	}
-
-	// Check if combinedData is nil (optional)
 	if model.TempCombinedData == nil {
-		slog.Warn("combinedData is nil. Check JSON structure and struct definition.")
-		return nil
-	} else {
-		return model.TempCombinedData
+		return nil, fmt.Errorf("%w: solar-term.json is empty", model.ErrDataUnavailable)
 	}
+	return model.TempCombinedData, nil
 }

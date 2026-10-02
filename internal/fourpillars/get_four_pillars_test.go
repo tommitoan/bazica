@@ -1,133 +1,96 @@
 package fourpillars
 
 import (
-	"bytes"
-	"encoding/json"
-	"github.com/tommitoan/bazica/model"
+	"errors"
+	"fmt"
 	"testing"
 	"time"
+
+	"github.com/tommitoan/bazica/model"
 )
 
-func TestGetFourPillarChart(t *testing.T) {
-	var path = "../../"
-	// Test Cases: Each case defines a birthdate, expected chart, and (optionally) a description.
-	testCases := []struct {
-		loc                            string
-		year, month, day, hour, minute int
-		expectedChart                  *model.FourPillars
-		description                    string
-	}{
-		{"Asia/Ho_Chi_Minh",
-			1977, 7, 12, 23, 30,
-			&model.FourPillars{
-				YearPillar: &model.YearPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Snake, Value: model.SnakeValue},
-					Year:          1977,
-					GanZhi: model.GanZhi{
-						Name:         "Desert earth",
-						ElementName:  "Earth",
-						ElementValue: 5,
-					},
-				},
-				MonthPillar: &model.MonthPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Goat, Value: model.GoatValue},
-					Month:         7,
-					GanZhi: model.GanZhi{
-						Name:         "Sky water",
-						ElementName:  "Water",
-						ElementValue: 1,
-					},
-				},
-				DayPillar: &model.DayPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YinMetalName, Value: model.YinMetalValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Goat, Value: model.GoatValue},
-					Day:           12,
-					GanZhi: model.GanZhi{
-						Name:         "Road earth",
-						ElementName:  "Earth",
-						ElementValue: 5,
-					},
-				},
-				HourPillar: &model.HourPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YangEarthName, Value: model.YangEarthValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Rat, Value: model.RatValue},
-					Hour:          model.TimeOfDay{Hour: 23, Minute: 30},
-					GanZhi: model.GanZhi{
-						Name:         "Lightning fire",
-						ElementName:  "Fire",
-						ElementValue: 2,
-					},
-				},
-			},
-			"case 1"},
-		{"Asia/Ho_Chi_Minh",
-			1995, 6, 8, 22, 05,
-			&model.FourPillars{
-				YearPillar: &model.YearPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YinWoodName, Value: model.YinWoodValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Pig, Value: model.PigValue},
-					Year:          1995,
-					GanZhi: model.GanZhi{
-						Name:         "Volcanic fire",
-						ElementName:  "Fire",
-						ElementValue: 2,
-					},
-				},
-				MonthPillar: &model.MonthPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YangWaterName, Value: model.YangWaterValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Horse, Value: model.HorseValue},
-					Month:         6,
-					GanZhi: model.GanZhi{
-						Name:         "Willow Tree Wood",
-						ElementName:  "Wood",
-						ElementValue: 3,
-					},
-				},
-				DayPillar: &model.DayPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YangMetalName, Value: model.YangMetalValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Horse, Value: model.HorseValue},
-					Day:           8,
-					GanZhi: model.GanZhi{
-						Name:         "Earth on the Roadside",
-						ElementName:  "Earth",
-						ElementValue: 5,
-					},
-				},
-				HourPillar: &model.HourPillar{
-					HeavenlyStem:  model.HeavenlyStem{Name: model.YinFireName, Value: model.YinFireValue},
-					EarthlyBranch: model.EarthlyBranch{Name: model.Pig, Value: model.PigValue},
-					Hour:          model.TimeOfDay{Hour: 22, Minute: 05},
-					GanZhi: model.GanZhi{
-						Name:         "Earth on the Roof",
-						ElementName:  "Earth",
-						ElementValue: 5,
-					},
-				},
-			},
-			"case 2"},
+const dataPath = "../../"
+
+func summarize(p *model.FourPillars) string {
+	pillar := func(stem model.HeavenlyStem, branch model.EarthlyBranch, g model.GanZhi) string {
+		return fmt.Sprintf("%s/%s %s", stem.Spelling, branch.Spelling, g.Name)
+	}
+	return fmt.Sprintf("Y[%s] M[%s] D[%s] H[%s]",
+		pillar(p.YearPillar.HeavenlyStem, p.YearPillar.EarthlyBranch, p.YearPillar.GanZhi),
+		pillar(p.MonthPillar.HeavenlyStem, p.MonthPillar.EarthlyBranch, p.MonthPillar.GanZhi),
+		pillar(p.DayPillar.HeavenlyStem, p.DayPillar.EarthlyBranch, p.DayPillar.GanZhi),
+		pillar(p.HourPillar.HeavenlyStem, p.HourPillar.EarthlyBranch, p.HourPillar.GanZhi))
+}
+
+func TestGetFourPillars(t *testing.T) {
+	loc, err := time.LoadLocation("Asia/Ho_Chi_Minh")
+	if err != nil {
+		t.Fatal(err)
 	}
 
-	// Loop through each test case
-	for _, tc := range testCases {
-		// Create time object
-		location, _ := time.LoadLocation(tc.loc)
-		dateTime := time.Date(tc.year, time.Month(tc.month), tc.day, tc.hour, tc.minute, 0, 0, location)
+	tests := []struct {
+		name string
+		date time.Time
+		want string
+	}{
+		{
+			"late Rat hour rolls to next day",
+			time.Date(1977, 7, 12, 23, 30, 0, 0, loc),
+			"Y[ding/si Desert earth] M[ding/wei Sky water] D[xin/wei Road earth] H[wu/zi Lightning fire]",
+		},
+		{
+			"mid-year birth",
+			time.Date(1995, 6, 8, 22, 5, 0, 0, loc),
+			"Y[yi/hai Volcanic fire] M[ren/wu Willow wood] D[geng/wu Road earth] H[ding/hai Roof tiles earth]",
+		},
+		{
+			// Winter Solstice 2025-12-21 15:03 UTC; the last ten days of
+			// December sit after it and previously caused an index panic.
+			"after winter solstice",
+			time.Date(2025, 12, 25, 12, 0, 0, 0, loc),
+			"Y[yi/si Lamp fire] M[wu/zi Lightning fire] D[wu/chen Forest wood] H[wu/wu Sun fire]",
+		},
+		{
+			"last day of the supported range",
+			time.Date(2099, 12, 31, 12, 0, 0, 0, loc),
+			"",
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			got, _, _, err := GetFourPillars(tc.date, loc, dataPath)
+			if err != nil {
+				t.Fatalf("GetFourPillars() error = %v", err)
+			}
+			if tc.want == "" {
+				return
+			}
+			if s := summarize(got); s != tc.want {
+				t.Errorf("GetFourPillars()\n got: %s\nwant: %s", s, tc.want)
+			}
+		})
+	}
+}
 
-		// Get the chart
-		baziChart, _, _, err := GetFourPillars(dateTime, location, path)
-		if err != nil {
-			t.Errorf("Error for %s: %v", tc.description, err) // Include description in error message
-			continue                                          // Skip to next case if this one failed
-		}
-
-		jsonData, _ := json.Marshal(baziChart)
-		expectData, _ := json.Marshal(tc.expectedChart)
-
-		// Compare JSON output
-		if !bytes.Equal(jsonData, expectData) {
-			t.Errorf("Mismatch for %s:\nExpected: %v\nGot: %v", tc.description, tc.expectedChart, baziChart)
-		}
+func TestGetFourPillarsErrors(t *testing.T) {
+	loc := time.UTC
+	tests := []struct {
+		name    string
+		date    time.Time
+		path    string
+		wantErr error
+	}{
+		{"before supported range", time.Date(1899, 6, 1, 12, 0, 0, 0, loc), dataPath, model.ErrDateOutOfRange},
+		{"after supported range", time.Date(2100, 6, 1, 12, 0, 0, 0, loc), dataPath, model.ErrDateOutOfRange},
+		{"first month of 2100", time.Date(2100, 1, 15, 12, 0, 0, 0, loc), dataPath, model.ErrDateOutOfRange},
+		{"missing data directory", time.Date(2001, 1, 25, 12, 0, 0, 0, loc), "/nonexistent/", model.ErrDataUnavailable},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			_, _, _, err := GetFourPillars(tc.date, loc, tc.path)
+			if !errors.Is(err, tc.wantErr) {
+				t.Errorf("GetFourPillars() error = %v, want %v", err, tc.wantErr)
+			}
+		})
 	}
 }

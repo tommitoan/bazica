@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
-	"log/slog"
 	"os"
 	"strings"
 	"time"
@@ -47,54 +46,51 @@ func GetLunarYear(path string, dateTime time.Time) (int, error) {
 	solarMonth := dateTime.Month()
 	solarDay := dateTime.Day()
 
-	lunarData := getNewYearData(path)
+	lunarData, err := getNewYearData(path)
+	if err != nil {
+		return 0, err
+	}
 
 	var lunarYear int = solarYear
 	// Check if the date is before or on the Lunar New Year of that solar year
 	lunarNewYearDateStr, exists := lunarData.LunarNewYearDates[fmt.Sprintf("%d", solarYear)]
-	if exists {
-		lunarNewYearDateParts := strings.Split(lunarNewYearDateStr, "-")
-		lunarNewYearMonth, _ := time.Parse("01", lunarNewYearDateParts[0])
-		lunarNewYearDay, _ := time.Parse("02", lunarNewYearDateParts[1])
-
-		if solarMonth < lunarNewYearMonth.Month() ||
-			(solarMonth == lunarNewYearMonth.Month() && solarDay < lunarNewYearDay.Day()) {
-			lunarYear--
+	if !exists {
+		// Jan 1 of the first year without data still precedes that year's
+		// Lunar New Year, so it belongs to the last covered lunar year.
+		if _, prevExists := lunarData.LunarNewYearDates[fmt.Sprintf("%d", solarYear-1)]; prevExists && solarMonth == time.January && solarDay == 1 {
+			return solarYear - 1, nil
 		}
+		return 0, fmt.Errorf("%w: no Lunar New Year data for %d", model.ErrDateOutOfRange, solarYear)
+	}
+	lunarNewYearDateParts := strings.Split(lunarNewYearDateStr, "-")
+	lunarNewYearMonth, _ := time.Parse("01", lunarNewYearDateParts[0])
+	lunarNewYearDay, _ := time.Parse("02", lunarNewYearDateParts[1])
+
+	if solarMonth < lunarNewYearMonth.Month() ||
+		(solarMonth == lunarNewYearMonth.Month() && solarDay < lunarNewYearDay.Day()) {
+		lunarYear--
 	}
 
 	return lunarYear, nil
 }
 
-func getNewYearData(path string) *model.LunarNewYearData {
-	// Assuming the combined JSON file is named "solar-term.json"
+func getNewYearData(path string) (*model.LunarNewYearData, error) {
 	prefix := ultis.PrefixPath
 	if path != "" {
 		prefix = path
 	}
 
-	fileToRead := prefix + "data/lunar-new-year.json"
-
-	data, err := os.ReadFile(fileToRead)
-
-	// Use slog directly from the beginning
+	data, err := os.ReadFile(prefix + "data/lunar-new-year.json")
 	if err != nil {
-		slog.Error("Error reading combined JSON", "error", err)
-		return nil
+		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
 	}
 
-	var lunarData *model.LunarNewYearData
-	err = json.Unmarshal(data, &lunarData)
-	if err != nil {
-		slog.Error("Error unmarshalling combined JSON", "error", err)
-		return nil
+	var lunarData model.LunarNewYearData
+	if err := json.Unmarshal(data, &lunarData); err != nil {
+		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
 	}
-
-	// Check if combinedData is nil (optional)
-	if lunarData == nil {
-		slog.Warn("combinedData is nil. Check JSON structure and struct definition.")
-		return nil
-	} else {
-		return lunarData
+	if len(lunarData.LunarNewYearDates) == 0 {
+		return nil, fmt.Errorf("%w: lunar-new-year.json is empty", model.ErrDataUnavailable)
 	}
+	return &lunarData, nil
 }
