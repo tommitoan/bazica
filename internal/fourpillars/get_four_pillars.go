@@ -9,18 +9,13 @@ import (
 	"time"
 )
 
-func GetFourPillars(dateTime time.Time, loc *time.Location, prefixPath ...string) (*model.FourPillars, int, int, error) {
-	var path string
-	if len(prefixPath) != 0 {
-		path = prefixPath[0]
-	}
-
+func GetFourPillars(dateTime time.Time, loc *time.Location) (*model.FourPillars, int, int, error) {
 	var fourPillars model.FourPillars
 	var ganzhi, mainElement string
 	var valueElement int
 
 	// Get Year pillar
-	yearPillar, err := GetYearPillar(path, dateTime)
+	yearPillar, err := GetYearPillar(dateTime)
 	if err != nil {
 		return nil, 0, 0, err
 	}
@@ -37,7 +32,7 @@ func GetFourPillars(dateTime time.Time, loc *time.Location, prefixPath ...string
 	fourPillars.YearPillar.GanZhi.ElementValue = valueElement
 
 	// Get Month pillar
-	monthPillar, passed, remaining, err := GetMonthPillar(path, yearPillar, dateTime)
+	monthPillar, passed, remaining, err := GetMonthPillar(yearPillar, dateTime)
 	if err != nil {
 		return nil, 0, 0, err
 	}

@@ -9,8 +9,6 @@ import (
 	"github.com/tommitoan/bazica/model"
 )
 
-const dataPath = "../../"
-
 func spellings(p *model.FourPillars) string {
 	return fmt.Sprintf("%s/%s %s/%s %s/%s %s/%s",
 		p.YearPillar.HeavenlyStem.Spelling, p.YearPillar.EarthlyBranch.Spelling,
@@ -64,7 +62,7 @@ func TestGetFourPillarsGolden(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			got, _, _, err := GetFourPillars(date, time.UTC, dataPath)
+			got, _, _, err := GetFourPillars(date, time.UTC)
 			if err != nil {
 				t.Fatalf("GetFourPillars() error = %v", err)
 			}
@@ -101,7 +99,7 @@ func TestGetFourPillarsLocalClock(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			got, _, _, err := GetFourPillars(tc.date, loc, dataPath)
+			got, _, _, err := GetFourPillars(tc.date, loc)
 			if err != nil {
 				t.Fatalf("GetFourPillars() error = %v", err)
 			}
@@ -120,17 +118,15 @@ func TestGetFourPillarsErrors(t *testing.T) {
 	tests := []struct {
 		name    string
 		date    time.Time
-		path    string
 		wantErr error
 	}{
-		{"before supported range", time.Date(1899, 6, 1, 12, 0, 0, 0, loc), dataPath, model.ErrDateOutOfRange},
-		{"after supported range", time.Date(2100, 6, 1, 12, 0, 0, 0, loc), dataPath, model.ErrDateOutOfRange},
-		{"first month of 2100", time.Date(2100, 1, 15, 12, 0, 0, 0, loc), dataPath, model.ErrDateOutOfRange},
-		{"missing data directory", time.Date(2001, 1, 25, 12, 0, 0, 0, loc), "/nonexistent/", model.ErrDataUnavailable},
+		{"before supported range", time.Date(1899, 6, 1, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
+		{"after supported range", time.Date(2100, 6, 1, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
+		{"first month of 2100", time.Date(2100, 1, 15, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			_, _, _, err := GetFourPillars(tc.date, loc, tc.path)
+			_, _, _, err := GetFourPillars(tc.date, loc)
 			if !errors.Is(err, tc.wantErr) {
 				t.Errorf("GetFourPillars() error = %v, want %v", err, tc.wantErr)
 			}

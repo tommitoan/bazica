@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining int, dateTime time.Time, prefixPath ...string) (*model.LuckPillars, error) {
+func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining int, dateTime time.Time) (*model.LuckPillars, error) {
 	luckPillars := model.LuckPillars{}
 
 	// Get 0 luck pillar

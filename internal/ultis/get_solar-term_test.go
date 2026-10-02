@@ -8,8 +8,6 @@ import (
 	"github.com/tommitoan/bazica/model"
 )
 
-const dataPath = "../../"
-
 func TestGetSolarTerm(t *testing.T) {
 	utc := time.UTC
 	tests := []struct {
@@ -28,7 +26,7 @@ func TestGetSolarTerm(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			term, passed, remaining, err := GetSolarTerm(dataPath, tc.date)
+			term, passed, remaining, err := GetSolarTerm(tc.date)
 			if err != nil {
 				t.Fatalf("GetSolarTerm() error = %v", err)
 			}
@@ -50,7 +48,7 @@ func TestGetSolarTermMonthLength(t *testing.T) {
 		time.Date(2025, 12, 25, 0, 0, 0, 0, time.UTC),
 		time.Date(2024, 1, 3, 0, 0, 0, 0, time.UTC),
 	} {
-		_, passed, remaining, err := GetSolarTerm(dataPath, d)
+		_, passed, remaining, err := GetSolarTerm(d)
 		if err != nil {
 			t.Fatalf("%s: %v", d.Format("2006-01-02"), err)
 		}
@@ -65,16 +63,14 @@ func TestGetSolarTermErrors(t *testing.T) {
 	tests := []struct {
 		name    string
 		date    time.Time
-		path    string
 		wantErr error
 	}{
-		{"year without data", time.Date(2101, 6, 1, 0, 0, 0, 0, time.UTC), dataPath, model.ErrDateOutOfRange},
-		{"previous year without data", time.Date(1899, 6, 1, 0, 0, 0, 0, time.UTC), dataPath, model.ErrDateOutOfRange},
-		{"missing data directory", time.Date(2024, 6, 1, 0, 0, 0, 0, time.UTC), "/nonexistent/", model.ErrDataUnavailable},
+		{"year without data", time.Date(2101, 6, 1, 0, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
+		{"previous year without data", time.Date(1899, 6, 1, 0, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			if _, _, _, err := GetSolarTerm(tc.path, tc.date); !errors.Is(err, tc.wantErr) {
+			if _, _, _, err := GetSolarTerm(tc.date); !errors.Is(err, tc.wantErr) {
 				t.Errorf("error = %v, want %v", err, tc.wantErr)
 			}
 		})

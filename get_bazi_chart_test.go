@@ -2,6 +2,7 @@ package bazica
 
 import (
 	"errors"
+	"sync"
 	"testing"
 	"time"
 
@@ -64,16 +65,14 @@ func TestGetBaziChartErrors(t *testing.T) {
 	tests := []struct {
 		name    string
 		date    time.Time
-		path    []string
 		wantErr error
 	}{
-		{"before supported range", time.Date(1899, 12, 31, 12, 0, 0, 0, time.UTC), nil, model.ErrDateOutOfRange},
-		{"after supported range", time.Date(2100, 1, 1, 12, 0, 0, 0, time.UTC), nil, model.ErrDateOutOfRange},
-		{"missing data directory", time.Date(2000, 1, 1, 12, 0, 0, 0, time.UTC), []string{"/nonexistent/"}, model.ErrDataUnavailable},
+		{"before supported range", time.Date(1899, 12, 31, 12, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
+		{"after supported range", time.Date(2100, 1, 1, 12, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			chart, err := GetBaziChart(tt.date, time.UTC, 1, tt.path...)
+			chart, err := GetBaziChart(tt.date, time.UTC, 1)
 			if !errors.Is(err, tt.wantErr) {
 				t.Errorf("GetBaziChart() error = %v, want %v", err, tt.wantErr)
 			}
@@ -81,5 +80,31 @@ func TestGetBaziChartErrors(t *testing.T) {
 				t.Errorf("GetBaziChart() returned a chart alongside an error")
 			}
 		})
+	}
+}
+
+// Calendar tables are loaded once and shared, so concurrent callers (for
+// example HTTP handlers) must not race. Run with -race to exercise this.
+func TestGetBaziChartConcurrent(t *testing.T) {
+	const workers = 8
+	var wg sync.WaitGroup
+	errs := make(chan error, workers)
+	for w := 0; w < workers; w++ {
+		wg.Add(1)
+		go func(w int) {
+			defer wg.Done()
+			for i := 0; i < 50; i++ {
+				date := time.Date(1980+w, time.Month(i%12+1), i%28+1, i%24, 0, 0, 0, time.UTC)
+				if _, err := GetBaziChart(date, time.UTC, w%2); err != nil {
+					errs <- err
+					return
+				}
+			}
+		}(w)
+	}
+	wg.Wait()
+	close(errs)
+	for err := range errs {
+		t.Error(err)
 	}
 }

@@ -2,23 +2,19 @@ package ultis
 
 import (
 	"encoding/json"
-	"os"
 	"strconv"
 	"testing"
 	"time"
 
+	dataTables "github.com/tommitoan/bazica/data"
 	"github.com/tommitoan/bazica/model"
 )
 
 // Guards the bundled calendar data: every year must list the 24 terms in
 // strictly increasing order and each term must fall in its own month.
 func TestSolarTermDataIntegrity(t *testing.T) {
-	raw, err := os.ReadFile(dataPath + "data/solar-term.json")
+	years, err := loadSolarTerms()
 	if err != nil {
-		t.Fatal(err)
-	}
-	var data map[string]model.CombinedData
-	if err := json.Unmarshal(raw, &data); err != nil {
 		t.Fatal(err)
 	}
 
@@ -29,14 +25,13 @@ func TestSolarTermDataIntegrity(t *testing.T) {
 		time.October, time.October, time.November, time.November, time.December, time.December,
 	}
 	for year := 1899; year <= 2100; year++ {
-		entry, ok := data[strconv.Itoa(year)]
+		terms, ok := years[year]
 		if !ok {
 			t.Errorf("%d: missing", year)
 			continue
 		}
-		terms, err := parseSolarTerms(entry.Data)
-		if err != nil {
-			t.Errorf("%d: %v", year, err)
+		if len(terms) != 24 {
+			t.Errorf("%d: has %d terms, want 24", year, len(terms))
 			continue
 		}
 		for i, term := range terms {
@@ -52,12 +47,8 @@ func TestSolarTermDataIntegrity(t *testing.T) {
 }
 
 func TestLunarNewYearDataIntegrity(t *testing.T) {
-	raw, err := os.ReadFile(dataPath + "data/lunar-new-year.json")
-	if err != nil {
-		t.Fatal(err)
-	}
 	var data model.LunarNewYearData
-	if err := json.Unmarshal(raw, &data); err != nil {
+	if err := json.Unmarshal(dataTables.LunarNewYear, &data); err != nil {
 		t.Fatal(err)
 	}
 	for year := 1900; year <= 2099; year++ {
