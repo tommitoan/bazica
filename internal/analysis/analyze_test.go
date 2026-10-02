@@ -31,7 +31,7 @@ var chart1995 = [4][2]int{{2, 10}, {9, 5}, {7, 5}, {9, 5}}
 
 func TestAttachFillsEveryPillarAndTheChart(t *testing.T) {
 	chart := chartOf(chart1995)
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatalf("Attach() error = %v", err)
 	}
 	fp := chart.FourPillar
@@ -42,8 +42,8 @@ func TestAttachFillsEveryPillarAndTheChart(t *testing.T) {
 		if a == nil {
 			t.Fatalf("%s pillar has no analysis", name)
 		}
-		if a.Stars == nil || len(a.Stars) != 0 {
-			t.Errorf("%s stars = %v, want an empty non-nil list", name, a.Stars)
+		if a.Stars == nil {
+			t.Errorf("%s stars are nil, want a list", name)
 		}
 		if len(a.HiddenStems) == 0 {
 			t.Errorf("%s pillar has no hidden stems", name)
@@ -56,7 +56,7 @@ func TestAttachFillsEveryPillarAndTheChart(t *testing.T) {
 
 func TestAttachDayMasterPillar(t *testing.T) {
 	chart := chartOf(chart1995)
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatal(err)
 	}
 	day := chart.FourPillar.DayPillar.Analysis
@@ -75,7 +75,7 @@ func TestAttachDayMasterPillar(t *testing.T) {
 
 func TestAttachVoidAndClashFlags(t *testing.T) {
 	chart := chartOf(chart1995)
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatal(err)
 	}
 	fp := chart.FourPillar
@@ -99,7 +99,7 @@ func TestAttachFlagsAClashingChart(t *testing.T) {
 	// Geng and Zi opposes Wu, so the hour is flagged. The overcome cells (year and
 	// day) are not flagged by those pairs.
 	chart := chartOf([4][2]int{{1, 11}, {7, 5}, {7, 11}, {3, 11}})
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatal(err)
 	}
 	fp := chart.FourPillar
@@ -120,7 +120,7 @@ func TestAttachFlagsAClashingChart(t *testing.T) {
 
 func TestAttachChartLevelFacts(t *testing.T) {
 	chart := chartOf(chart1995)
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatal(err)
 	}
 	a := chart.Analysis
@@ -145,7 +145,7 @@ func TestAttachChartLevelFacts(t *testing.T) {
 
 func TestAttachElementCounts(t *testing.T) {
 	chart := chartOf(chart1995)
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatal(err)
 	}
 	c := chart.Analysis.ElementCounts
@@ -187,7 +187,7 @@ func TestAttachRejectsInvalidInput(t *testing.T) {
 		}(),
 	}
 	for name, chart := range cases {
-		if err := Attach(chart); !errors.Is(err, errInvalidPillar) {
+		if err := Attach(chart, model.GenderMale); !errors.Is(err, errInvalidPillar) {
 			t.Errorf("%s: error = %v, want errInvalidPillar", name, err)
 		}
 	}

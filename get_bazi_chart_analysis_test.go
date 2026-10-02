@@ -65,13 +65,10 @@ func stripKeys(node any, keys ...string) {
 	}
 }
 
-// The fixture is the contract shared with bazica-web. Stars are not evaluated
-// yet, so they are removed from both sides.
+// The fixture is the contract shared with bazica-web.
 func TestAnalysisMatchesTheSharedFixture(t *testing.T) {
 	got := referenceChart(t)
 	want := loadFixture(t, "chart_1995_expected_v140.json")
-	stripKeys(got, "stars")
-	stripKeys(want, "stars")
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("chart differs from fixture near:\n%s", firstDifference(mustJSON(t, got), mustJSON(t, want)))
@@ -113,7 +110,7 @@ func mustJSON(t *testing.T, v any) []byte {
 	return data
 }
 
-func TestAnalysisSerialisesNullsAndEmptyLists(t *testing.T) {
+func TestAnalysisSerialisesNullsAndLists(t *testing.T) {
 	chart := referenceChart(t)
 	fp := chart["four_pillars"].(map[string]any)
 	day := fp["day_pillar"].(map[string]any)["analysis"].(map[string]any)
@@ -121,8 +118,8 @@ func TestAnalysisSerialisesNullsAndEmptyLists(t *testing.T) {
 		t.Errorf("day ten_god = %v (present %v), want null", v, ok)
 	}
 	year := fp["year_pillar"].(map[string]any)["analysis"].(map[string]any)
-	if stars, ok := year["stars"].([]any); !ok || len(stars) != 0 {
-		t.Errorf("year stars = %#v, want an empty list", year["stars"])
+	if stars, ok := year["stars"].([]any); !ok || len(stars) == 0 {
+		t.Errorf("year stars = %#v, want the stars of the 1995 chart", year["stars"])
 	}
 	analysis := chart["analysis"].(map[string]any)
 	for _, k := range []string{"day_master_strength", "useful_god"} {

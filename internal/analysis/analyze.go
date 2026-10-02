@@ -23,14 +23,16 @@ type natalPillar struct {
 }
 
 // Attach fills the Analysis fields of the four natal pillars, of the luck
-// pillars (when present) and of the chart. The legacy fields of chart are left untouched.
-func Attach(chart *model.BaziChart) error {
+// pillars (when present) and of the chart. gender (model.GenderFemale or
+// model.GenderMale) is needed by the Giao and Cau stars. The legacy fields of
+// chart are left untouched.
+func Attach(chart *model.BaziChart, gender int) error {
 	pillars, err := natalPillarsOf(chart)
 	if err != nil {
 		return err
 	}
 
-	analyses, err := analyzePillars(pillars)
+	analyses, err := analyzePillars(pillars, gender == model.GenderMale)
 	if err != nil {
 		return err
 	}
@@ -78,13 +80,14 @@ func natalCells(pillars [4]natalPillar) []cell {
 	return cells
 }
 
-func analyzePillars(pillars [4]natalPillar) ([4]*model.PillarAnalysis, error) {
+func analyzePillars(pillars [4]natalPillar, male bool) ([4]*model.PillarAnalysis, error) {
 	var out [4]*model.PillarAnalysis
 	dayStem, dayBranch := pillars[2].stem.Value, pillars[2].branch.Value
 	monthBranch := pillars[1].branch.Value
 	void := voidBranches(dayStem, dayBranch)
 
 	cells := natalCells(pillars)
+	stars := evaluateStars(newChartFacts(pillars, male))
 
 	for i, p := range pillars {
 		nayin, ok := nayinTerms[p.ganZhi.Name]
@@ -102,7 +105,7 @@ func analyzePillars(pillars [4]natalPillar) ([4]*model.PillarAnalysis, error) {
 			HiddenStems:            hiddenStemList(dayStem, p.branch.Value, monthBranch),
 			IsVoid:                 i != 2 && (p.branch.Value == void[0] || p.branch.Value == void[1]),
 			HeavenEarthClash:       heavenEarthClash(cells[i], othersOf(cells, i)),
-			Stars:                  []model.LocalizedTerm{},
+			Stars:                  stars[i],
 		}
 		if i != 2 {
 			god := tenGod(dayStem, p.stem.Value)

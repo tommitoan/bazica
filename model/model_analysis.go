@@ -32,7 +32,7 @@ type PillarAnalysis struct {
 	// HeavenEarthClash is true when this pillar's stem overcomes the stem of
 	// another natal pillar with the same polarity and the two branches are opposite.
 	HeavenEarthClash bool `json:"heaven_earth_clash"`
-	// Stars holds verified stars only; it is empty until stars are evaluated.
+	// Stars holds the verified stars of this pillar in registry order, never nil.
 	Stars []LocalizedTerm `json:"stars"`
 }
 
