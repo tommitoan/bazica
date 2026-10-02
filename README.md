@@ -2,7 +2,7 @@
 [![GitHub release](https://img.shields.io/github/tag/tommitoan/bazica.svg?label=latest)](https://github.com/tommitoan/bazica/releases)
 [![Go Reference](https://pkg.go.dev/badge/github.com/tommitoan/bazica.svg)](https://pkg.go.dev/github.com/tommitoan/bazica)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tommitoan/bazica)](https://goreportcard.com/report/github.com/tommitoan/bazica)
-[![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/main/LICENSE)
 
 <p align="center">
   <img style="float: right;" src="./Images/bazica-gopher.png" width=400>
@@ -86,7 +86,13 @@ func main() {
 ## Note
 ### Data Input Limitations:
 Due to the specific calculations and algorithms used in this package, it is currently designed to handle date inputs ranging from January 1, 1900, to December 31, 2099. Dates outside this range return `model.ErrDateOutOfRange`.   
-Missing or unreadable `data/` files return `model.ErrDataUnavailable`.
+
+### Conventions
+- **Day**: the day changes at 23:00 (the Rat hour), so a birth at 23:30 takes the pillar of the next day.
+- **Year**: the year changes at the Lunar New Year (`data/lunar-new-year.json`).
+- **Month**: the month changes at the "initial" solar terms (jie), such as Start of Spring and Awakening of Insects.
+- **Time zone**: `dateTime` is read as wall-clock time in `loc`, so pass the birth place's zone. A nil `loc` keeps the zone `dateTime` already carries.
+- **Gender**: `0` is female and `1` is male (`model.GenderFemale`, `model.GenderMale`); it sets the direction of the luck pillars. Other values return `model.ErrInvalidGender`.
 
 If you require calculations for dates outside this range, please consider alternative libraries or solutions.
 
@@ -106,16 +112,7 @@ This project drew inspiration and information from the following sources:
 ### Document
 https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/
 
-For a given date and time of birth, the Hsia Calendar is used to obtain the Heavenly Stems and Earthly Branches with which to construct the Four Pillars of Destiny (四柱) of a person. 
-The Four Pillars of Destiny are also known as the Ba Zi (八字), literally the Eight Characters of a person's birth. 
-In ancient China, one use of this form of divination was to select a suitable marriage partner.
-
-The Four Pillars of Destiny are the Year Pillar, the Month Pillar, the Day Pillar and the Hour Pillar. 
-Each Pillar is made up of two components, namely the Heavenly Stem and the Earthly Branch, both of which are read from the Hsia Calendar.
-
-The Hsia Calendar is also used in various types of Feng Shui, or Chinese Geomancy, such as the Flying Star Feng Shui.
-
-A ba zi chart done with mixed Lunar & Seasonal (Solar Term) Calendar will look like this:- 
+The article above discusses the Lunar and Hsia (seasonal, solar term) calendars used to read the Four Pillars. Bazica uses a mix of both: the year follows the lunar calendar and the month follows the solar terms. An example chart:
 
 ```
 Date time: 2024-07-05 22:00 UTC+7 (Vietnam)  
