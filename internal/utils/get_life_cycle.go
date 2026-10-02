@@ -20,6 +20,12 @@ func GetLifeCycleFromFourPillar(pillars *model.FourPillars) *model.FourPillars {
 // GetLifeCycleByRuleAndBranch returns the life stage of a branch, given the
 // stage of the Tiger branch (lifeCycleValue) and the direction of the cycle.
 func GetLifeCycleByRuleAndBranch(branchValue int, lifeCycleValue int, reverse bool) string {
+	return ConvertValueToLifeCycle(GetLifeCycleValueByRuleAndBranch(branchValue, lifeCycleValue, reverse))
+}
+
+// GetLifeCycleValueByRuleAndBranch is GetLifeCycleByRuleAndBranch returning the
+// stage value (1-12) instead of its name.
+func GetLifeCycleValueByRuleAndBranch(branchValue int, lifeCycleValue int, reverse bool) int {
 	offset := branchValue - 1
 	if reverse {
 		offset = -offset
@@ -28,5 +34,11 @@ func GetLifeCycleByRuleAndBranch(branchValue int, lifeCycleValue int, reverse bo
 	if valueToCal < 1 {
 		valueToCal += 12
 	}
-	return ConvertValueToLifeCycle(valueToCal)
+	return valueToCal
+}
+
+// GetLifeCycleValueOfStem returns the life stage value (1-12) of any Heavenly
+// Stem at a branch. Yang stems advance along the branches, Yin stems run against them.
+func GetLifeCycleValueOfStem(stemValue int, branchValue int) int {
+	return GetLifeCycleValueByRuleAndBranch(branchValue, GetLifeCycleRule(stemValue), stemValue%2 == 0)
 }

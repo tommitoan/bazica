@@ -1,0 +1,494 @@
+{
+ "terms": [
+  {
+   "code": "ten_god.friend",
+   "en": "Friend",
+   "vi": "Tỷ Kiên"
+  },
+  {
+   "code": "ten_god.rob_wealth",
+   "en": "Rob Wealth",
+   "vi": "Kiếp Tài"
+  },
+  {
+   "code": "ten_god.eating_god",
+   "en": "Eating God",
+   "vi": "Thực Thần"
+  },
+  {
+   "code": "ten_god.hurting_officer",
+   "en": "Hurting Officer",
+   "vi": "Thương Quan"
+  },
+  {
+   "code": "ten_god.indirect_wealth",
+   "en": "Indirect Wealth",
+   "vi": "Thiên Tài"
+  },
+  {
+   "code": "ten_god.direct_wealth",
+   "en": "Direct Wealth",
+   "vi": "Chính Tài"
+  },
+  {
+   "code": "ten_god.seven_killings",
+   "en": "Seven Killings",
+   "vi": "Thất Sát"
+  },
+  {
+   "code": "ten_god.direct_officer",
+   "en": "Direct Officer",
+   "vi": "Chính Quan"
+  },
+  {
+   "code": "ten_god.indirect_resource",
+   "en": "Indirect Resource",
+   "vi": "Thiên Ấn"
+  },
+  {
+   "code": "ten_god.direct_resource",
+   "en": "Direct Resource",
+   "vi": "Chính Ấn"
+  },
+  {
+   "code": "stage.birth",
+   "en": "Birth",
+   "vi": "Sinh"
+  },
+  {
+   "code": "stage.bath",
+   "en": "Bath",
+   "vi": "Mộc Dục"
+  },
+  {
+   "code": "stage.youth",
+   "en": "Youth",
+   "vi": "Quan Đới"
+  },
+  {
+   "code": "stage.thriving",
+   "en": "Thriving",
+   "vi": "Lâm Quan"
+  },
+  {
+   "code": "stage.prosperous",
+   "en": "Prosperous",
+   "vi": "Đế Vượng"
+  },
+  {
+   "code": "stage.weakening",
+   "en": "Weakening",
+   "vi": "Suy"
+  },
+  {
+   "code": "stage.sick",
+   "en": "Sick",
+   "vi": "Bệnh"
+  },
+  {
+   "code": "stage.death",
+   "en": "Death",
+   "vi": "Tử"
+  },
+  {
+   "code": "stage.grave",
+   "en": "Grave",
+   "vi": "Mộ"
+  },
+  {
+   "code": "stage.extinction",
+   "en": "Extinction",
+   "vi": "Tuyệt"
+  },
+  {
+   "code": "stage.conceived",
+   "en": "Conceived",
+   "vi": "Thai"
+  },
+  {
+   "code": "stage.nourishing",
+   "en": "Nourishing",
+   "vi": "Dưỡng"
+  },
+  {
+   "code": "element.wood",
+   "en": "Wood",
+   "vi": "Mộc"
+  },
+  {
+   "code": "element.fire",
+   "en": "Fire",
+   "vi": "Hỏa"
+  },
+  {
+   "code": "element.earth",
+   "en": "Earth",
+   "vi": "Thổ"
+  },
+  {
+   "code": "element.metal",
+   "en": "Metal",
+   "vi": "Kim"
+  },
+  {
+   "code": "element.water",
+   "en": "Water",
+   "vi": "Thủy"
+  },
+  {
+   "code": "polarity.yang",
+   "en": "Yang",
+   "vi": "Dương"
+  },
+  {
+   "code": "polarity.yin",
+   "en": "Yin",
+   "vi": "Âm"
+  },
+  {
+   "code": "nayin.sea_metal",
+   "en": "Sea metal",
+   "vi": "Hải Trung Kim"
+  },
+  {
+   "code": "nayin.furnace_fire",
+   "en": "Furnace fire",
+   "vi": "Lò Trung Hỏa"
+  },
+  {
+   "code": "nayin.forest_wood",
+   "en": "Forest wood",
+   "vi": "Đại Lâm Mộc"
+  },
+  {
+   "code": "nayin.road_earth",
+   "en": "Road earth",
+   "vi": "Lộ Bàng Thổ"
+  },
+  {
+   "code": "nayin.sword_metal",
+   "en": "Sword metal",
+   "vi": "Kiếm Phong Kim"
+  },
+  {
+   "code": "nayin.volcanic_fire",
+   "en": "Volcanic fire",
+   "vi": "Sơn Đầu Hỏa"
+  },
+  {
+   "code": "nayin.cave_water",
+   "en": "Cave water",
+   "vi": "Giản Hạ Thủy"
+  },
+  {
+   "code": "nayin.fortress_earth",
+   "en": "Fortress earth",
+   "vi": "Thành Đầu Thổ"
+  },
+  {
+   "code": "nayin.wax_metal",
+   "en": "Wax metal",
+   "vi": "Bạch Lạp Kim"
+  },
+  {
+   "code": "nayin.willow_wood",
+   "en": "Willow wood",
+   "vi": "Dương Liễu Mộc"
+  },
+  {
+   "code": "nayin.stream_water",
+   "en": "Stream water",
+   "vi": "Tuyền Trung Thủy"
+  },
+  {
+   "code": "nayin.roof_tiles_earth",
+   "en": "Roof tiles earth",
+   "vi": "Ốc Thượng Thổ"
+  },
+  {
+   "code": "nayin.lightning_fire",
+   "en": "Lightning fire",
+   "vi": "Tích Lịch Hỏa"
+  },
+  {
+   "code": "nayin.conifer_wood",
+   "en": "Conifer wood",
+   "vi": "Tùng Bách Mộc"
+  },
+  {
+   "code": "nayin.river_water",
+   "en": "River water",
+   "vi": "Trường Lưu Thủy"
+  },
+  {
+   "code": "nayin.sand_metal",
+   "en": "Sand metal",
+   "vi": "Sa Trung Kim"
+  },
+  {
+   "code": "nayin.forest_fire",
+   "en": "Forest fire",
+   "vi": "Sơn Hạ Hỏa"
+  },
+  {
+   "code": "nayin.meadow_wood",
+   "en": "Meadow wood",
+   "vi": "Bình Địa Mộc"
+  },
+  {
+   "code": "nayin.adobe_earth",
+   "en": "Adobe earth",
+   "vi": "Bích Thượng Thổ"
+  },
+  {
+   "code": "nayin.precious_metal",
+   "en": "Precious metal",
+   "vi": "Kim Bạch Kim"
+  },
+  {
+   "code": "nayin.lamp_fire",
+   "en": "Lamp fire",
+   "vi": "Phúc Đăng Hỏa"
+  },
+  {
+   "code": "nayin.sky_water",
+   "en": "Sky water",
+   "vi": "Thiên Hà Thủy"
+  },
+  {
+   "code": "nayin.highway_earth",
+   "en": "Highway earth",
+   "vi": "Đại Trạch Thổ"
+  },
+  {
+   "code": "nayin.jewellery_metal",
+   "en": "Jewellery metal",
+   "vi": "Thoa Xuyến Kim"
+  },
+  {
+   "code": "nayin.mulberry_wood",
+   "en": "Mulberry wood",
+   "vi": "Tang Đố Mộc"
+  },
+  {
+   "code": "nayin.rapids_water",
+   "en": "Rapids water",
+   "vi": "Đại Khê Thủy"
+  },
+  {
+   "code": "nayin.desert_earth",
+   "en": "Desert earth",
+   "vi": "Sa Trung Thổ"
+  },
+  {
+   "code": "nayin.sun_fire",
+   "en": "Sun fire",
+   "vi": "Thiên Thượng Hỏa"
+  },
+  {
+   "code": "nayin.pomegranate_wood",
+   "en": "Pomegranate wood",
+   "vi": "Thạch Lựu Mộc"
+  },
+  {
+   "code": "nayin.ocean_water",
+   "en": "Ocean water",
+   "vi": "Đại Hải Thủy"
+  },
+  {
+   "code": "star.thien_at_quy_nhan",
+   "en": "Heavenly Noble",
+   "vi": "Thiên Ất Quý Nhân"
+  },
+  {
+   "code": "star.quoc_an",
+   "en": "National Seal",
+   "vi": "Quốc Ấn"
+  },
+  {
+   "code": "star.van_xuong",
+   "en": "Literary Star",
+   "vi": "Văn Xương"
+  },
+  {
+   "code": "star.phuc_tinh",
+   "en": "Fortune Star",
+   "vi": "Phúc Tinh"
+  },
+  {
+   "code": "star.thai_cuc_quy_nhan",
+   "en": "Supreme Noble",
+   "vi": "Thái Cực Quý Nhân"
+  },
+  {
+   "code": "star.tue_loc",
+   "en": "Year Prosperity",
+   "vi": "Tuế Lộc"
+  },
+  {
+   "code": "star.kien_loc",
+   "en": "Month Prosperity",
+   "vi": "Kiến Lộc"
+  },
+  {
+   "code": "star.toa_loc",
+   "en": "Day Prosperity",
+   "vi": "Tọa Lộc"
+  },
+  {
+   "code": "star.quy_loc",
+   "en": "Hour Prosperity",
+   "vi": "Quý Lộc"
+  },
+  {
+   "code": "star.am_loc",
+   "en": "Hidden Prosperity",
+   "vi": "Âm Lộc"
+  },
+  {
+   "code": "star.giap_loc",
+   "en": "Flanking Prosperity",
+   "vi": "Giáp Lộc"
+  },
+  {
+   "code": "star.duong_nhan",
+   "en": "Goat Blade",
+   "vi": "Dương Nhận"
+  },
+  {
+   "code": "star.phi_nhan",
+   "en": "Flying Blade",
+   "vi": "Phi Nhận"
+  },
+  {
+   "code": "star.kinh_duong",
+   "en": "Ram Blade",
+   "vi": "Kình Dương"
+  },
+  {
+   "code": "star.kim_du",
+   "en": "Golden Carriage",
+   "vi": "Kim Dư"
+  },
+  {
+   "code": "star.hoc_duong",
+   "en": "Study Hall",
+   "vi": "Học Đường"
+  },
+  {
+   "code": "star.vong_than",
+   "en": "Lost Spirit",
+   "vi": "Vong Thần"
+  },
+  {
+   "code": "star.kiep_sat",
+   "en": "Robbery Sha",
+   "vi": "Kiếp Sát"
+  },
+  {
+   "code": "star.dich_ma",
+   "en": "Travelling Horse",
+   "vi": "Dịch Mã"
+  },
+  {
+   "code": "star.tuong_tinh",
+   "en": "General Star",
+   "vi": "Tướng Tinh"
+  },
+  {
+   "code": "star.hoa_cai",
+   "en": "Canopy",
+   "vi": "Hoa Cái"
+  },
+  {
+   "code": "star.dao_hoa",
+   "en": "Peach Blossom",
+   "vi": "Đào Hoa"
+  },
+  {
+   "code": "star.tai_sat",
+   "en": "Disaster Sha",
+   "vi": "Tai Sát"
+  },
+  {
+   "code": "star.hong_loan",
+   "en": "Red Phoenix",
+   "vi": "Hồng Loan"
+  },
+  {
+   "code": "star.thien_hy",
+   "en": "Heavenly Joy",
+   "vi": "Thiên Hỷ"
+  },
+  {
+   "code": "star.giao",
+   "en": "Intersect",
+   "vi": "Giao"
+  },
+  {
+   "code": "star.cau",
+   "en": "Hook",
+   "vi": "Cấu"
+  },
+  {
+   "code": "star.nguyet_duc_quy_nhan",
+   "en": "Monthly Virtue Noble",
+   "vi": "Nguyệt Đức Quý Nhân"
+  },
+  {
+   "code": "star.thien_duc_quy_nhan",
+   "en": "Heavenly Virtue Noble",
+   "vi": "Thiên Đức Quý Nhân"
+  },
+  {
+   "code": "star.thien_y",
+   "en": "Heavenly Doctor",
+   "vi": "Thiên Y"
+  },
+  {
+   "code": "star.thap_ac_dai_bai",
+   "en": "Ten Evil Great Defeat",
+   "vi": "Thập Ác Đại Bại"
+  },
+  {
+   "code": "star.khoi_cuong",
+   "en": "Kui Gang",
+   "vi": "Khôi Cương"
+  },
+  {
+   "code": "star.tien_than",
+   "en": "Advancing Spirit",
+   "vi": "Tiến Thần"
+  },
+  {
+   "code": "star.kim_than",
+   "en": "Golden Spirit",
+   "vi": "Kim Thần"
+  },
+  {
+   "code": "star.am_duong_sai_thac",
+   "en": "Yin Yang Error",
+   "vi": "Âm Dương Sai Thác"
+  },
+  {
+   "code": "star.am_duong_sat",
+   "en": "Yin Yang Sha",
+   "vi": "Âm Dương Sát"
+  },
+  {
+   "code": "star.nhat_quy",
+   "en": "Day Noble",
+   "vi": "Nhật Quý"
+  },
+  {
+   "code": "star.luc_tu",
+   "en": "Six Elegances",
+   "vi": "Lục Tú"
+  },
+  {
+   "code": "star.khong_vong",
+   "en": "Void",
+   "vi": "Không Vong"
+  }
+ ]
+}
