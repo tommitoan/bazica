@@ -11,49 +11,92 @@ import (
 
 const dataPath = "../../"
 
-func summarize(p *model.FourPillars) string {
-	pillar := func(stem model.HeavenlyStem, branch model.EarthlyBranch, g model.GanZhi) string {
-		return fmt.Sprintf("%s/%s %s", stem.Spelling, branch.Spelling, g.Name)
-	}
-	return fmt.Sprintf("Y[%s] M[%s] D[%s] H[%s]",
-		pillar(p.YearPillar.HeavenlyStem, p.YearPillar.EarthlyBranch, p.YearPillar.GanZhi),
-		pillar(p.MonthPillar.HeavenlyStem, p.MonthPillar.EarthlyBranch, p.MonthPillar.GanZhi),
-		pillar(p.DayPillar.HeavenlyStem, p.DayPillar.EarthlyBranch, p.DayPillar.GanZhi),
-		pillar(p.HourPillar.HeavenlyStem, p.HourPillar.EarthlyBranch, p.HourPillar.GanZhi))
+func spellings(p *model.FourPillars) string {
+	return fmt.Sprintf("%s/%s %s/%s %s/%s %s/%s",
+		p.YearPillar.HeavenlyStem.Spelling, p.YearPillar.EarthlyBranch.Spelling,
+		p.MonthPillar.HeavenlyStem.Spelling, p.MonthPillar.EarthlyBranch.Spelling,
+		p.DayPillar.HeavenlyStem.Spelling, p.DayPillar.EarthlyBranch.Spelling,
+		p.HourPillar.HeavenlyStem.Spelling, p.HourPillar.EarthlyBranch.Spelling)
 }
 
-func TestGetFourPillars(t *testing.T) {
-	loc, err := time.LoadLocation("Asia/Ho_Chi_Minh")
-	if err != nil {
-		t.Fatal(err)
-	}
+func ganZhiNames(p *model.FourPillars) string {
+	return fmt.Sprintf("%s | %s | %s | %s",
+		p.YearPillar.GanZhi.Name, p.MonthPillar.GanZhi.Name, p.DayPillar.GanZhi.Name, p.HourPillar.GanZhi.Name)
+}
 
+// The expected values come from an independent implementation: Julian-day
+// arithmetic for the day pillar, the Five Tigers/Five Rats rules for the month
+// and hour stems, and the latest "initial" solar term for the month branch.
+// Year pillars follow the Lunar New Year, as documented in the README.
+func TestGetFourPillarsGolden(t *testing.T) {
 	tests := []struct {
 		name string
-		date time.Time
-		want string
+		date string // UTC, "2006-01-02 15:04"
+		want string // year month day hour as stem/branch
+	}{
+		{"start of supported range", "1900-01-01 12:00", "ji/hai bing/zi jia/xu geng/wu"},
+		{"Lunar New Year day 1900", "1900-02-19 12:00", "geng/zi wu/yin gui/hai wu/wu"},
+		{"before Lunar New Year 2001", "2001-01-23 12:00", "geng/chen ji/chou bing/xu jia/wu"},
+		{"early January belongs to the Rat month", "2024-01-03 12:00", "gui/mao jia/zi bing/yin jia/wu"},
+		{"Ox month after Minor Cold", "2024-01-10 12:00", "gui/mao yi/chou gui/you wu/wu"},
+		{"Ox month in a repaired data year", "2057-01-10 12:00", "bing/zi xin/chou ding/mao bing/wu"},
+		{"Rat month in a repaired data year", "2057-12-29 12:00", "ding/chou ren/zi geng/shen ren/wu"},
+		{"before Minor Cold in a repaired data year", "2041-01-03 12:00", "geng/shen wu/zi bing/shen jia/wu"},
+		{"after winter solstice", "2025-12-25 12:00", "yi/si wu/zi wu/chen wu/wu"},
+		{"last day of the year, late Rat hour", "2024-12-31 23:30", "jia/chen bing/zi geng/wu bing/zi"},
+		{"hour boundary 00:59", "2024-03-10 00:59", "jia/chen ding/mao gui/you ren/zi"},
+		{"hour boundary 01:00", "2024-03-10 01:00", "jia/chen ding/mao gui/you gui/chou"},
+		{"hour boundary 22:59", "2024-03-10 22:59", "jia/chen ding/mao gui/you gui/hai"},
+		{"hour boundary 23:00", "2024-03-10 23:00", "jia/chen ding/mao jia/xu jia/zi"},
+		{"hour boundary 23:59", "2024-03-10 23:59", "jia/chen ding/mao jia/xu jia/zi"},
+		{"two minutes before Minor Heat 2024", "2024-07-06 14:18", "jia/chen geng/wu xin/wei yi/wei"},
+		{"two minutes after Minor Heat 2024", "2024-07-06 14:22", "jia/chen xin/wei xin/wei yi/wei"},
+		{"Yin day master gui", "2020-03-01 12:00", "geng/zi wu/yin gui/mao wu/wu"},
+		{"Yin day master yi", "2020-03-03 12:00", "geng/zi wu/yin yi/si ren/wu"},
+		{"Yin day master ding", "2020-03-05 12:00", "geng/zi ji/mao ding/wei bing/wu"},
+		{"Yin day master ji", "2020-03-07 12:00", "geng/zi ji/mao ji/you geng/wu"},
+		{"Yin day master xin", "2020-03-09 12:00", "geng/zi ji/mao xin/hai jia/wu"},
+		{"end of supported range", "2099-12-31 23:30", "ji/wei bing/zi gui/mao ren/zi"},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			date, err := time.ParseInLocation("2006-01-02 15:04", tc.date, time.UTC)
+			if err != nil {
+				t.Fatal(err)
+			}
+			got, _, _, err := GetFourPillars(date, time.UTC, dataPath)
+			if err != nil {
+				t.Fatalf("GetFourPillars() error = %v", err)
+			}
+			if s := spellings(got); s != tc.want {
+				t.Errorf("GetFourPillars()\n got: %s\nwant: %s", s, tc.want)
+			}
+		})
+	}
+}
+
+func TestGetFourPillarsLocalClock(t *testing.T) {
+	loc, err := time.LoadLocation("Asia/Ho_Chi_Minh")
+	if err != nil {
+		t.Skipf("timezone database unavailable: %v", err)
+	}
+	tests := []struct {
+		name       string
+		date       time.Time
+		wantStems  string
+		wantGanZhi string
 	}{
 		{
-			"late Rat hour rolls to next day",
+			"late Rat hour rolls to the next day",
 			time.Date(1977, 7, 12, 23, 30, 0, 0, loc),
-			"Y[ding/si Desert earth] M[ding/wei Sky water] D[xin/wei Road earth] H[wu/zi Lightning fire]",
+			"ding/si ding/wei xin/wei wu/zi",
+			"Desert earth | Sky water | Road earth | Lightning fire",
 		},
 		{
-			"mid-year birth",
+			"evening birth",
 			time.Date(1995, 6, 8, 22, 5, 0, 0, loc),
-			"Y[yi/hai Volcanic fire] M[ren/wu Willow wood] D[geng/wu Road earth] H[ding/hai Roof tiles earth]",
-		},
-		{
-			// Winter Solstice 2025-12-21 15:03 UTC; the last ten days of
-			// December sit after it and previously caused an index panic.
-			"after winter solstice",
-			time.Date(2025, 12, 25, 12, 0, 0, 0, loc),
-			"Y[yi/si Lamp fire] M[wu/zi Lightning fire] D[wu/chen Forest wood] H[wu/wu Sun fire]",
-		},
-		{
-			"last day of the supported range",
-			time.Date(2099, 12, 31, 12, 0, 0, 0, loc),
-			"",
+			"yi/hai ren/wu geng/wu ding/hai",
+			"Volcanic fire | Willow wood | Road earth | Roof tiles earth",
 		},
 	}
 	for _, tc := range tests {
@@ -62,11 +105,11 @@ func TestGetFourPillars(t *testing.T) {
 			if err != nil {
 				t.Fatalf("GetFourPillars() error = %v", err)
 			}
-			if tc.want == "" {
-				return
+			if s := spellings(got); s != tc.wantStems {
+				t.Errorf("pillars\n got: %s\nwant: %s", s, tc.wantStems)
 			}
-			if s := summarize(got); s != tc.want {
-				t.Errorf("GetFourPillars()\n got: %s\nwant: %s", s, tc.want)
+			if s := ganZhiNames(got); s != tc.wantGanZhi {
+				t.Errorf("gan zhi\n got: %s\nwant: %s", s, tc.wantGanZhi)
 			}
 		})
 	}
