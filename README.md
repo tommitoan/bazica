@@ -108,8 +108,8 @@ func main() {
 ```
 ## Note
 ### Data Input Limitations:
-Due to the specific calculations and algorithms used in this package, it is currently designed to handle date inputs ranging from January 1, 1900, to December 31, 2100.   
-Dates before 1900 or after 2100 may fall outside the scope of supported calendar systems or lead to inaccurate results.
+Due to the specific calculations and algorithms used in this package, it is currently designed to handle date inputs ranging from January 1, 1900, to December 31, 2099. Dates outside this range return `model.ErrDateOutOfRange`.   
+Missing or unreadable `data/` files return `model.ErrDataUnavailable`.
 
 If you require calculations for dates outside this range, please consider alternative libraries or solutions.
 
