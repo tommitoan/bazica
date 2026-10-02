@@ -1,10 +1,8 @@
 package fourpillars
 
 import (
-	"encoding/json"
 	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
-	"log/slog"
 	"strings"
 	"time"
 )
@@ -82,7 +80,5 @@ func GetFourPillars(dateTime time.Time, loc *time.Location) (*model.FourPillars,
 	fourPillars.HourPillar.GanZhi.ElementName = mainElement
 	fourPillars.HourPillar.GanZhi.ElementValue = valueElement
 
-	jsonData, _ := json.Marshal(fourPillars)
-	slog.Info(string(jsonData))
 	return &fourPillars, passed, remaining, nil
 }
