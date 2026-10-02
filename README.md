@@ -37,41 +37,16 @@ Otherwise, run the following Go command to install the `bazica` package:
 
 ```sh
 go get -u github.com/tommitoan/bazica@latest
-
-go mod vendor # For fetching full model
 ```
 
-## Get Data 
+## Data
 
-> [!CAUTION]
-> You'll need to manually copy the relevant JSON files from the `data` folder into your project to utilize the data within your application.
+The solar term and Lunar New Year tables are embedded in the module (`go:embed`), so nothing has to be copied into your project and the library works from any working directory, including a vendored build or a container image with only the binary.
 
-This module provides data related to solar terms, zodiac signs, and the 60-year era cycle.
+The same tables are also published as JSON in the `data` folder if you want to use them elsewhere:
 
-For your convenience, the data is also summarized in JSON files and located in the `data` folder.
-
-To use this module:  
-Clone or copy this repository to your project directory.
-Access the JSON files located in the data folder.
-
-Example:
-```
-Before Install              
-├── your_project_folder
-│   ├── app
-│   ├── main.go
-│   ├── go.mod
-
-After Install and Clone `data` folder
-├── your_project_folder
-│   ├── app
-│   ├── data
-│   │   ├── lunar-new-year.json
-│   │   ├── solar-term.json
-│   │   ├── ...(updating)...
-│   ├── main.go
-│   ├── go.mod
-```
+- `data/solar-term.json`: the 24 solar terms for each year, in UTC.
+- `data/lunar-new-year.json`: the Lunar New Year date for each year.
 
 ## How to use
 
@@ -101,6 +76,7 @@ func main() {
 	chart, err := bazica.GetBaziChart(now, loc, gender)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 	jsonData, _ := json.Marshal(chart)
 	fmt.Println(string(jsonData))

@@ -8,21 +8,16 @@ import (
 	"time"
 )
 
-func GetBaziChart(dateTime time.Time, loc *time.Location, gender int, prefixPath ...string) (*model.BaziChart, error) {
+func GetBaziChart(dateTime time.Time, loc *time.Location, gender int) (*model.BaziChart, error) {
 	var baziChart model.BaziChart
 
-	var path string
-	if len(prefixPath) != 0 {
-		path = prefixPath[0]
-	}
-
-	fourPillar, passed, remaining, err := fourpillars.GetFourPillars(dateTime, loc, path)
+	fourPillar, passed, remaining, err := fourpillars.GetFourPillars(dateTime, loc)
 	if err != nil {
 		return nil, err
 	}
 	baziChart.FourPillar = ultis.GetLifeCycleFromFourPillar(fourPillar)
 
-	lucksPillar, err := luckpillars.GetLuckPillars(fourPillar, gender, passed, remaining, dateTime, path)
+	lucksPillar, err := luckpillars.GetLuckPillars(fourPillar, gender, passed, remaining, dateTime)
 	if err != nil {
 		return nil, err
 	}

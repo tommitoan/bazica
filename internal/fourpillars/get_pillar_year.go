@@ -3,16 +3,17 @@ package fourpillars
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/tommitoan/bazica/data"
 	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
-	"os"
 	"strings"
+	"sync"
 	"time"
 )
 
-func GetYearPillar(path string, dateTime time.Time) (*model.YearPillar, error) {
+func GetYearPillar(dateTime time.Time) (*model.YearPillar, error) {
 	// convert solar date time to get lunar year
-	lunarYear, err := GetLunarYear(path, dateTime)
+	lunarYear, err := GetLunarYear(dateTime)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +39,7 @@ func GetYearPillar(path string, dateTime time.Time) (*model.YearPillar, error) {
 	return &yearPillar, nil
 }
 
-func GetLunarYear(path string, dateTime time.Time) (int, error) {
+func GetLunarYear(dateTime time.Time) (int, error) {
 	// From 23:00 is new day (Rat hour)
 	dateTime = dateTime.Add(time.Hour)
 
@@ -46,7 +47,7 @@ func GetLunarYear(path string, dateTime time.Time) (int, error) {
 	solarMonth := dateTime.Month()
 	solarDay := dateTime.Day()
 
-	lunarData, err := getNewYearData(path)
+	lunarData, err := loadLunarNewYear()
 	if err != nil {
 		return 0, err
 	}
@@ -74,23 +75,14 @@ func GetLunarYear(path string, dateTime time.Time) (int, error) {
 	return lunarYear, nil
 }
 
-func getNewYearData(path string) (*model.LunarNewYearData, error) {
-	prefix := ultis.PrefixPath
-	if path != "" {
-		prefix = path
-	}
-
-	data, err := os.ReadFile(prefix + "data/lunar-new-year.json")
-	if err != nil {
-		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
-	}
-
+// loadLunarNewYear decodes the embedded table once; the result is read-only.
+var loadLunarNewYear = sync.OnceValues(func() (*model.LunarNewYearData, error) {
 	var lunarData model.LunarNewYearData
-	if err := json.Unmarshal(data, &lunarData); err != nil {
-		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
+	if err := json.Unmarshal(data.LunarNewYear, &lunarData); err != nil {
+		return nil, fmt.Errorf("%w: lunar-new-year.json: %v", model.ErrDataUnavailable, err)
 	}
 	if len(lunarData.LunarNewYearDates) == 0 {
 		return nil, fmt.Errorf("%w: lunar-new-year.json is empty", model.ErrDataUnavailable)
 	}
 	return &lunarData, nil
-}
+})

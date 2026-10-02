@@ -6,12 +6,12 @@ import (
 	"time"
 )
 
-func GetMonthPillar(path string, yearPillar *model.YearPillar, dateTime time.Time) (*model.MonthPillar, int, int, error) {
+func GetMonthPillar(yearPillar *model.YearPillar, dateTime time.Time) (*model.MonthPillar, int, int, error) {
 	var monthPillar model.MonthPillar
 	monthPillar.Month = int(dateTime.Month())
 
 	// Detect solar term
-	termName, passed, remaining, err := ultis.GetSolarTerm(path, dateTime)
+	termName, passed, remaining, err := ultis.GetSolarTerm(dateTime)
 	if err != nil {
 		return nil, 0, 0, err
 	}

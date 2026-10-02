@@ -3,9 +3,11 @@ package ultis
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/tommitoan/bazica/data"
 	"github.com/tommitoan/bazica/model"
-	"os"
 	"slices"
+	"strconv"
+	"sync"
 	"time"
 )
 
@@ -39,13 +41,24 @@ var MidpointTerms = []string{
 	model.WinterSolstice,
 }
 
-func GetSolarTerm(path string, dateTime time.Time) (string, int, int, error) {
-	year := dateTime.Year()
-	current, next, previous, err := GetSolarTermsByYear(fmt.Sprint(year), fmt.Sprint(year+1), fmt.Sprint(year-1), path)
+// GetSolarTerm returns the solar term containing dateTime together with the
+// minutes elapsed since the preceding initial term and the minutes remaining
+// until the next one.
+func GetSolarTerm(dateTime time.Time) (string, int, int, error) {
+	years, err := loadSolarTerms()
 	if err != nil {
 		return "", 0, 0, err
 	}
-	return findSolarTerm(dateTime, current, next, previous)
+	year := dateTime.Year()
+	var terms [3][]solarTermTime
+	for i, y := range []int{year, year + 1, year - 1} {
+		t, ok := years[y]
+		if !ok {
+			return "", 0, 0, fmt.Errorf("%w: no solar term data for %d", model.ErrDateOutOfRange, y)
+		}
+		terms[i] = t
+	}
+	return findSolarTerm(dateTime, terms[0], terms[1], terms[2])
 }
 
 type solarTermTime struct {
@@ -97,27 +110,18 @@ const solarTermLayout = "2006-01-02 15:04:05.999999999-07:00"
 // findSolarTerm locates the solar term containing t. It returns the term name,
 // the minutes elapsed since the preceding "initial" term (jie) and the minutes
 // remaining until the next one; both bound the current Ba-zi month.
-func findSolarTerm(t time.Time, currentYear, nextYear, previousYear model.SolarTermYear) (string, int, int, error) {
-	terms, err := parseSolarTerms(currentYear)
-	if err != nil {
-		return "", 0, 0, err
-	}
-
+func findSolarTerm(t time.Time, terms, nextYear, previousYear []solarTermTime) (string, int, int, error) {
 	// nextInitial resolves the first initial term after index i, which wraps
 	// into the following year for the last terms of December.
-	nextInitial := func(i int) (time.Time, error) {
+	nextInitial := func(i int) time.Time {
 		idx := i + 1
 		if slices.Contains(InititalTerms, terms[i].name) {
 			idx = i + 2
 		}
 		if idx < len(terms) {
-			return terms[idx].time, nil
+			return terms[idx].time
 		}
-		following, err := parseSolarTerms(nextYear)
-		if err != nil {
-			return time.Time{}, err
-		}
-		return following[idx-len(terms)].time, nil
+		return nextYear[idx-len(terms)].time
 	}
 
 	for i, term := range terms {
@@ -129,65 +133,33 @@ func findSolarTerm(t time.Time, currentYear, nextYear, previousYear model.SolarT
 		if slices.Contains(MidpointTerms, term.name) {
 			passed += int(term.time.Sub(terms[i-1].time).Minutes())
 		}
-		boundary, err := nextInitial(i)
-		if err != nil {
-			return "", 0, 0, err
-		}
-		return term.name, passed, int(boundary.Sub(t).Minutes()), nil
+		return term.name, passed, int(nextInitial(i).Sub(t).Minutes()), nil
 	}
 
 	// t precedes the first term of the year: it still belongs to the month
 	// opened by Major Snow of the previous year.
-	previous, err := parseSolarTerms(previousYear)
-	if err != nil {
-		return "", 0, 0, err
-	}
-	majorSnow := previous[len(previous)-2].time
-	passed := int(t.Sub(majorSnow).Minutes())
-	remaining := int(terms[0].time.Sub(t).Minutes())
-	return model.MajorSnow, passed, remaining, nil
+	majorSnow := previousYear[len(previousYear)-2].time
+	return model.MajorSnow, int(t.Sub(majorSnow).Minutes()), int(terms[0].time.Sub(t).Minutes()), nil
 }
 
-var PrefixPath string
-
-// GetSolarTermsByYear returns the solar term data of the requested year and its
-// neighbours. A year without data yields model.ErrDateOutOfRange.
-func GetSolarTermsByYear(year, nextYear, previousYear string, path ...string) (model.SolarTermYear, model.SolarTermYear, model.SolarTermYear, error) {
-	var prefix string
-	if len(path) != 0 {
-		prefix = path[0]
+// loadSolarTerms decodes the embedded table once. The returned map is shared
+// and must be treated as read-only.
+var loadSolarTerms = sync.OnceValues(func() (map[int][]solarTermTime, error) {
+	var raw map[string]model.CombinedData
+	if err := json.Unmarshal(data.SolarTerm, &raw); err != nil {
+		return nil, fmt.Errorf("%w: solar-term.json: %v", model.ErrDataUnavailable, err)
 	}
-	data, err := getSolarTermData(prefix)
-	if err != nil {
-		return model.SolarTermYear{}, model.SolarTermYear{}, model.SolarTermYear{}, err
-	}
-	var out [3]model.SolarTermYear
-	for i, y := range []string{year, nextYear, previousYear} {
-		entry, ok := data[y]
-		if !ok {
-			return model.SolarTermYear{}, model.SolarTermYear{}, model.SolarTermYear{}, fmt.Errorf("%w: no solar term data for %s", model.ErrDateOutOfRange, y)
+	years := make(map[int][]solarTermTime, len(raw))
+	for key, entry := range raw {
+		year, err := strconv.Atoi(key)
+		if err != nil {
+			return nil, fmt.Errorf("%w: solar-term.json: year %q", model.ErrDataUnavailable, key)
 		}
-		out[i] = entry.Data
+		terms, err := parseSolarTerms(entry.Data)
+		if err != nil {
+			return nil, err
+		}
+		years[year] = terms
 	}
-	return out[0], out[1], out[2], nil
-}
-
-func getSolarTermData(path string) (map[string]model.CombinedData, error) {
-	prefix := PrefixPath
-	if path != "" {
-		prefix = path
-	}
-
-	data, err := os.ReadFile(prefix + "data/solar-term.json")
-	if err != nil {
-		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
-	}
-
-	if err := json.Unmarshal(data, &model.TempCombinedData); err != nil {
-		return nil, fmt.Errorf("%w: %v", model.ErrDataUnavailable, err)
-	}
-	if model.TempCombinedData == nil {
-		return nil, fmt.Errorf("%w: solar-term.json is empty", model.ErrDataUnavailable)
-	}
-	return model.TempCombinedData, nil
-}
+	return years, nil
+})
