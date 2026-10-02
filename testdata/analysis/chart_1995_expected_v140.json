@@ -99,9 +99,9 @@
     "heaven_earth_clash": false,
     "stars": [
      {
-      "code": "star.thien_duc_quy_nhan",
-      "en": "Heavenly Virtue Noble",
-      "vi": "Thiên Đức Quý Nhân"
+      "code": "star.quoc_an",
+      "en": "National Seal",
+      "vi": "Quốc Ấn"
      },
      {
       "code": "star.van_xuong",
@@ -109,19 +109,19 @@
       "vi": "Văn Xương"
      },
      {
-      "code": "star.quoc_an",
-      "en": "National Seal",
-      "vi": "Quốc Ấn"
+      "code": "star.kiep_sat",
+      "en": "Robbery Sha",
+      "vi": "Kiếp Sát"
+     },
+     {
+      "code": "star.thien_duc_quy_nhan",
+      "en": "Heavenly Virtue Noble",
+      "vi": "Thiên Đức Quý Nhân"
      },
      {
       "code": "star.khong_vong",
       "en": "Void",
       "vi": "Không Vong"
-     },
-     {
-      "code": "star.kiep_sat",
-      "en": "Robbery Sha",
-      "vi": "Kiếp Sát"
      }
     ]
    }
@@ -235,9 +235,9 @@
       "vi": "Văn Xương"
      },
      {
-      "code": "star.tuong_tinh",
-      "en": "General Star",
-      "vi": "Tướng Tinh"
+      "code": "star.phuc_tinh",
+      "en": "Fortune Star",
+      "vi": "Phúc Tinh"
      },
      {
       "code": "star.thai_cuc_quy_nhan",
@@ -245,9 +245,9 @@
       "vi": "Thái Cực Quý Nhân"
      },
      {
-      "code": "star.phuc_tinh",
-      "en": "Fortune Star",
-      "vi": "Phúc Tinh"
+      "code": "star.tuong_tinh",
+      "en": "General Star",
+      "vi": "Tướng Tinh"
      }
     ]
    }
@@ -357,9 +357,9 @@
       "vi": "Văn Xương"
      },
      {
-      "code": "star.tuong_tinh",
-      "en": "General Star",
-      "vi": "Tướng Tinh"
+      "code": "star.phuc_tinh",
+      "en": "Fortune Star",
+      "vi": "Phúc Tinh"
      },
      {
       "code": "star.thai_cuc_quy_nhan",
@@ -367,9 +367,9 @@
       "vi": "Thái Cực Quý Nhân"
      },
      {
-      "code": "star.phuc_tinh",
-      "en": "Fortune Star",
-      "vi": "Phúc Tinh"
+      "code": "star.tuong_tinh",
+      "en": "General Star",
+      "vi": "Tướng Tinh"
      }
     ]
    }
@@ -486,9 +486,9 @@
       "vi": "Văn Xương"
      },
      {
-      "code": "star.tuong_tinh",
-      "en": "General Star",
-      "vi": "Tướng Tinh"
+      "code": "star.phuc_tinh",
+      "en": "Fortune Star",
+      "vi": "Phúc Tinh"
      },
      {
       "code": "star.thai_cuc_quy_nhan",
@@ -496,9 +496,9 @@
       "vi": "Thái Cực Quý Nhân"
      },
      {
-      "code": "star.phuc_tinh",
-      "en": "Fortune Star",
-      "vi": "Phúc Tinh"
+      "code": "star.tuong_tinh",
+      "en": "General Star",
+      "vi": "Tướng Tinh"
      }
     ]
    }

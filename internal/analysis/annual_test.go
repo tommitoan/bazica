@@ -60,7 +60,7 @@ func TestAnnualPillarsRequiresAChart(t *testing.T) {
 
 func TestAttachLuckSkipsAChartWithoutLuckPillars(t *testing.T) {
 	chart := chartOf(chart1995)
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatalf("Attach() without luck pillars: %v", err)
 	}
 }
@@ -76,7 +76,7 @@ func TestAttachLuckRejectsInvalidLuckPillars(t *testing.T) {
 		lp.GanZhi.Name = "Wax metal"
 		mutate(lp)
 		chart.LuckPillars = &model.LuckPillars{LuckPillars: []*model.LuckPillar{lp}}
-		if err := Attach(chart); !errors.Is(err, errInvalidPillar) {
+		if err := Attach(chart, model.GenderMale); !errors.Is(err, errInvalidPillar) {
 			t.Errorf("%s: error = %v, want errInvalidPillar", name, err)
 		}
 	}
@@ -90,7 +90,7 @@ func TestAttachLuckAgesAndFlags(t *testing.T) {
 	lp := &model.LuckPillar{Number: 1, HeavenlyStem: model.HeavenlyStem{Value: 8}, EarthlyBranch: model.EarthlyBranch{Value: 4}, YearStart: 1996, YearEnd: 2005}
 	lp.GanZhi.Name = "Wax metal"
 	chart.LuckPillars = &model.LuckPillars{LuckPillars: []*model.LuckPillar{lp}}
-	if err := Attach(chart); err != nil {
+	if err := Attach(chart, model.GenderMale); err != nil {
 		t.Fatal(err)
 	}
 	a := lp.Analysis
