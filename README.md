@@ -83,6 +83,55 @@ func main() {
 	fmt.Println(string(jsonData))
 }
 ```
+## Analysis
+
+From v1.4.0 every chart also carries derived facts under an `analysis` key. The fields that existed in v1.3.0 are unchanged, and every added key is named `analysis`, so existing clients keep working.
+
+| Where | Field | Meaning |
+|---|---|---|
+| each natal pillar | `ten_god` | stem against the Day Master (`null` on the day pillar) |
+| | `stem_element`, `branch_element`, `nayin` | five elements and the Nayin |
+| | `stem_stage_at_own_branch`, `stem_stage_at_month_branch`, `day_master_stage` | the twelve life stages |
+| | `hidden_stems` | stems hidden in the branch, main qi first, each with its Ten God and stage |
+| | `is_void`, `heaven_earth_clash` | void branch and clash flags |
+| | `stars` | verified stars only, in a fixed order (empty list when none) |
+| each luck pillar | `age_start`, `age_end` | nominal age range |
+| | `ten_god`, `nayin`, `stem_stage_at_own_branch`, `hidden_stems`, `heaven_earth_clash` | as above |
+| chart | `day_master`, `void_branches` | the Day Master and the two void branches |
+| | `thai_nguyen`, `thai_tuc`, `life_palace` | conception, gestation and life palace pillars with their Nayin |
+| | `element_counts` | unweighted counts of stems, branches and hidden stems per element |
+| | `day_master_strength`, `useful_god` | reserved, always `null` |
+
+Every named concept (Ten God, life stage, element, polarity, Nayin, star) is an object with a stable `code` and an English and a Vietnamese label:
+
+```json
+{"code": "ten_god.hurting_officer", "en": "Hurting Officer", "vi": "Thương Quan"}
+```
+
+Switch on `code`, not on a label. A UI can show either language without recalculating the chart.
+
+`GetAnnualPillars(chart, fromYear, count)` returns the pillar of each year with its Ten God, life stage, nominal age, the luck pillar it falls in and the clash flag:
+
+```go
+chart, _ := bazica.GetBaziChart(birth, loc, model.GenderMale)
+annual, err := bazica.GetAnnualPillars(chart, 2026, 10)
+if err != nil { // model.ErrInvalidYearRange
+	return err
+}
+for _, y := range annual.AnnualPillars {
+	fmt.Println(y.Year, y.NominalAge, y.HeavenlyStem.Name, y.EarthlyBranch.Name, y.TenGod.EN)
+}
+```
+
+`fromYear` may not precede the year pillar's year and the years must lie within 1900 to 2099.
+
+### Analysis conventions
+- **Nominal age**: the year of the year pillar is age 1. For a January birth before the Lunar New Year the year pillar belongs to the previous year, so ages count from there.
+- **Stars**: only stars whose rules were verified against reference charts are reported. Other stars are never guessed.
+- **Life palace**: Rat and Ox are counted before Tiger when the stem is derived, which differs from the classical month order.
+- **Heaven-clash/earth-clash**: directional. A cell is flagged when its stem overcomes another natal pillar's stem with the same polarity and their branches are opposite. Earth stems take part.
+- **Strength and Useful God**: not computed.
+
 ## Note
 ### Data Input Limitations:
 Due to the specific calculations and algorithms used in this package, it is currently designed to handle date inputs ranging from January 1, 1900, to December 31, 2099. Dates outside this range return `model.ErrDateOutOfRange`.   
