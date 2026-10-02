@@ -65,23 +65,16 @@ func stripKeys(node any, keys ...string) {
 	}
 }
 
-// The fixture is the contract shared with bazica-web. Luck pillar analysis and
-// stars are not produced yet, so they are removed from the expected side.
+// The fixture is the contract shared with bazica-web. Stars are not evaluated
+// yet, so they are removed from both sides.
 func TestAnalysisMatchesTheSharedFixture(t *testing.T) {
 	got := referenceChart(t)
 	want := loadFixture(t, "chart_1995_expected_v140.json")
-
-	luck := want["luck_pillars"].(map[string]any)["luck_pillars"].([]any)
-	for _, lp := range luck {
-		delete(lp.(map[string]any), "analysis")
-	}
 	stripKeys(got, "stars")
 	stripKeys(want, "stars")
 
 	if !reflect.DeepEqual(got, want) {
-		gotJSON, _ := json.MarshalIndent(got, "", " ")
-		wantJSON, _ := json.MarshalIndent(want, "", " ")
-		t.Errorf("chart differs from fixture\ngot:  %s\nwant: %s", firstDifference(gotJSON, wantJSON), "(see fixture)")
+		t.Errorf("chart differs from fixture near:\n%s", firstDifference(mustJSON(t, got), mustJSON(t, want)))
 	}
 }
 
