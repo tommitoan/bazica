@@ -1,10 +1,8 @@
 package luckpillars
 
 import (
-	"fmt"
 	"github.com/tommitoan/bazica/internal/ultis"
 	"github.com/tommitoan/bazica/model"
-	"log/slog"
 	"strings"
 	"time"
 )
@@ -46,7 +44,6 @@ func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining in
 		incrementRule = -1
 		age = passed
 	}
-	slog.Info(fmt.Sprintf("LuckPillars increment rule: %v", incrementRule))
 
 	// Calculate the remaining 11 luck pillars (excluding age and year)
 	var branchValue int = fourPillars.MonthPillar.EarthlyBranch.Value
