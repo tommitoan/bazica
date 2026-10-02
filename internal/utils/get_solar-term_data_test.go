@@ -46,6 +46,45 @@ func TestSolarTermDataIntegrity(t *testing.T) {
 	}
 }
 
+// Lunar years last 12 or 13 lunations, which is 353-355 or 383-385 days.
+func TestLunarNewYearGaps(t *testing.T) {
+	var data model.LunarNewYearData
+	if err := json.Unmarshal(dataTables.LunarNewYear, &data); err != nil {
+		t.Fatal(err)
+	}
+	dates := map[int]time.Time{}
+	for year := 1900; year <= 2099; year++ {
+		d, err := time.Parse("2006-01-02", strconv.Itoa(year)+"-"+data.LunarNewYearDates[strconv.Itoa(year)])
+		if err != nil {
+			t.Fatalf("%d: %v", year, err)
+		}
+		dates[year] = d
+	}
+	for year := 1900; year < 2099; year++ {
+		gap := int(dates[year+1].Sub(dates[year]).Hours() / 24)
+		if !(gap >= 353 && gap <= 355) && !(gap >= 383 && gap <= 385) {
+			t.Errorf("%d to %d: %d days between Lunar New Years", year, year+1, gap)
+		}
+	}
+}
+
+// A handful of widely published dates, to catch a table keyed by the wrong year.
+func TestLunarNewYearKnownDates(t *testing.T) {
+	var data model.LunarNewYearData
+	if err := json.Unmarshal(dataTables.LunarNewYear, &data); err != nil {
+		t.Fatal(err)
+	}
+	known := map[int]string{
+		1900: "01-31", 1949: "01-29", 1950: "02-17", 1958: "02-18", 1985: "02-20",
+		1990: "01-27", 1995: "01-31", 2000: "02-05", 2020: "01-25", 2034: "02-19",
+	}
+	for year, want := range known {
+		if got := data.LunarNewYearDates[strconv.Itoa(year)]; got != want {
+			t.Errorf("%d: Lunar New Year is %s, want %s", year, got, want)
+		}
+	}
+}
+
 func TestLunarNewYearDataIntegrity(t *testing.T) {
 	var data model.LunarNewYearData
 	if err := json.Unmarshal(dataTables.LunarNewYear, &data); err != nil {

@@ -33,7 +33,11 @@ func TestGetFourPillarsGolden(t *testing.T) {
 		want string // year month day hour as stem/branch
 	}{
 		{"start of supported range", "1900-01-01 12:00", "ji/hai bing/zi jia/xu geng/wu"},
-		{"Lunar New Year day 1900", "1900-02-19 12:00", "geng/zi wu/yin gui/hai wu/wu"},
+		{"after Lunar New Year 1900", "1900-02-19 12:00", "geng/zi wu/yin gui/hai wu/wu"},
+		{"after Lunar New Year and Lichun 1995", "1995-02-10 12:00", "yi/hai wu/yin ren/shen bing/wu"},
+		{"shortly after Lunar New Year 1958", "1958-02-20 12:00", "wu/xu jia/yin wu/chen wu/wu"},
+		{"after Lunar New Year 1985", "1985-02-25 12:00", "yi/chou wu/yin yi/wei ren/wu"},
+		{"before Lunar New Year 1990", "1990-01-25 12:00", "ji/si ding/chou geng/yin ren/wu"},
 		{"before Lunar New Year 2001", "2001-01-23 12:00", "geng/chen ji/chou bing/xu jia/wu"},
 		{"early January belongs to the Rat month", "2024-01-03 12:00", "gui/mao jia/zi bing/yin jia/wu"},
 		{"Ox month after Minor Cold", "2024-01-10 12:00", "gui/mao yi/chou gui/you wu/wu"},

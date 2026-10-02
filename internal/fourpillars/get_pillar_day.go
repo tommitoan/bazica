@@ -6,32 +6,33 @@ import (
 	"time"
 )
 
-func GetDayPillar(dateTime time.Time, loc *time.Location) (*model.DayPillar, error) {
+// dayCountEpoch is 1900-01-01, a Jia Xu day.
+var dayCountEpoch = time.Date(1900, 1, 1, 0, 0, 0, 0, time.UTC)
+
+// GetDayPillar returns the day pillar for the wall-clock date of dateTime in its
+// own location.
+func GetDayPillar(dateTime time.Time) (*model.DayPillar, error) {
 	var dayPillar model.DayPillar
 	dayPillar.Day = dateTime.Day()
 
-	// From 23:00 is new day (Rat hour)
-	dateTime = dateTime.Add(time.Hour)
-	dateTime = dateTime.In(loc)
-
-	milestone := time.Date(1900, 1, 1, 0, 0, 0, 0, loc)
-	num := dateTime.Sub(milestone).Hours() / 24.0
+	// Count whole calendar days since the epoch. Using civil dates instead of
+	// elapsed time keeps the count exact across offset changes.
+	year, month, day := utils.BirthCalendarDate(dateTime)
+	num := int(time.Date(year, month, day, 0, 0, 0, 0, time.UTC).Sub(dayCountEpoch).Hours() / 24)
 
 	// Get day stem
-	stemRule := (int(num) + 1) % 10
+	stemRule := (num + 1) % 10
 	if stemRule < 1 {
 		stemRule = stemRule + 10
 	}
-	stem := utils.CalculateHeavenlyStem(stemRule)
-	dayPillar.HeavenlyStem = stem
+	dayPillar.HeavenlyStem = utils.CalculateHeavenlyStem(stemRule)
 
 	// Get day branch
-	branchRule := (int(num) - 3) % 12
+	branchRule := (num - 3) % 12
 	if branchRule < 1 {
 		branchRule = branchRule + 12
 	}
-	branch := utils.CalculateEarthlyBranch(branchRule)
-	dayPillar.EarthlyBranch = branch
+	dayPillar.EarthlyBranch = utils.CalculateEarthlyBranch(branchRule)
 
 	return &dayPillar, nil
 }

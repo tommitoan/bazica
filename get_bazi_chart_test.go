@@ -76,6 +76,91 @@ func TestGetBaziChartJSONFieldNames(t *testing.T) {
 	}
 }
 
+// dateTime is read as wall-clock time in loc, whichever zone it was built in.
+func TestGetBaziChartReadsDateTimeInLoc(t *testing.T) {
+	loc, err := time.LoadLocation("Asia/Ho_Chi_Minh")
+	if err != nil {
+		t.Skipf("timezone database unavailable: %v", err)
+	}
+	local := time.Date(2024, 3, 11, 3, 0, 0, 0, loc)
+	instantInUTC := local.UTC()
+
+	want, err := GetBaziChart(local, loc, model.GenderMale)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got, err := GetBaziChart(instantInUTC, loc, model.GenderMale)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if g, w := got.FourPillar.HourPillar.EarthlyBranch.Spelling, want.FourPillar.HourPillar.EarthlyBranch.Spelling; g != w {
+		t.Errorf("hour branch = %s, want %s", g, w)
+	}
+	if g, w := got.FourPillar.DayPillar.HeavenlyStem.Spelling, want.FourPillar.DayPillar.HeavenlyStem.Spelling; g != w {
+		t.Errorf("day stem = %s, want %s", g, w)
+	}
+	if got.FourPillar.HourPillar.Hour.Hour != 3 {
+		t.Errorf("hour = %d, want 3", got.FourPillar.HourPillar.Hour.Hour)
+	}
+
+	// A nil location keeps the zone the time already carries.
+	nilLoc, err := GetBaziChart(local, nil, model.GenderMale)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if nilLoc.FourPillar.HourPillar.EarthlyBranch.Spelling != want.FourPillar.HourPillar.EarthlyBranch.Spelling {
+		t.Error("nil loc should behave like the time's own location")
+	}
+}
+
+func TestGetBaziChartRejectsInvalidGender(t *testing.T) {
+	for _, g := range []int{-1, 2, 7} {
+		chart, err := GetBaziChart(time.Date(2000, 6, 1, 12, 0, 0, 0, time.UTC), time.UTC, g)
+		if !errors.Is(err, model.ErrInvalidGender) || chart != nil {
+			t.Errorf("gender %d: got chart=%v err=%v, want ErrInvalidGender", g, chart, err)
+		}
+	}
+}
+
+// Every pillar of every chart must be a valid Sexagenary pair (stem and branch
+// share polarity), and every field must be populated.
+func TestGetBaziChartInvariants(t *testing.T) {
+	step := 37*time.Hour + 11*time.Minute
+	count := 0
+	for d := time.Date(1900, 1, 2, 0, 0, 0, 0, time.UTC); d.Year() < 2099; d = d.Add(step) {
+		chart, err := GetBaziChart(d, time.UTC, int(d.Unix()%2))
+		if err != nil {
+			t.Fatalf("%s: %v", d.Format(time.RFC3339), err)
+		}
+		fp := chart.FourPillar
+		for name, p := range map[string]struct {
+			stem   model.HeavenlyStem
+			branch model.EarthlyBranch
+			gz     model.GanZhi
+			lc     string
+		}{
+			"year":  {fp.YearPillar.HeavenlyStem, fp.YearPillar.EarthlyBranch, fp.YearPillar.GanZhi, fp.YearPillar.LifeCycle},
+			"month": {fp.MonthPillar.HeavenlyStem, fp.MonthPillar.EarthlyBranch, fp.MonthPillar.GanZhi, fp.MonthPillar.LifeCycle},
+			"day":   {fp.DayPillar.HeavenlyStem, fp.DayPillar.EarthlyBranch, fp.DayPillar.GanZhi, fp.DayPillar.LifeCycle},
+			"hour":  {fp.HourPillar.HeavenlyStem, fp.HourPillar.EarthlyBranch, fp.HourPillar.GanZhi, fp.HourPillar.LifeCycle},
+		} {
+			if p.stem.Value == 0 || p.branch.Value == 0 || p.stem.Value%2 != p.branch.Value%2 {
+				t.Fatalf("%s %s pillar is not a valid pair: stem %d branch %d", d.Format(time.RFC3339), name, p.stem.Value, p.branch.Value)
+			}
+			if p.gz.Name == "" || p.lc == "" {
+				t.Fatalf("%s %s pillar is missing GanZhi or life cycle", d.Format(time.RFC3339), name)
+			}
+		}
+		if n := len(chart.LuckPillars.LuckPillars); n != 12 {
+			t.Fatalf("%s: %d luck pillars", d.Format(time.RFC3339), n)
+		}
+		count++
+	}
+	if count < 15000 {
+		t.Fatalf("only %d dates checked", count)
+	}
+}
+
 func TestGetBaziChartErrors(t *testing.T) {
 	tests := []struct {
 		name    string

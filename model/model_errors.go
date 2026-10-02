@@ -10,4 +10,13 @@ var (
 	// ErrDataUnavailable is returned when the bundled calendar data cannot be
 	// read or decoded.
 	ErrDataUnavailable = errors.New("bazica: calendar data unavailable")
+
+	// ErrInvalidGender is returned when the gender is neither GenderFemale nor GenderMale.
+	ErrInvalidGender = errors.New("bazica: gender must be 0 (female) or 1 (male)")
+)
+
+// Gender values accepted by GetBaziChart.
+const (
+	GenderFemale = 0
+	GenderMale   = 1
 )
