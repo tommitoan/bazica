@@ -6,7 +6,13 @@ import (
 	"time"
 )
 
+// GetFourPillars computes the four pillars for the wall-clock time of dateTime
+// in loc. A nil loc keeps the location dateTime already carries.
 func GetFourPillars(dateTime time.Time, loc *time.Location) (*model.FourPillars, int, int, error) {
+	if loc != nil {
+		dateTime = dateTime.In(loc)
+	}
+
 	yearPillar, err := GetYearPillar(dateTime)
 	if err != nil {
 		return nil, 0, 0, err
@@ -19,7 +25,7 @@ func GetFourPillars(dateTime time.Time, loc *time.Location) (*model.FourPillars,
 	}
 	monthPillar.GanZhi = utils.GanZhiOf(monthPillar.HeavenlyStem, monthPillar.EarthlyBranch)
 
-	dayPillar, err := GetDayPillar(dateTime, loc)
+	dayPillar, err := GetDayPillar(dateTime)
 	if err != nil {
 		return nil, 0, 0, err
 	}

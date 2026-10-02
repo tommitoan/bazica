@@ -41,11 +41,7 @@ func GetYearPillar(dateTime time.Time) (*model.YearPillar, error) {
 
 func GetLunarYear(dateTime time.Time) (int, error) {
 	// From 23:00 is new day (Rat hour)
-	dateTime = dateTime.Add(time.Hour)
-
-	solarYear := dateTime.Year()
-	solarMonth := dateTime.Month()
-	solarDay := dateTime.Day()
+	solarYear, solarMonth, solarDay := utils.BirthCalendarDate(dateTime)
 
 	lunarData, err := loadLunarNewYear()
 	if err != nil {
