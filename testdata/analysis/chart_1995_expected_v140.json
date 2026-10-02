@@ -1,0 +1,1686 @@
+{
+ "four_pillars": {
+  "year_pillar": {
+   "heavenly_stem": {
+    "name": "Yin Wood",
+    "value": 2,
+    "character": "乙",
+    "spelling": "yi"
+   },
+   "earthly_branch": {
+    "name": "Pig",
+    "value": 10,
+    "character": "亥",
+    "spelling": "hai"
+   },
+   "gan_zhi": {
+    "name": "Volcanic fire",
+    "element_name": "Fire",
+    "element_value": 2
+   },
+   "year": 1995,
+   "life_cycle": "Sick",
+   "analysis": {
+    "is_day_master": false,
+    "ten_god": {
+     "code": "ten_god.direct_wealth",
+     "en": "Direct Wealth",
+     "vi": "Chính Tài"
+    },
+    "stem_element": {
+     "code": "element.wood",
+     "en": "Wood",
+     "vi": "Mộc"
+    },
+    "branch_element": {
+     "code": "element.water",
+     "en": "Water",
+     "vi": "Thủy"
+    },
+    "nayin": {
+     "code": "nayin.volcanic_fire",
+     "en": "Volcanic fire",
+     "vi": "Sơn Đầu Hỏa"
+    },
+    "stem_stage_at_own_branch": {
+     "code": "stage.death",
+     "en": "Death",
+     "vi": "Tử"
+    },
+    "stem_stage_at_month_branch": {
+     "code": "stage.birth",
+     "en": "Birth",
+     "vi": "Sinh"
+    },
+    "day_master_stage": {
+     "code": "stage.sick",
+     "en": "Sick",
+     "vi": "Bệnh"
+    },
+    "hidden_stems": [
+     {
+      "heavenly_stem": {
+       "name": "Yang Water",
+       "value": 9,
+       "character": "壬",
+       "spelling": "ren"
+      },
+      "ten_god": {
+       "code": "ten_god.eating_god",
+       "en": "Eating God",
+       "vi": "Thực Thần"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.conceived",
+       "en": "Conceived",
+       "vi": "Thai"
+      }
+     },
+     {
+      "heavenly_stem": {
+       "name": "Yang Wood",
+       "value": 1,
+       "character": "甲",
+       "spelling": "jia"
+      },
+      "ten_god": {
+       "code": "ten_god.indirect_wealth",
+       "en": "Indirect Wealth",
+       "vi": "Thiên Tài"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.death",
+       "en": "Death",
+       "vi": "Tử"
+      }
+     }
+    ],
+    "is_void": true,
+    "heaven_earth_clash": false,
+    "stars": [
+     {
+      "code": "star.thien_duc_quy_nhan",
+      "en": "Heavenly Virtue Noble",
+      "vi": "Thiên Đức Quý Nhân"
+     },
+     {
+      "code": "star.van_xuong",
+      "en": "Literary Star",
+      "vi": "Văn Xương"
+     },
+     {
+      "code": "star.quoc_an",
+      "en": "National Seal",
+      "vi": "Quốc Ấn"
+     },
+     {
+      "code": "star.khong_vong",
+      "en": "Void",
+      "vi": "Không Vong"
+     },
+     {
+      "code": "star.kiep_sat",
+      "en": "Robbery Sha",
+      "vi": "Kiếp Sát"
+     }
+    ]
+   }
+  },
+  "month_pillar": {
+   "heavenly_stem": {
+    "name": "Yang Water",
+    "value": 9,
+    "character": "壬",
+    "spelling": "ren"
+   },
+   "earthly_branch": {
+    "name": "Horse",
+    "value": 5,
+    "character": "午",
+    "spelling": "wu"
+   },
+   "gan_zhi": {
+    "name": "Willow wood",
+    "element_name": "Wood",
+    "element_value": 3
+   },
+   "month": 6,
+   "life_cycle": "Bath",
+   "analysis": {
+    "is_day_master": false,
+    "ten_god": {
+     "code": "ten_god.eating_god",
+     "en": "Eating God",
+     "vi": "Thực Thần"
+    },
+    "stem_element": {
+     "code": "element.water",
+     "en": "Water",
+     "vi": "Thủy"
+    },
+    "branch_element": {
+     "code": "element.fire",
+     "en": "Fire",
+     "vi": "Hỏa"
+    },
+    "nayin": {
+     "code": "nayin.willow_wood",
+     "en": "Willow wood",
+     "vi": "Dương Liễu Mộc"
+    },
+    "stem_stage_at_own_branch": {
+     "code": "stage.conceived",
+     "en": "Conceived",
+     "vi": "Thai"
+    },
+    "stem_stage_at_month_branch": {
+     "code": "stage.conceived",
+     "en": "Conceived",
+     "vi": "Thai"
+    },
+    "day_master_stage": {
+     "code": "stage.bath",
+     "en": "Bath",
+     "vi": "Mộc Dục"
+    },
+    "hidden_stems": [
+     {
+      "heavenly_stem": {
+       "name": "Yin Fire",
+       "value": 4,
+       "character": "丁",
+       "spelling": "ding"
+      },
+      "ten_god": {
+       "code": "ten_god.direct_officer",
+       "en": "Direct Officer",
+       "vi": "Chính Quan"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.thriving",
+       "en": "Thriving",
+       "vi": "Lâm Quan"
+      }
+     },
+     {
+      "heavenly_stem": {
+       "name": "Yin Earth",
+       "value": 6,
+       "character": "己",
+       "spelling": "ji"
+      },
+      "ten_god": {
+       "code": "ten_god.direct_resource",
+       "en": "Direct Resource",
+       "vi": "Chính Ấn"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.thriving",
+       "en": "Thriving",
+       "vi": "Lâm Quan"
+      }
+     }
+    ],
+    "is_void": false,
+    "heaven_earth_clash": false,
+    "stars": [
+     {
+      "code": "star.thien_at_quy_nhan",
+      "en": "Heavenly Noble",
+      "vi": "Thiên Ất Quý Nhân"
+     },
+     {
+      "code": "star.van_xuong",
+      "en": "Literary Star",
+      "vi": "Văn Xương"
+     },
+     {
+      "code": "star.tuong_tinh",
+      "en": "General Star",
+      "vi": "Tướng Tinh"
+     },
+     {
+      "code": "star.thai_cuc_quy_nhan",
+      "en": "Supreme Noble",
+      "vi": "Thái Cực Quý Nhân"
+     },
+     {
+      "code": "star.phuc_tinh",
+      "en": "Fortune Star",
+      "vi": "Phúc Tinh"
+     }
+    ]
+   }
+  },
+  "day_pillar": {
+   "heavenly_stem": {
+    "name": "Yang Metal",
+    "value": 7,
+    "character": "庚",
+    "spelling": "geng"
+   },
+   "earthly_branch": {
+    "name": "Horse",
+    "value": 5,
+    "character": "午",
+    "spelling": "wu"
+   },
+   "gan_zhi": {
+    "name": "Road earth",
+    "element_name": "Earth",
+    "element_value": 5
+   },
+   "day": 8,
+   "life_cycle": "Bath",
+   "analysis": {
+    "is_day_master": true,
+    "ten_god": null,
+    "stem_element": {
+     "code": "element.metal",
+     "en": "Metal",
+     "vi": "Kim"
+    },
+    "branch_element": {
+     "code": "element.fire",
+     "en": "Fire",
+     "vi": "Hỏa"
+    },
+    "nayin": {
+     "code": "nayin.road_earth",
+     "en": "Road earth",
+     "vi": "Lộ Bàng Thổ"
+    },
+    "stem_stage_at_own_branch": {
+     "code": "stage.bath",
+     "en": "Bath",
+     "vi": "Mộc Dục"
+    },
+    "stem_stage_at_month_branch": {
+     "code": "stage.bath",
+     "en": "Bath",
+     "vi": "Mộc Dục"
+    },
+    "day_master_stage": {
+     "code": "stage.bath",
+     "en": "Bath",
+     "vi": "Mộc Dục"
+    },
+    "hidden_stems": [
+     {
+      "heavenly_stem": {
+       "name": "Yin Fire",
+       "value": 4,
+       "character": "丁",
+       "spelling": "ding"
+      },
+      "ten_god": {
+       "code": "ten_god.direct_officer",
+       "en": "Direct Officer",
+       "vi": "Chính Quan"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.thriving",
+       "en": "Thriving",
+       "vi": "Lâm Quan"
+      }
+     },
+     {
+      "heavenly_stem": {
+       "name": "Yin Earth",
+       "value": 6,
+       "character": "己",
+       "spelling": "ji"
+      },
+      "ten_god": {
+       "code": "ten_god.direct_resource",
+       "en": "Direct Resource",
+       "vi": "Chính Ấn"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.thriving",
+       "en": "Thriving",
+       "vi": "Lâm Quan"
+      }
+     }
+    ],
+    "is_void": false,
+    "heaven_earth_clash": false,
+    "stars": [
+     {
+      "code": "star.thien_at_quy_nhan",
+      "en": "Heavenly Noble",
+      "vi": "Thiên Ất Quý Nhân"
+     },
+     {
+      "code": "star.van_xuong",
+      "en": "Literary Star",
+      "vi": "Văn Xương"
+     },
+     {
+      "code": "star.tuong_tinh",
+      "en": "General Star",
+      "vi": "Tướng Tinh"
+     },
+     {
+      "code": "star.thai_cuc_quy_nhan",
+      "en": "Supreme Noble",
+      "vi": "Thái Cực Quý Nhân"
+     },
+     {
+      "code": "star.phuc_tinh",
+      "en": "Fortune Star",
+      "vi": "Phúc Tinh"
+     }
+    ]
+   }
+  },
+  "hour_pillar": {
+   "heavenly_stem": {
+    "name": "Yang Water",
+    "value": 9,
+    "character": "壬",
+    "spelling": "ren"
+   },
+   "earthly_branch": {
+    "name": "Horse",
+    "value": 5,
+    "character": "午",
+    "spelling": "wu"
+   },
+   "gan_zhi": {
+    "name": "Willow wood",
+    "element_name": "Wood",
+    "element_value": 3
+   },
+   "hour": {
+    "hour": 11,
+    "minute": 1
+   },
+   "life_cycle": "Bath",
+   "analysis": {
+    "is_day_master": false,
+    "ten_god": {
+     "code": "ten_god.eating_god",
+     "en": "Eating God",
+     "vi": "Thực Thần"
+    },
+    "stem_element": {
+     "code": "element.water",
+     "en": "Water",
+     "vi": "Thủy"
+    },
+    "branch_element": {
+     "code": "element.fire",
+     "en": "Fire",
+     "vi": "Hỏa"
+    },
+    "nayin": {
+     "code": "nayin.willow_wood",
+     "en": "Willow wood",
+     "vi": "Dương Liễu Mộc"
+    },
+    "stem_stage_at_own_branch": {
+     "code": "stage.conceived",
+     "en": "Conceived",
+     "vi": "Thai"
+    },
+    "stem_stage_at_month_branch": {
+     "code": "stage.conceived",
+     "en": "Conceived",
+     "vi": "Thai"
+    },
+    "day_master_stage": {
+     "code": "stage.bath",
+     "en": "Bath",
+     "vi": "Mộc Dục"
+    },
+    "hidden_stems": [
+     {
+      "heavenly_stem": {
+       "name": "Yin Fire",
+       "value": 4,
+       "character": "丁",
+       "spelling": "ding"
+      },
+      "ten_god": {
+       "code": "ten_god.direct_officer",
+       "en": "Direct Officer",
+       "vi": "Chính Quan"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.thriving",
+       "en": "Thriving",
+       "vi": "Lâm Quan"
+      }
+     },
+     {
+      "heavenly_stem": {
+       "name": "Yin Earth",
+       "value": 6,
+       "character": "己",
+       "spelling": "ji"
+      },
+      "ten_god": {
+       "code": "ten_god.direct_resource",
+       "en": "Direct Resource",
+       "vi": "Chính Ấn"
+      },
+      "stage_at_month_branch": {
+       "code": "stage.thriving",
+       "en": "Thriving",
+       "vi": "Lâm Quan"
+      }
+     }
+    ],
+    "is_void": false,
+    "heaven_earth_clash": false,
+    "stars": [
+     {
+      "code": "star.thien_at_quy_nhan",
+      "en": "Heavenly Noble",
+      "vi": "Thiên Ất Quý Nhân"
+     },
+     {
+      "code": "star.van_xuong",
+      "en": "Literary Star",
+      "vi": "Văn Xương"
+     },
+     {
+      "code": "star.tuong_tinh",
+      "en": "General Star",
+      "vi": "Tướng Tinh"
+     },
+     {
+      "code": "star.thai_cuc_quy_nhan",
+      "en": "Supreme Noble",
+      "vi": "Thái Cực Quý Nhân"
+     },
+     {
+      "code": "star.phuc_tinh",
+      "en": "Fortune Star",
+      "vi": "Phúc Tinh"
+     }
+    ]
+   }
+  }
+ },
+ "luck_pillars": {
+  "luck_pillars": [
+   {
+    "number": 0,
+    "heavenly_stem": {
+     "name": "Yang Water",
+     "value": 9,
+     "character": "壬",
+     "spelling": "ren"
+    },
+    "earthly_branch": {
+     "name": "Horse",
+     "value": 5,
+     "character": "午",
+     "spelling": "wu"
+    },
+    "gan_zhi": {
+     "name": "Willow wood",
+     "element_name": "Wood",
+     "element_value": 3
+    },
+    "year_start": 1995,
+    "year_end": 1995,
+    "time": "1995-06-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 1,
+     "age_end": 1,
+     "ten_god": {
+      "code": "ten_god.eating_god",
+      "en": "Eating God",
+      "vi": "Thực Thần"
+     },
+     "nayin": {
+      "code": "nayin.willow_wood",
+      "en": "Willow wood",
+      "vi": "Dương Liễu Mộc"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.conceived",
+      "en": "Conceived",
+      "vi": "Thai"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yin Fire",
+        "value": 4,
+        "character": "丁",
+        "spelling": "ding"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_officer",
+        "en": "Direct Officer",
+        "vi": "Chính Quan"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Earth",
+        "value": 6,
+        "character": "己",
+        "spelling": "ji"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_resource",
+        "en": "Direct Resource",
+        "vi": "Chính Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 1,
+    "heavenly_stem": {
+     "name": "Yin Metal",
+     "value": 8,
+     "character": "辛",
+     "spelling": "xin"
+    },
+    "earthly_branch": {
+     "name": "Snake",
+     "value": 4,
+     "character": "巳",
+     "spelling": "si"
+    },
+    "gan_zhi": {
+     "name": "Wax metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 1996,
+    "year_end": 2005,
+    "time": "1996-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 2,
+     "age_end": 11,
+     "ten_god": {
+      "code": "ten_god.rob_wealth",
+      "en": "Rob Wealth",
+      "vi": "Kiếp Tài"
+     },
+     "nayin": {
+      "code": "nayin.wax_metal",
+      "en": "Wax metal",
+      "vi": "Bạch Lạp Kim"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.death",
+      "en": "Death",
+      "vi": "Tử"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yang Fire",
+        "value": 3,
+        "character": "丙",
+        "spelling": "bing"
+       },
+       "ten_god": {
+        "code": "ten_god.seven_killings",
+        "en": "Seven Killings",
+        "vi": "Thất Sát"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yang Earth",
+        "value": 5,
+        "character": "戊",
+        "spelling": "wu"
+       },
+       "ten_god": {
+        "code": "ten_god.indirect_resource",
+        "en": "Indirect Resource",
+        "vi": "Thiên Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yang Metal",
+        "value": 7,
+        "character": "庚",
+        "spelling": "geng"
+       },
+       "ten_god": {
+        "code": "ten_god.friend",
+        "en": "Friend",
+        "vi": "Tỷ Kiên"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.birth",
+        "en": "Birth",
+        "vi": "Sinh"
+       }
+      }
+     ],
+     "heaven_earth_clash": true
+    }
+   },
+   {
+    "number": 2,
+    "heavenly_stem": {
+     "name": "Yang Metal",
+     "value": 7,
+     "character": "庚",
+     "spelling": "geng"
+    },
+    "earthly_branch": {
+     "name": "Dragon",
+     "value": 3,
+     "character": "辰",
+     "spelling": "chen"
+    },
+    "gan_zhi": {
+     "name": "Wax metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 2006,
+    "year_end": 2015,
+    "time": "2006-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 12,
+     "age_end": 21,
+     "ten_god": {
+      "code": "ten_god.friend",
+      "en": "Friend",
+      "vi": "Tỷ Kiên"
+     },
+     "nayin": {
+      "code": "nayin.wax_metal",
+      "en": "Wax metal",
+      "vi": "Bạch Lạp Kim"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.nourishing",
+      "en": "Nourishing",
+      "vi": "Dưỡng"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yang Earth",
+        "value": 5,
+        "character": "戊",
+        "spelling": "wu"
+       },
+       "ten_god": {
+        "code": "ten_god.indirect_resource",
+        "en": "Indirect Resource",
+        "vi": "Thiên Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.youth",
+        "en": "Youth",
+        "vi": "Quan Đới"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Wood",
+        "value": 2,
+        "character": "乙",
+        "spelling": "yi"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_wealth",
+        "en": "Direct Wealth",
+        "vi": "Chính Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.youth",
+        "en": "Youth",
+        "vi": "Quan Đới"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Water",
+        "value": 10,
+        "character": "癸",
+        "spelling": "gui"
+       },
+       "ten_god": {
+        "code": "ten_god.hurting_officer",
+        "en": "Hurting Officer",
+        "vi": "Thương Quan"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.nourishing",
+        "en": "Nourishing",
+        "vi": "Dưỡng"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 3,
+    "heavenly_stem": {
+     "name": "Yin Earth",
+     "value": 6,
+     "character": "己",
+     "spelling": "ji"
+    },
+    "earthly_branch": {
+     "name": "Rabbit",
+     "value": 2,
+     "character": "卯",
+     "spelling": "mao"
+    },
+    "gan_zhi": {
+     "name": "Fortress earth",
+     "element_name": "Earth",
+     "element_value": 5
+    },
+    "year_start": 2016,
+    "year_end": 2025,
+    "time": "2016-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 22,
+     "age_end": 31,
+     "ten_god": {
+      "code": "ten_god.direct_resource",
+      "en": "Direct Resource",
+      "vi": "Chính Ấn"
+     },
+     "nayin": {
+      "code": "nayin.fortress_earth",
+      "en": "Fortress earth",
+      "vi": "Thành Đầu Thổ"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.sick",
+      "en": "Sick",
+      "vi": "Bệnh"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yin Wood",
+        "value": 2,
+        "character": "乙",
+        "spelling": "yi"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_wealth",
+        "en": "Direct Wealth",
+        "vi": "Chính Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 4,
+    "heavenly_stem": {
+     "name": "Yang Earth",
+     "value": 5,
+     "character": "戊",
+     "spelling": "wu"
+    },
+    "earthly_branch": {
+     "name": "Tiger",
+     "value": 1,
+     "character": "寅",
+     "spelling": "yin"
+    },
+    "gan_zhi": {
+     "name": "Fortress earth",
+     "element_name": "Earth",
+     "element_value": 5
+    },
+    "year_start": 2026,
+    "year_end": 2035,
+    "time": "2026-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 32,
+     "age_end": 41,
+     "ten_god": {
+      "code": "ten_god.indirect_resource",
+      "en": "Indirect Resource",
+      "vi": "Thiên Ấn"
+     },
+     "nayin": {
+      "code": "nayin.fortress_earth",
+      "en": "Fortress earth",
+      "vi": "Thành Đầu Thổ"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.birth",
+      "en": "Birth",
+      "vi": "Sinh"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yang Wood",
+        "value": 1,
+        "character": "甲",
+        "spelling": "jia"
+       },
+       "ten_god": {
+        "code": "ten_god.indirect_wealth",
+        "en": "Indirect Wealth",
+        "vi": "Thiên Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yang Fire",
+        "value": 3,
+        "character": "丙",
+        "spelling": "bing"
+       },
+       "ten_god": {
+        "code": "ten_god.seven_killings",
+        "en": "Seven Killings",
+        "vi": "Thất Sát"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.birth",
+        "en": "Birth",
+        "vi": "Sinh"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yang Earth",
+        "value": 5,
+        "character": "戊",
+        "spelling": "wu"
+       },
+       "ten_god": {
+        "code": "ten_god.indirect_resource",
+        "en": "Indirect Resource",
+        "vi": "Thiên Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.birth",
+        "en": "Birth",
+        "vi": "Sinh"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 5,
+    "heavenly_stem": {
+     "name": "Yin Fire",
+     "value": 4,
+     "character": "丁",
+     "spelling": "ding"
+    },
+    "earthly_branch": {
+     "name": "Ox",
+     "value": 12,
+     "character": "丑",
+     "spelling": "chou"
+    },
+    "gan_zhi": {
+     "name": "Cave water",
+     "element_name": "Water",
+     "element_value": 1
+    },
+    "year_start": 2036,
+    "year_end": 2045,
+    "time": "2036-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 42,
+     "age_end": 51,
+     "ten_god": {
+      "code": "ten_god.direct_officer",
+      "en": "Direct Officer",
+      "vi": "Chính Quan"
+     },
+     "nayin": {
+      "code": "nayin.cave_water",
+      "en": "Cave water",
+      "vi": "Giản Hạ Thủy"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.grave",
+      "en": "Grave",
+      "vi": "Mộ"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yin Earth",
+        "value": 6,
+        "character": "己",
+        "spelling": "ji"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_resource",
+        "en": "Direct Resource",
+        "vi": "Chính Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.grave",
+        "en": "Grave",
+        "vi": "Mộ"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Water",
+        "value": 10,
+        "character": "癸",
+        "spelling": "gui"
+       },
+       "ten_god": {
+        "code": "ten_god.hurting_officer",
+        "en": "Hurting Officer",
+        "vi": "Thương Quan"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.youth",
+        "en": "Youth",
+        "vi": "Quan Đới"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Metal",
+        "value": 8,
+        "character": "辛",
+        "spelling": "xin"
+       },
+       "ten_god": {
+        "code": "ten_god.rob_wealth",
+        "en": "Rob Wealth",
+        "vi": "Kiếp Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.nourishing",
+        "en": "Nourishing",
+        "vi": "Dưỡng"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 6,
+    "heavenly_stem": {
+     "name": "Yang Fire",
+     "value": 3,
+     "character": "丙",
+     "spelling": "bing"
+    },
+    "earthly_branch": {
+     "name": "Rat",
+     "value": 11,
+     "character": "子",
+     "spelling": "zi"
+    },
+    "gan_zhi": {
+     "name": "Cave water",
+     "element_name": "Water",
+     "element_value": 1
+    },
+    "year_start": 2046,
+    "year_end": 2055,
+    "time": "2046-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 52,
+     "age_end": 61,
+     "ten_god": {
+      "code": "ten_god.seven_killings",
+      "en": "Seven Killings",
+      "vi": "Thất Sát"
+     },
+     "nayin": {
+      "code": "nayin.cave_water",
+      "en": "Cave water",
+      "vi": "Giản Hạ Thủy"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.conceived",
+      "en": "Conceived",
+      "vi": "Thai"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yin Water",
+        "value": 10,
+        "character": "癸",
+        "spelling": "gui"
+       },
+       "ten_god": {
+        "code": "ten_god.hurting_officer",
+        "en": "Hurting Officer",
+        "vi": "Thương Quan"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      }
+     ],
+     "heaven_earth_clash": true
+    }
+   },
+   {
+    "number": 7,
+    "heavenly_stem": {
+     "name": "Yin Wood",
+     "value": 2,
+     "character": "乙",
+     "spelling": "yi"
+    },
+    "earthly_branch": {
+     "name": "Pig",
+     "value": 10,
+     "character": "亥",
+     "spelling": "hai"
+    },
+    "gan_zhi": {
+     "name": "Volcanic fire",
+     "element_name": "Fire",
+     "element_value": 2
+    },
+    "year_start": 2056,
+    "year_end": 2065,
+    "time": "2056-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 62,
+     "age_end": 71,
+     "ten_god": {
+      "code": "ten_god.direct_wealth",
+      "en": "Direct Wealth",
+      "vi": "Chính Tài"
+     },
+     "nayin": {
+      "code": "nayin.volcanic_fire",
+      "en": "Volcanic fire",
+      "vi": "Sơn Đầu Hỏa"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.death",
+      "en": "Death",
+      "vi": "Tử"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yang Water",
+        "value": 9,
+        "character": "壬",
+        "spelling": "ren"
+       },
+       "ten_god": {
+        "code": "ten_god.eating_god",
+        "en": "Eating God",
+        "vi": "Thực Thần"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yang Wood",
+        "value": 1,
+        "character": "甲",
+        "spelling": "jia"
+       },
+       "ten_god": {
+        "code": "ten_god.indirect_wealth",
+        "en": "Indirect Wealth",
+        "vi": "Thiên Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.birth",
+        "en": "Birth",
+        "vi": "Sinh"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 8,
+    "heavenly_stem": {
+     "name": "Yang Wood",
+     "value": 1,
+     "character": "甲",
+     "spelling": "jia"
+    },
+    "earthly_branch": {
+     "name": "Dog",
+     "value": 9,
+     "character": "戌",
+     "spelling": "xu"
+    },
+    "gan_zhi": {
+     "name": "Volcanic fire",
+     "element_name": "Fire",
+     "element_value": 2
+    },
+    "year_start": 2066,
+    "year_end": 2075,
+    "time": "2066-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 72,
+     "age_end": 81,
+     "ten_god": {
+      "code": "ten_god.indirect_wealth",
+      "en": "Indirect Wealth",
+      "vi": "Thiên Tài"
+     },
+     "nayin": {
+      "code": "nayin.volcanic_fire",
+      "en": "Volcanic fire",
+      "vi": "Sơn Đầu Hỏa"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.nourishing",
+      "en": "Nourishing",
+      "vi": "Dưỡng"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yang Earth",
+        "value": 5,
+        "character": "戊",
+        "spelling": "wu"
+       },
+       "ten_god": {
+        "code": "ten_god.indirect_resource",
+        "en": "Indirect Resource",
+        "vi": "Thiên Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.grave",
+        "en": "Grave",
+        "vi": "Mộ"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Metal",
+        "value": 8,
+        "character": "辛",
+        "spelling": "xin"
+       },
+       "ten_god": {
+        "code": "ten_god.rob_wealth",
+        "en": "Rob Wealth",
+        "vi": "Kiếp Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.youth",
+        "en": "Youth",
+        "vi": "Quan Đới"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Fire",
+        "value": 4,
+        "character": "丁",
+        "spelling": "ding"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_officer",
+        "en": "Direct Officer",
+        "vi": "Chính Quan"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.nourishing",
+        "en": "Nourishing",
+        "vi": "Dưỡng"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 9,
+    "heavenly_stem": {
+     "name": "Yin Water",
+     "value": 10,
+     "character": "癸",
+     "spelling": "gui"
+    },
+    "earthly_branch": {
+     "name": "Rooster",
+     "value": 8,
+     "character": "酉",
+     "spelling": "you"
+    },
+    "gan_zhi": {
+     "name": "Sword metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 2076,
+    "year_end": 2085,
+    "time": "2076-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 82,
+     "age_end": 91,
+     "ten_god": {
+      "code": "ten_god.hurting_officer",
+      "en": "Hurting Officer",
+      "vi": "Thương Quan"
+     },
+     "nayin": {
+      "code": "nayin.sword_metal",
+      "en": "Sword metal",
+      "vi": "Kiếm Phong Kim"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.sick",
+      "en": "Sick",
+      "vi": "Bệnh"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yin Metal",
+        "value": 8,
+        "character": "辛",
+        "spelling": "xin"
+       },
+       "ten_god": {
+        "code": "ten_god.rob_wealth",
+        "en": "Rob Wealth",
+        "vi": "Kiếp Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 10,
+    "heavenly_stem": {
+     "name": "Yang Water",
+     "value": 9,
+     "character": "壬",
+     "spelling": "ren"
+    },
+    "earthly_branch": {
+     "name": "Monkey",
+     "value": 7,
+     "character": "申",
+     "spelling": "shen"
+    },
+    "gan_zhi": {
+     "name": "Sword metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 2086,
+    "year_end": 2095,
+    "time": "2086-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 92,
+     "age_end": 101,
+     "ten_god": {
+      "code": "ten_god.eating_god",
+      "en": "Eating God",
+      "vi": "Thực Thần"
+     },
+     "nayin": {
+      "code": "nayin.sword_metal",
+      "en": "Sword metal",
+      "vi": "Kiếm Phong Kim"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.birth",
+      "en": "Birth",
+      "vi": "Sinh"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yang Metal",
+        "value": 7,
+        "character": "庚",
+        "spelling": "geng"
+       },
+       "ten_god": {
+        "code": "ten_god.friend",
+        "en": "Friend",
+        "vi": "Tỷ Kiên"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.thriving",
+        "en": "Thriving",
+        "vi": "Lâm Quan"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yang Water",
+        "value": 9,
+        "character": "壬",
+        "spelling": "ren"
+       },
+       "ten_god": {
+        "code": "ten_god.eating_god",
+        "en": "Eating God",
+        "vi": "Thực Thần"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.birth",
+        "en": "Birth",
+        "vi": "Sinh"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yang Earth",
+        "value": 5,
+        "character": "戊",
+        "spelling": "wu"
+       },
+       "ten_god": {
+        "code": "ten_god.indirect_resource",
+        "en": "Indirect Resource",
+        "vi": "Thiên Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.sick",
+        "en": "Sick",
+        "vi": "Bệnh"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   },
+   {
+    "number": 11,
+    "heavenly_stem": {
+     "name": "Yin Metal",
+     "value": 8,
+     "character": "辛",
+     "spelling": "xin"
+    },
+    "earthly_branch": {
+     "name": "Goat",
+     "value": 6,
+     "character": "未",
+     "spelling": "wei"
+    },
+    "gan_zhi": {
+     "name": "Road earth",
+     "element_name": "Earth",
+     "element_value": 5
+    },
+    "year_start": 2096,
+    "year_end": 2105,
+    "time": "2096-02-08T11:01:00+07:00",
+    "analysis": {
+     "age_start": 102,
+     "age_end": 111,
+     "ten_god": {
+      "code": "ten_god.rob_wealth",
+      "en": "Rob Wealth",
+      "vi": "Kiếp Tài"
+     },
+     "nayin": {
+      "code": "nayin.road_earth",
+      "en": "Road earth",
+      "vi": "Lộ Bàng Thổ"
+     },
+     "stem_stage_at_own_branch": {
+      "code": "stage.weakening",
+      "en": "Weakening",
+      "vi": "Suy"
+     },
+     "hidden_stems": [
+      {
+       "heavenly_stem": {
+        "name": "Yin Earth",
+        "value": 6,
+        "character": "己",
+        "spelling": "ji"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_resource",
+        "en": "Direct Resource",
+        "vi": "Chính Ấn"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.youth",
+        "en": "Youth",
+        "vi": "Quan Đới"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Fire",
+        "value": 4,
+        "character": "丁",
+        "spelling": "ding"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_officer",
+        "en": "Direct Officer",
+        "vi": "Chính Quan"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.youth",
+        "en": "Youth",
+        "vi": "Quan Đới"
+       }
+      },
+      {
+       "heavenly_stem": {
+        "name": "Yin Wood",
+        "value": 2,
+        "character": "乙",
+        "spelling": "yi"
+       },
+       "ten_god": {
+        "code": "ten_god.direct_wealth",
+        "en": "Direct Wealth",
+        "vi": "Chính Tài"
+       },
+       "stage_at_own_branch": {
+        "code": "stage.nourishing",
+        "en": "Nourishing",
+        "vi": "Dưỡng"
+       }
+      }
+     ],
+     "heaven_earth_clash": false
+    }
+   }
+  ]
+ },
+ "analysis": {
+  "day_master": {
+   "heavenly_stem": {
+    "name": "Yang Metal",
+    "value": 7,
+    "character": "庚",
+    "spelling": "geng"
+   },
+   "element": {
+    "code": "element.metal",
+    "en": "Metal",
+    "vi": "Kim"
+   },
+   "polarity": {
+    "code": "polarity.yang",
+    "en": "Yang",
+    "vi": "Dương"
+   }
+  },
+  "void_branches": [
+   {
+    "name": "Dog",
+    "value": 9,
+    "character": "戌",
+    "spelling": "xu"
+   },
+   {
+    "name": "Pig",
+    "value": 10,
+    "character": "亥",
+    "spelling": "hai"
+   }
+  ],
+  "thai_nguyen": {
+   "heavenly_stem": {
+    "name": "Yin Water",
+    "value": 10,
+    "character": "癸",
+    "spelling": "gui"
+   },
+   "earthly_branch": {
+    "name": "Rooster",
+    "value": 8,
+    "character": "酉",
+    "spelling": "you"
+   },
+   "gan_zhi": {
+    "name": "Sword metal",
+    "element_name": "Metal",
+    "element_value": 4
+   },
+   "nayin": {
+    "code": "nayin.sword_metal",
+    "en": "Sword metal",
+    "vi": "Kiếm Phong Kim"
+   }
+  },
+  "thai_tuc": {
+   "heavenly_stem": {
+    "name": "Yin Wood",
+    "value": 2,
+    "character": "乙",
+    "spelling": "yi"
+   },
+   "earthly_branch": {
+    "name": "Goat",
+    "value": 6,
+    "character": "未",
+    "spelling": "wei"
+   },
+   "gan_zhi": {
+    "name": "Sand metal",
+    "element_name": "Metal",
+    "element_value": 4
+   },
+   "nayin": {
+    "code": "nayin.sand_metal",
+    "en": "Sand metal",
+    "vi": "Sa Trung Kim"
+   }
+  },
+  "life_palace": {
+   "heavenly_stem": {
+    "name": "Yin Metal",
+    "value": 8,
+    "character": "辛",
+    "spelling": "xin"
+   },
+   "earthly_branch": {
+    "name": "Snake",
+    "value": 4,
+    "character": "巳",
+    "spelling": "si"
+   },
+   "gan_zhi": {
+    "name": "Wax metal",
+    "element_name": "Metal",
+    "element_value": 4
+   },
+   "nayin": {
+    "code": "nayin.wax_metal",
+    "en": "Wax metal",
+    "vi": "Bạch Lạp Kim"
+   }
+  },
+  "element_counts": {
+   "stems": {
+    "wood": 1,
+    "fire": 0,
+    "earth": 0,
+    "metal": 1,
+    "water": 2
+   },
+   "branches": {
+    "wood": 0,
+    "fire": 3,
+    "earth": 0,
+    "metal": 0,
+    "water": 1
+   },
+   "hidden_stems": {
+    "wood": 1,
+    "fire": 3,
+    "earth": 3,
+    "metal": 0,
+    "water": 1
+   }
+  },
+  "day_master_strength": null,
+  "useful_god": null
+ }
+}

@@ -82,3 +82,19 @@ func TestLifeCycleKnownCases(t *testing.T) {
 		})
 	}
 }
+
+// The value-returning helpers must agree with the name-returning one for every stem and branch.
+func TestLifeCycleValueOfStemMatchesNames(t *testing.T) {
+	for stem := 1; stem <= 10; stem++ {
+		for branch := 1; branch <= 12; branch++ {
+			value := GetLifeCycleValueOfStem(stem, branch)
+			if value < 1 || value > 12 {
+				t.Fatalf("stem %d branch %d: value %d out of range", stem, branch, value)
+			}
+			byRule := GetLifeCycleByRuleAndBranch(branch, GetLifeCycleRule(stem), stem%2 == 0)
+			if got := ConvertValueToLifeCycle(value); got != byRule {
+				t.Errorf("stem %d branch %d: got %q, want %q", stem, branch, got, byRule)
+			}
+		}
+	}
+}
