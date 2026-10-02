@@ -7,6 +7,8 @@ type BaziChart struct {
 	PersonalInfo *PersonalInfo `json:"personalInfo,omitempty"`
 	FourPillar   *FourPillars  `json:"four_pillars"`
 	LuckPillars  *LuckPillars  `json:"luck_pillars"`
+	// Analysis holds chart-level derived facts such as the Day Master, void branches and element counts.
+	Analysis *ChartAnalysis `json:"analysis"`
 }
 
 // PersonalInfo is optional metadata a caller can attach to a chart; GetBaziChart does not fill it in.
@@ -38,42 +40,48 @@ type LuckPillar struct {
 	YearStart     int           `json:"year_start"`
 	YearEnd       int           `json:"year_end"`
 	Time          time.Time     `json:"time"`
+	// Analysis holds the derived facts of the luck pillar.
+	Analysis *LuckPillarAnalysis `json:"analysis"`
 }
 
 // YearPillar is the pillar of the lunar year the birth belongs to; Year is the Gregorian year.
 type YearPillar struct {
-	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
-	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
-	GanZhi        GanZhi        `json:"gan_zhi"`
-	Year          int           `json:"year"`
-	LifeCycle     string        `json:"life_cycle"`
+	HeavenlyStem  HeavenlyStem    `json:"heavenly_stem"`
+	EarthlyBranch EarthlyBranch   `json:"earthly_branch"`
+	GanZhi        GanZhi          `json:"gan_zhi"`
+	Year          int             `json:"year"`
+	LifeCycle     string          `json:"life_cycle"`
+	Analysis      *PillarAnalysis `json:"analysis"`
 }
 
 // MonthPillar is the pillar of the solar-term month; Month is the Gregorian month.
 type MonthPillar struct {
-	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
-	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
-	GanZhi        GanZhi        `json:"gan_zhi"`
-	Month         int           `json:"month"`
-	LifeCycle     string        `json:"life_cycle"`
+	HeavenlyStem  HeavenlyStem    `json:"heavenly_stem"`
+	EarthlyBranch EarthlyBranch   `json:"earthly_branch"`
+	GanZhi        GanZhi          `json:"gan_zhi"`
+	Month         int             `json:"month"`
+	LifeCycle     string          `json:"life_cycle"`
+	Analysis      *PillarAnalysis `json:"analysis"`
 }
 
 // DayPillar is the pillar of the day; the day changes at 23:00.
 type DayPillar struct {
-	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
-	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
-	GanZhi        GanZhi        `json:"gan_zhi"`
-	Day           int           `json:"day"`
-	LifeCycle     string        `json:"life_cycle"`
+	HeavenlyStem  HeavenlyStem    `json:"heavenly_stem"`
+	EarthlyBranch EarthlyBranch   `json:"earthly_branch"`
+	GanZhi        GanZhi          `json:"gan_zhi"`
+	Day           int             `json:"day"`
+	LifeCycle     string          `json:"life_cycle"`
+	Analysis      *PillarAnalysis `json:"analysis"`
 }
 
 // HourPillar is the pillar of the two-hour period containing the birth time.
 type HourPillar struct {
-	HeavenlyStem  HeavenlyStem  `json:"heavenly_stem"`
-	EarthlyBranch EarthlyBranch `json:"earthly_branch"`
-	GanZhi        GanZhi        `json:"gan_zhi"`
-	Hour          TimeOfDay     `json:"hour"`
-	LifeCycle     string        `json:"life_cycle"`
+	HeavenlyStem  HeavenlyStem    `json:"heavenly_stem"`
+	EarthlyBranch EarthlyBranch   `json:"earthly_branch"`
+	GanZhi        GanZhi          `json:"gan_zhi"`
+	Hour          TimeOfDay       `json:"hour"`
+	LifeCycle     string          `json:"life_cycle"`
+	Analysis      *PillarAnalysis `json:"analysis"`
 }
 
 // GanZhi is the Nayin (sound element) of a stem and branch pair.

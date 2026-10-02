@@ -1,6 +1,7 @@
 package bazica
 
 import (
+	"github.com/tommitoan/bazica/internal/analysis"
 	"github.com/tommitoan/bazica/internal/fourpillars"
 	"github.com/tommitoan/bazica/internal/luckpillars"
 	"github.com/tommitoan/bazica/internal/utils"
@@ -38,5 +39,9 @@ func GetBaziChart(dateTime time.Time, loc *time.Location, gender int) (*model.Ba
 		return nil, err
 	}
 
-	return &model.BaziChart{FourPillar: fourPillar, LuckPillars: luckPillars}, nil
+	chart := &model.BaziChart{FourPillar: fourPillar, LuckPillars: luckPillars}
+	if err := analysis.Attach(chart, gender); err != nil {
+		return nil, err
+	}
+	return chart, nil
 }

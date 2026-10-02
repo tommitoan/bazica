@@ -1,0 +1,371 @@
+{
+ "four_pillars": {
+  "year_pillar": {
+   "heavenly_stem": {
+    "name": "Yin Wood",
+    "value": 2,
+    "character": "乙",
+    "spelling": "yi"
+   },
+   "earthly_branch": {
+    "name": "Pig",
+    "value": 10,
+    "character": "亥",
+    "spelling": "hai"
+   },
+   "gan_zhi": {
+    "name": "Volcanic fire",
+    "element_name": "Fire",
+    "element_value": 2
+   },
+   "year": 1995,
+   "life_cycle": "Sick"
+  },
+  "month_pillar": {
+   "heavenly_stem": {
+    "name": "Yang Water",
+    "value": 9,
+    "character": "壬",
+    "spelling": "ren"
+   },
+   "earthly_branch": {
+    "name": "Horse",
+    "value": 5,
+    "character": "午",
+    "spelling": "wu"
+   },
+   "gan_zhi": {
+    "name": "Willow wood",
+    "element_name": "Wood",
+    "element_value": 3
+   },
+   "month": 6,
+   "life_cycle": "Bath"
+  },
+  "day_pillar": {
+   "heavenly_stem": {
+    "name": "Yang Metal",
+    "value": 7,
+    "character": "庚",
+    "spelling": "geng"
+   },
+   "earthly_branch": {
+    "name": "Horse",
+    "value": 5,
+    "character": "午",
+    "spelling": "wu"
+   },
+   "gan_zhi": {
+    "name": "Road earth",
+    "element_name": "Earth",
+    "element_value": 5
+   },
+   "day": 8,
+   "life_cycle": "Bath"
+  },
+  "hour_pillar": {
+   "heavenly_stem": {
+    "name": "Yang Water",
+    "value": 9,
+    "character": "壬",
+    "spelling": "ren"
+   },
+   "earthly_branch": {
+    "name": "Horse",
+    "value": 5,
+    "character": "午",
+    "spelling": "wu"
+   },
+   "gan_zhi": {
+    "name": "Willow wood",
+    "element_name": "Wood",
+    "element_value": 3
+   },
+   "hour": {
+    "hour": 11,
+    "minute": 1
+   },
+   "life_cycle": "Bath"
+  }
+ },
+ "luck_pillars": {
+  "luck_pillars": [
+   {
+    "number": 0,
+    "heavenly_stem": {
+     "name": "Yang Water",
+     "value": 9,
+     "character": "壬",
+     "spelling": "ren"
+    },
+    "earthly_branch": {
+     "name": "Horse",
+     "value": 5,
+     "character": "午",
+     "spelling": "wu"
+    },
+    "gan_zhi": {
+     "name": "Willow wood",
+     "element_name": "Wood",
+     "element_value": 3
+    },
+    "year_start": 1995,
+    "year_end": 1995,
+    "time": "1995-06-08T11:01:00+07:00"
+   },
+   {
+    "number": 1,
+    "heavenly_stem": {
+     "name": "Yin Metal",
+     "value": 8,
+     "character": "辛",
+     "spelling": "xin"
+    },
+    "earthly_branch": {
+     "name": "Snake",
+     "value": 4,
+     "character": "巳",
+     "spelling": "si"
+    },
+    "gan_zhi": {
+     "name": "Wax metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 1996,
+    "year_end": 2005,
+    "time": "1996-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 2,
+    "heavenly_stem": {
+     "name": "Yang Metal",
+     "value": 7,
+     "character": "庚",
+     "spelling": "geng"
+    },
+    "earthly_branch": {
+     "name": "Dragon",
+     "value": 3,
+     "character": "辰",
+     "spelling": "chen"
+    },
+    "gan_zhi": {
+     "name": "Wax metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 2006,
+    "year_end": 2015,
+    "time": "2006-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 3,
+    "heavenly_stem": {
+     "name": "Yin Earth",
+     "value": 6,
+     "character": "己",
+     "spelling": "ji"
+    },
+    "earthly_branch": {
+     "name": "Rabbit",
+     "value": 2,
+     "character": "卯",
+     "spelling": "mao"
+    },
+    "gan_zhi": {
+     "name": "Fortress earth",
+     "element_name": "Earth",
+     "element_value": 5
+    },
+    "year_start": 2016,
+    "year_end": 2025,
+    "time": "2016-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 4,
+    "heavenly_stem": {
+     "name": "Yang Earth",
+     "value": 5,
+     "character": "戊",
+     "spelling": "wu"
+    },
+    "earthly_branch": {
+     "name": "Tiger",
+     "value": 1,
+     "character": "寅",
+     "spelling": "yin"
+    },
+    "gan_zhi": {
+     "name": "Fortress earth",
+     "element_name": "Earth",
+     "element_value": 5
+    },
+    "year_start": 2026,
+    "year_end": 2035,
+    "time": "2026-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 5,
+    "heavenly_stem": {
+     "name": "Yin Fire",
+     "value": 4,
+     "character": "丁",
+     "spelling": "ding"
+    },
+    "earthly_branch": {
+     "name": "Ox",
+     "value": 12,
+     "character": "丑",
+     "spelling": "chou"
+    },
+    "gan_zhi": {
+     "name": "Cave water",
+     "element_name": "Water",
+     "element_value": 1
+    },
+    "year_start": 2036,
+    "year_end": 2045,
+    "time": "2036-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 6,
+    "heavenly_stem": {
+     "name": "Yang Fire",
+     "value": 3,
+     "character": "丙",
+     "spelling": "bing"
+    },
+    "earthly_branch": {
+     "name": "Rat",
+     "value": 11,
+     "character": "子",
+     "spelling": "zi"
+    },
+    "gan_zhi": {
+     "name": "Cave water",
+     "element_name": "Water",
+     "element_value": 1
+    },
+    "year_start": 2046,
+    "year_end": 2055,
+    "time": "2046-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 7,
+    "heavenly_stem": {
+     "name": "Yin Wood",
+     "value": 2,
+     "character": "乙",
+     "spelling": "yi"
+    },
+    "earthly_branch": {
+     "name": "Pig",
+     "value": 10,
+     "character": "亥",
+     "spelling": "hai"
+    },
+    "gan_zhi": {
+     "name": "Volcanic fire",
+     "element_name": "Fire",
+     "element_value": 2
+    },
+    "year_start": 2056,
+    "year_end": 2065,
+    "time": "2056-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 8,
+    "heavenly_stem": {
+     "name": "Yang Wood",
+     "value": 1,
+     "character": "甲",
+     "spelling": "jia"
+    },
+    "earthly_branch": {
+     "name": "Dog",
+     "value": 9,
+     "character": "戌",
+     "spelling": "xu"
+    },
+    "gan_zhi": {
+     "name": "Volcanic fire",
+     "element_name": "Fire",
+     "element_value": 2
+    },
+    "year_start": 2066,
+    "year_end": 2075,
+    "time": "2066-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 9,
+    "heavenly_stem": {
+     "name": "Yin Water",
+     "value": 10,
+     "character": "癸",
+     "spelling": "gui"
+    },
+    "earthly_branch": {
+     "name": "Rooster",
+     "value": 8,
+     "character": "酉",
+     "spelling": "you"
+    },
+    "gan_zhi": {
+     "name": "Sword metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 2076,
+    "year_end": 2085,
+    "time": "2076-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 10,
+    "heavenly_stem": {
+     "name": "Yang Water",
+     "value": 9,
+     "character": "壬",
+     "spelling": "ren"
+    },
+    "earthly_branch": {
+     "name": "Monkey",
+     "value": 7,
+     "character": "申",
+     "spelling": "shen"
+    },
+    "gan_zhi": {
+     "name": "Sword metal",
+     "element_name": "Metal",
+     "element_value": 4
+    },
+    "year_start": 2086,
+    "year_end": 2095,
+    "time": "2086-02-08T11:01:00+07:00"
+   },
+   {
+    "number": 11,
+    "heavenly_stem": {
+     "name": "Yin Metal",
+     "value": 8,
+     "character": "辛",
+     "spelling": "xin"
+    },
+    "earthly_branch": {
+     "name": "Goat",
+     "value": 6,
+     "character": "未",
+     "spelling": "wei"
+    },
+    "gan_zhi": {
+     "name": "Road earth",
+     "element_name": "Earth",
+     "element_value": 5
+    },
+    "year_start": 2096,
+    "year_end": 2105,
+    "time": "2096-02-08T11:01:00+07:00"
+   }
+  ]
+ }
+}
