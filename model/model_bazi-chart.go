@@ -73,8 +73,8 @@ type GanZhi struct {
 }
 
 type TimeOfDay struct {
-	Hour   int
-	Minute int
+	Hour   int `json:"hour"`
+	Minute int `json:"minute"`
 }
 
 type HeavenlyStem struct {

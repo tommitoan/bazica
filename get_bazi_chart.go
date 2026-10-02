@@ -3,7 +3,7 @@ package bazica
 import (
 	"github.com/tommitoan/bazica/internal/fourpillars"
 	"github.com/tommitoan/bazica/internal/luckpillars"
-	"github.com/tommitoan/bazica/internal/ultis"
+	"github.com/tommitoan/bazica/internal/utils"
 	"github.com/tommitoan/bazica/model"
 	"time"
 )
@@ -15,7 +15,7 @@ func GetBaziChart(dateTime time.Time, loc *time.Location, gender int) (*model.Ba
 	if err != nil {
 		return nil, err
 	}
-	baziChart.FourPillar = ultis.GetLifeCycleFromFourPillar(fourPillar)
+	baziChart.FourPillar = utils.GetLifeCycleFromFourPillar(fourPillar)
 
 	lucksPillar, err := luckpillars.GetLuckPillars(fourPillar, gender, passed, remaining, dateTime)
 	if err != nil {

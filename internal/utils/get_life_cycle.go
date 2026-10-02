@@ -1,4 +1,4 @@
-package ultis
+package utils
 
 import "github.com/tommitoan/bazica/model"
 

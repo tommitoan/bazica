@@ -1,4 +1,4 @@
-package ultis
+package utils
 
 import (
 	"errors"

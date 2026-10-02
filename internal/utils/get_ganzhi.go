@@ -1,6 +1,10 @@
-package ultis
+package utils
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/tommitoan/bazica/model"
+)
 
 var baziMap = map[string]string{
 	"Yang Wood Rat":     "Sea metal",
@@ -65,32 +69,31 @@ var baziMap = map[string]string{
 	"Yin Water Pig":     "Ocean water",
 }
 
-// Function to get the corresponding element
+// GetGanzhi returns the Nayin name of a "<stem> <branch>" sign such as
+// "Yang Wood Rat", its main element and the element's number. An unknown sign
+// yields empty values.
 func GetGanzhi(sign string) (string, string, int) {
-	if element, exists := baziMap[sign]; exists {
-		mainElement := ""
-		valueElement := 0
-		switch {
-		case strings.Contains(element, "fire"):
-			mainElement = "Fire"
-			valueElement = 2
-		case strings.Contains(element, "wood"):
-			mainElement = "Wood"
-			valueElement = 3
-		case strings.Contains(element, "water"):
-			mainElement = "Water"
-			valueElement = 1
-		case strings.Contains(element, "earth"):
-			mainElement = "Earth"
-			valueElement = 5
-		case strings.Contains(element, "gold") || strings.Contains(element, "metal"):
-			mainElement = "Metal"
-			valueElement = 4
-		default:
-			mainElement = ""
-			valueElement = 0
-		}
-		return element, mainElement, valueElement
+	element, exists := baziMap[sign]
+	if !exists {
+		return "", "", 0
 	}
-	return "", "", 0
+	switch {
+	case strings.Contains(element, "fire"):
+		return element, "Fire", 2
+	case strings.Contains(element, "wood"):
+		return element, "Wood", 3
+	case strings.Contains(element, "water"):
+		return element, "Water", 1
+	case strings.Contains(element, "earth"):
+		return element, "Earth", 5
+	case strings.Contains(element, "metal"):
+		return element, "Metal", 4
+	}
+	return element, "", 0
+}
+
+// GanZhiOf returns the Nayin data of a stem and branch pair.
+func GanZhiOf(stem model.HeavenlyStem, branch model.EarthlyBranch) model.GanZhi {
+	name, element, value := GetGanzhi(stem.Name + " " + branch.Name)
+	return model.GanZhi{Name: name, ElementName: element, ElementValue: value}
 }

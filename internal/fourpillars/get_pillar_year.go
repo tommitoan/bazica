@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/tommitoan/bazica/data"
-	"github.com/tommitoan/bazica/internal/ultis"
+	"github.com/tommitoan/bazica/internal/utils"
 	"github.com/tommitoan/bazica/model"
 	"strings"
 	"sync"
@@ -25,7 +25,7 @@ func GetYearPillar(dateTime time.Time) (*model.YearPillar, error) {
 	if stemValue < 1 {
 		stemValue = stemValue + 10
 	}
-	stem := ultis.CalculateHeavenlyStem(stemValue)
+	stem := utils.CalculateHeavenlyStem(stemValue)
 	yearPillar.HeavenlyStem = stem
 
 	// calculate earthly branch (1900 is Rat year)
@@ -33,7 +33,7 @@ func GetYearPillar(dateTime time.Time) (*model.YearPillar, error) {
 	if branchValue < 1 {
 		branchValue = branchValue + 12
 	}
-	branch := ultis.CalculateEarthlyBranch(branchValue)
+	branch := utils.CalculateEarthlyBranch(branchValue)
 	yearPillar.EarthlyBranch = branch
 
 	return &yearPillar, nil

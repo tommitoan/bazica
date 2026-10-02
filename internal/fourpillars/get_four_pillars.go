@@ -1,84 +1,40 @@
 package fourpillars
 
 import (
-	"github.com/tommitoan/bazica/internal/ultis"
+	"github.com/tommitoan/bazica/internal/utils"
 	"github.com/tommitoan/bazica/model"
-	"strings"
 	"time"
 )
 
 func GetFourPillars(dateTime time.Time, loc *time.Location) (*model.FourPillars, int, int, error) {
-	var fourPillars model.FourPillars
-	var ganzhi, mainElement string
-	var valueElement int
-
-	// Get Year pillar
 	yearPillar, err := GetYearPillar(dateTime)
 	if err != nil {
 		return nil, 0, 0, err
 	}
-	fourPillars.YearPillar = yearPillar
+	yearPillar.GanZhi = utils.GanZhiOf(yearPillar.HeavenlyStem, yearPillar.EarthlyBranch)
 
-	var yearStemBranch strings.Builder
-	yearStemBranch.WriteString(yearPillar.HeavenlyStem.Name)
-	yearStemBranch.WriteString(" ")
-	yearStemBranch.WriteString(yearPillar.EarthlyBranch.Name)
-
-	ganzhi, mainElement, valueElement = ultis.GetGanzhi(yearStemBranch.String())
-	fourPillars.YearPillar.GanZhi.Name = ganzhi
-	fourPillars.YearPillar.GanZhi.ElementName = mainElement
-	fourPillars.YearPillar.GanZhi.ElementValue = valueElement
-
-	// Get Month pillar
 	monthPillar, passed, remaining, err := GetMonthPillar(yearPillar, dateTime)
 	if err != nil {
 		return nil, 0, 0, err
 	}
-	fourPillars.MonthPillar = monthPillar
+	monthPillar.GanZhi = utils.GanZhiOf(monthPillar.HeavenlyStem, monthPillar.EarthlyBranch)
 
-	var monthStemBranch strings.Builder
-	monthStemBranch.WriteString(monthPillar.HeavenlyStem.Name)
-	monthStemBranch.WriteString(" ")
-	monthStemBranch.WriteString(monthPillar.EarthlyBranch.Name)
-
-	ganzhi, mainElement, valueElement = ultis.GetGanzhi(monthStemBranch.String())
-	fourPillars.MonthPillar.GanZhi.Name = ganzhi
-	fourPillars.MonthPillar.GanZhi.ElementName = mainElement
-	fourPillars.MonthPillar.GanZhi.ElementValue = valueElement
-
-	// Get Day pillar
 	dayPillar, err := GetDayPillar(dateTime, loc)
 	if err != nil {
 		return nil, 0, 0, err
 	}
-	fourPillars.DayPillar = dayPillar
+	dayPillar.GanZhi = utils.GanZhiOf(dayPillar.HeavenlyStem, dayPillar.EarthlyBranch)
 
-	var dayStemBranch strings.Builder
-	dayStemBranch.WriteString(dayPillar.HeavenlyStem.Name)
-	dayStemBranch.WriteString(" ")
-	dayStemBranch.WriteString(dayPillar.EarthlyBranch.Name)
-
-	ganzhi, mainElement, valueElement = ultis.GetGanzhi(dayStemBranch.String())
-	fourPillars.DayPillar.GanZhi.Name = ganzhi
-	fourPillars.DayPillar.GanZhi.ElementName = mainElement
-	fourPillars.DayPillar.GanZhi.ElementValue = valueElement
-
-	// Get Hour pillar
 	hourPillar, err := GetHourPillar(dayPillar, dateTime)
 	if err != nil {
 		return nil, 0, 0, err
 	}
-	fourPillars.HourPillar = hourPillar
+	hourPillar.GanZhi = utils.GanZhiOf(hourPillar.HeavenlyStem, hourPillar.EarthlyBranch)
 
-	var hourStemBranch strings.Builder
-	hourStemBranch.WriteString(hourPillar.HeavenlyStem.Name)
-	hourStemBranch.WriteString(" ")
-	hourStemBranch.WriteString(hourPillar.EarthlyBranch.Name)
-
-	ganzhi, mainElement, valueElement = ultis.GetGanzhi(hourStemBranch.String())
-	fourPillars.HourPillar.GanZhi.Name = ganzhi
-	fourPillars.HourPillar.GanZhi.ElementName = mainElement
-	fourPillars.HourPillar.GanZhi.ElementValue = valueElement
-
-	return &fourPillars, passed, remaining, nil
+	return &model.FourPillars{
+		YearPillar:  yearPillar,
+		MonthPillar: monthPillar,
+		DayPillar:   dayPillar,
+		HourPillar:  hourPillar,
+	}, passed, remaining, nil
 }

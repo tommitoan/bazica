@@ -1,9 +1,8 @@
 package luckpillars
 
 import (
-	"github.com/tommitoan/bazica/internal/ultis"
+	"github.com/tommitoan/bazica/internal/utils"
 	"github.com/tommitoan/bazica/model"
-	"strings"
 	"time"
 )
 
@@ -19,17 +18,7 @@ func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining in
 		YearStart:     dateTime.Year(),
 	}
 
-	var zeroGanzhi, zeroMainElement string
-	var zeroValueElement int
-	var zeroTempStemBranch strings.Builder
-	zeroTempStemBranch.WriteString(zeroLuckPillars.HeavenlyStem.Name)
-	zeroTempStemBranch.WriteString(" ")
-	zeroTempStemBranch.WriteString(zeroLuckPillars.EarthlyBranch.Name)
-
-	zeroGanzhi, zeroMainElement, zeroValueElement = ultis.GetGanzhi(zeroTempStemBranch.String())
-	zeroLuckPillars.GanZhi.Name = zeroGanzhi
-	zeroLuckPillars.GanZhi.ElementName = zeroMainElement
-	zeroLuckPillars.GanZhi.ElementValue = zeroValueElement
+	zeroLuckPillars.GanZhi = utils.GanZhiOf(zeroLuckPillars.HeavenlyStem, zeroLuckPillars.EarthlyBranch)
 
 	luckPillars.LuckPillars = append(luckPillars.LuckPillars, zeroLuckPillars)
 
@@ -65,8 +54,8 @@ func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining in
 			stemValue = stemValue + 10
 		}
 
-		branch := ultis.CalculateEarthlyBranch(branchValue)
-		stem := ultis.CalculateHeavenlyStem(stemValue)
+		branch := utils.CalculateEarthlyBranch(branchValue)
+		stem := utils.CalculateHeavenlyStem(stemValue)
 
 		if i == 1 {
 			years := age / (60 * 24 * 3)
@@ -92,17 +81,7 @@ func GetLuckPillars(fourPillars *model.FourPillars, gender, passed, remaining in
 			YearEnd:       luckPeriod.Year() + 9,
 		}
 
-		var ganzhi, mainElement string
-		var valueElement int
-		var tempStemBranch strings.Builder
-		tempStemBranch.WriteString(tempLuckPillars.HeavenlyStem.Name)
-		tempStemBranch.WriteString(" ")
-		tempStemBranch.WriteString(tempLuckPillars.EarthlyBranch.Name)
-
-		ganzhi, mainElement, valueElement = ultis.GetGanzhi(tempStemBranch.String())
-		tempLuckPillars.GanZhi.Name = ganzhi
-		tempLuckPillars.GanZhi.ElementName = mainElement
-		tempLuckPillars.GanZhi.ElementValue = valueElement
+		tempLuckPillars.GanZhi = utils.GanZhiOf(tempLuckPillars.HeavenlyStem, tempLuckPillars.EarthlyBranch)
 
 		luckPillars.LuckPillars = append(luckPillars.LuckPillars, tempLuckPillars)
 	}
