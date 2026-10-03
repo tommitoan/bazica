@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"os"
 	"reflect"
+	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/tommitoan/bazica/model"
 )
@@ -35,10 +37,28 @@ func has(codes []string, code string) bool {
 }
 
 type starCase struct {
-	Name    string      `json:"name"`
-	Pillars [4][2]int   `json:"pillars"`
-	Male    bool        `json:"male"`
-	Stars   [4][]string `json:"stars"`
+	Name    string    `json:"name"`
+	Pillars [4][2]int `json:"pillars"`
+	Male    bool      `json:"male"`
+	// Birth is the wall-clock birth time in Vietnam; when set, the Moon General is awarded.
+	Birth string `json:"birth"`
+	// Skip lists star codes the comparison ignores for this chart (see the generator of the fixture).
+	Skip  []string    `json:"skip"`
+	Stars [4][]string `json:"stars"`
+}
+
+// without drops the skipped star codes from every pillar of a result.
+func without(stars [4][]string, skip []string) [4][]string {
+	var out [4][]string
+	for i, pillar := range stars {
+		out[i] = []string{}
+		for _, code := range pillar {
+			if !slices.Contains(skip, code) {
+				out[i] = append(out[i], code)
+			}
+		}
+	}
+	return out
 }
 
 func loadStarCases(t *testing.T, file string) []starCase {
@@ -63,7 +83,18 @@ func attachedStars(t *testing.T, c starCase) [4][]string {
 		gender = model.GenderMale
 	}
 	chart := chartOf(c.Pillars)
-	if err := Attach(chart, gender); err != nil {
+	var err error
+	if c.Birth != "" {
+		var birth time.Time
+		birth, err = time.ParseInLocation("2006-01-02T15:04", c.Birth, time.FixedZone("ICT", 7*3600))
+		if err != nil {
+			t.Fatalf("birth %q: %v", c.Birth, err)
+		}
+		err = AttachAt(chart, gender, birth)
+	} else {
+		err = Attach(chart, gender)
+	}
+	if err != nil {
 		t.Fatalf("Attach(%v): %v", c.Pillars, err)
 	}
 	fp := chart.FourPillar
@@ -102,22 +133,22 @@ func TestStarRulesFollowTheSharedRegistry(t *testing.T) {
 	}
 }
 
-// Charts whose stars the reference page printed: the confirmed stars must be reproduced exactly.
+// Charts recorded from the reference page: every star it printed must be reproduced exactly.
 func TestStarsMatchTheChartsThePagePrinted(t *testing.T) {
 	cases := loadStarCases(t, "stars_observed.json")
-	if len(cases) < 30 {
+	if len(cases) < 250 {
 		t.Fatalf("only %d observed charts", len(cases))
 	}
 	for _, c := range cases {
-		if got := attachedStars(t, c); !reflect.DeepEqual(got, c.Stars) {
-			t.Errorf("%s: got %v, want %v", c.Name, got, c.Stars)
+		got, want := without(attachedStars(t, c), c.Skip), without(c.Stars, c.Skip)
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("%s: got %v, want %v", c.Name, got, want)
 		}
 	}
 }
 
-// Random valid charts, with the stars an independent oracle awards. These
-// also exercise table rows no recorded chart reached, which stay classical
-// and unobserved (planning/07).
+// Random valid charts, with the stars an independent oracle awards. They
+// carry no birth date, so the Moon General is not part of them.
 func TestStarsMatchTheOracleOnRandomCharts(t *testing.T) {
 	for i, c := range loadStarCases(t, "stars_oracle_cases.json") {
 		if got := attachedStars(t, c); !reflect.DeepEqual(got, c.Stars) {
@@ -128,10 +159,12 @@ func TestStarsMatchTheOracleOnRandomCharts(t *testing.T) {
 
 func TestEveryRegistryStarCanBeAwarded(t *testing.T) {
 	seen := map[string]bool{}
-	for _, c := range loadStarCases(t, "stars_oracle_cases.json") {
-		for _, pillar := range attachedStars(t, c) {
-			for _, code := range pillar {
-				seen[code] = true
+	for _, file := range []string{"stars_oracle_cases.json", "stars_observed.json"} {
+		for _, c := range loadStarCases(t, file) {
+			for _, pillar := range attachedStars(t, c) {
+				for _, code := range pillar {
+					seen[code] = true
+				}
 			}
 		}
 	}

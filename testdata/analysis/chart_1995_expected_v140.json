@@ -248,6 +248,16 @@
       "code": "star.tuong_tinh",
       "en": "General Star",
       "vi": "Tướng Tinh"
+     },
+     {
+      "code": "star.hong_diem",
+      "en": "Red Allure",
+      "vi": "Hồng Diễm"
+     },
+     {
+      "code": "star.hoc_sy",
+      "en": "Scholar",
+      "vi": "Học Sĩ"
      }
     ]
    }
@@ -370,6 +380,16 @@
       "code": "star.tuong_tinh",
       "en": "General Star",
       "vi": "Tướng Tinh"
+     },
+     {
+      "code": "star.hong_diem",
+      "en": "Red Allure",
+      "vi": "Hồng Diễm"
+     },
+     {
+      "code": "star.hoc_sy",
+      "en": "Scholar",
+      "vi": "Học Sĩ"
      }
     ]
    }
@@ -499,6 +519,21 @@
       "code": "star.tuong_tinh",
       "en": "General Star",
       "vi": "Tướng Tinh"
+     },
+     {
+      "code": "star.hong_diem",
+      "en": "Red Allure",
+      "vi": "Hồng Diễm"
+     },
+     {
+      "code": "star.hoc_sy",
+      "en": "Scholar",
+      "vi": "Học Sĩ"
+     },
+     {
+      "code": "star.cuu_quy_phong_hai",
+      "en": "Nine Ghosts Harm",
+      "vi": "Cửu Quý Phòng Hại"
      }
     ]
    }

@@ -27,7 +27,9 @@
 //     pillar's year is the Lunar New Year year, which for a January birth
 //     before the Lunar New Year is the year before the civil birth year.
 //   - Stars are listed only when their rules have been verified against
-//     reference charts; other stars are never reported.
+//     reference charts; other stars are never reported. The Moon General
+//     follows the calendar date of the birth: the whole day on which a
+//     principal term falls already belongs to the new general.
 //   - The life palace puts the Rat and Ox branches before the Tiger when it
 //     derives the stem, which differs from the classical month order.
 //   - The heaven-clash/earth-clash flag is directional: a cell is flagged when
