@@ -178,4 +178,4 @@ var amDuongSatPairs = [][2]int{{2, 0}, {4, 6}}
 var nhatQuyPairs = [][2]int{{3, 9}, {3, 11}, {9, 3}, {9, 5}}
 
 // lucTuPairs are the day pillars with Six Elegances.
-var lucTuPairs = [][2]int{{2, 6}, {3, 7}, {4, 0}, {4, 6}, {5, 1}, {5, 7}}
+var lucTuPairs = [][2]int{{2, 6}, {3, 7}, {4, 6}, {5, 1}, {5, 7}}

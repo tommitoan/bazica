@@ -40,7 +40,7 @@ func GetBaziChart(dateTime time.Time, loc *time.Location, gender int) (*model.Ba
 	}
 
 	chart := &model.BaziChart{FourPillar: fourPillar, LuckPillars: luckPillars}
-	if err := analysis.Attach(chart, gender); err != nil {
+	if err := analysis.AttachAt(chart, gender, dateTime); err != nil {
 		return nil, err
 	}
 	return chart, nil

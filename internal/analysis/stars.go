@@ -19,10 +19,11 @@ const (
 	inDay
 	inHour
 
-	inAll       = inYear | inMonth | inDay | inHour
-	inMonthHour = inMonth | inHour
-	inDayHour   = inDay | inHour
-	inNotDay    = inYear | inMonth | inHour
+	inAll          = inYear | inMonth | inDay | inHour
+	inMonthHour    = inMonth | inHour
+	inMonthDayHour = inMonth | inDay | inHour
+	inDayHour      = inDay | inHour
+	inNotDay       = inYear | inMonth | inHour
 )
 
 func (s pillarSet) has(pillar int) bool { return s&(1<<pillar) != 0 }
@@ -33,6 +34,10 @@ type chartFacts struct {
 	stem   [4]int
 	branch [4]int
 	male   bool
+	// general is the branch of the Moon General at the birth date; it is only
+	// meaningful when hasGeneral is set.
+	general    int
+	hasGeneral bool
 }
 
 // starRule is one row of the star table: the star it awards, the pillars it
@@ -43,8 +48,10 @@ type starRule struct {
 	match func(f *chartFacts, pillar int) bool
 }
 
-func newChartFacts(pillars [4]natalPillar, male bool) *chartFacts {
-	f := &chartFacts{male: male}
+// newChartFacts reads the pillars. general is the branch of the Moon General,
+// or a negative number when the birth date is unknown.
+func newChartFacts(pillars [4]natalPillar, male bool, general int) *chartFacts {
+	f := &chartFacts{male: male, general: general, hasGeneral: general >= 0}
 	for i, p := range pillars {
 		f.stem[i] = stemIndex(p.stem.Value)
 		f.branch[i] = branchIndex(p.branch.Value)
@@ -211,5 +218,89 @@ func voidStar(code string) starRule {
 	return starRule{code, inNotDay, func(f *chartFacts, p int) bool {
 		void := voidBranchIndices(f.stem[dayPillar], f.branch[dayPillar])
 		return f.branch[p] == void[0] || f.branch[p] == void[1]
+	}}
+}
+
+// daiHao awards Great Depletion: the branch clashing with the year branch, one
+// step on for a Yang-year man or a Yin-year woman and one step back otherwise
+// (the same direction rule as Giao and Cau).
+func daiHao(code string) starRule {
+	return starRule{code, inAll, func(f *chartFacts, p int) bool {
+		step := -1
+		if (f.stem[yearPillar]%2 == 0) == f.male {
+			step = 1
+		}
+		return f.branch[p] == mod12(opposite(f.branch[yearPillar])+step)
+	}}
+}
+
+// byMonthGroupStem awards a star to a pillar whose stem is listed for the
+// branch group of the month branch.
+func byMonthGroupStem(code string, stems [4][]int) starRule {
+	return starRule{code, inAll, func(f *chartFacts, p int) bool {
+		return contains(stems[groupOf(f.branch[monthPillar])], f.stem[p])
+	}}
+}
+
+// seasonIndex returns which of the four season groups holds a branch.
+func seasonIndex(groups [4][3]int, branch int) int {
+	for i, g := range groups {
+		if contains(g[:], branch) {
+			return i
+		}
+	}
+	return 0
+}
+
+// bySeasonGroup awards a star on the month, day and hour pillars whose branch
+// is the target of the season group of the year branch.
+func bySeasonGroup(code string, targets [4]int) starRule {
+	return starRule{code, inMonthDayHour, func(f *chartFacts, p int) bool {
+		return f.branch[p] == targets[seasonIndex(seasonGroups, f.branch[yearPillar])]
+	}}
+}
+
+// byPairedDayBranch awards a star to a pillar other than the day pillar whose
+// branch is one of two branches while the day branch is the other one.
+func byPairedDayBranch(code string, pair [2]int) starRule {
+	return starRule{code, inNotDay, func(f *chartFacts, p int) bool {
+		day := f.branch[dayPillar]
+		return contains(pair[:], f.branch[p]) && contains(pair[:], day) && day != f.branch[p]
+	}}
+}
+
+// bySeasonDayPillar awards a star to a day pillar listed for the season of the month branch.
+func bySeasonDayPillar(code string, pairs [4][][2]int) starRule {
+	return starRule{code, onlyPillar(dayPillar), func(f *chartFacts, p int) bool {
+		for _, pair := range pairs[seasonIndex(seasonOfMonthBranch, f.branch[monthPillar])] {
+			if pair[0] == f.stem[p] && pair[1] == f.branch[p] {
+				return true
+			}
+		}
+		return false
+	}}
+}
+
+// tamKy awards a Three Wonders star to three consecutive pillars, counted from
+// the year pillar, whose stems are the triple in order.
+func tamKy(code string, triple [3]int) starRule {
+	return starRule{code, inAll, func(f *chartFacts, p int) bool {
+		for start := 0; start <= 1; start++ {
+			if p < start || p > start+2 {
+				continue
+			}
+			if f.stem[start] == triple[0] && f.stem[start+1] == triple[1] && f.stem[start+2] == triple[2] {
+				return true
+			}
+		}
+		return false
+	}}
+}
+
+// moonGeneral awards the Moon General to every pillar whose branch is the
+// general of the birth date. Without a birth date nothing is awarded.
+func moonGeneral(code string) starRule {
+	return starRule{code, inAll, func(f *chartFacts, p int) bool {
+		return f.hasGeneral && f.branch[p] == f.general
 	}}
 }

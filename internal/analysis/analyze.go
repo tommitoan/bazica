@@ -7,6 +7,7 @@ package analysis
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/tommitoan/bazica/internal/utils"
 	"github.com/tommitoan/bazica/model"
@@ -24,15 +25,32 @@ type natalPillar struct {
 
 // Attach fills the Analysis fields of the four natal pillars, of the luck
 // pillars (when present) and of the chart. gender (model.GenderFemale or
-// model.GenderMale) is needed by the Giao and Cau stars. The legacy fields of
-// chart are left untouched.
+// model.GenderMale) is needed by the Giao, Cau and Dai Hao stars. The legacy
+// fields of chart are left untouched.
+//
+// Attach does not know the birth date, so it awards no Moon General; use
+// AttachAt when the birth date is known.
 func Attach(chart *model.BaziChart, gender int) error {
+	return attach(chart, gender, -1)
+}
+
+// AttachAt is Attach for a known birth time: the calendar date of birth in its
+// own location also decides the Moon General (Thai Duong).
+func AttachAt(chart *model.BaziChart, gender int, birth time.Time) error {
+	general, err := utils.GetMoonGeneral(birth)
+	if err != nil {
+		return err
+	}
+	return attach(chart, gender, general)
+}
+
+func attach(chart *model.BaziChart, gender, general int) error {
 	pillars, err := natalPillarsOf(chart)
 	if err != nil {
 		return err
 	}
 
-	analyses, err := analyzePillars(pillars, gender == model.GenderMale)
+	analyses, err := analyzePillars(pillars, gender == model.GenderMale, general)
 	if err != nil {
 		return err
 	}
@@ -80,14 +98,14 @@ func natalCells(pillars [4]natalPillar) []cell {
 	return cells
 }
 
-func analyzePillars(pillars [4]natalPillar, male bool) ([4]*model.PillarAnalysis, error) {
+func analyzePillars(pillars [4]natalPillar, male bool, general int) ([4]*model.PillarAnalysis, error) {
 	var out [4]*model.PillarAnalysis
 	dayStem, dayBranch := pillars[2].stem.Value, pillars[2].branch.Value
 	monthBranch := pillars[1].branch.Value
 	void := voidBranches(dayStem, dayBranch)
 
 	cells := natalCells(pillars)
-	stars := evaluateStars(newChartFacts(pillars, male))
+	stars := evaluateStars(newChartFacts(pillars, male, general))
 
 	for i, p := range pillars {
 		nayin, ok := nayinTerms[p.ganZhi.Name]

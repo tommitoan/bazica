@@ -489,6 +489,101 @@
    "code": "star.khong_vong",
    "en": "Void",
    "vi": "Không Vong"
+  },
+  {
+   "code": "star.hong_diem",
+   "en": "Red Allure",
+   "vi": "Hồng Diễm"
+  },
+  {
+   "code": "star.hoc_sy",
+   "en": "Scholar",
+   "vi": "Học Sĩ"
+  },
+  {
+   "code": "star.duc_quy_nhan",
+   "en": "Virtue Noble",
+   "vi": "Đức Quý Nhân"
+  },
+  {
+   "code": "star.tu_quy_nhan",
+   "en": "Elegance Noble",
+   "vi": "Tú Quý Nhân"
+  },
+  {
+   "code": "star.thai_duong",
+   "en": "Moon General",
+   "vi": "Thái Dương"
+  },
+  {
+   "code": "star.tam_ky_thuong",
+   "en": "Three Wonders, Upper",
+   "vi": "Tam Kỳ Thượng"
+  },
+  {
+   "code": "star.tam_ky_trung",
+   "en": "Three Wonders, Middle",
+   "vi": "Tam Kỳ Trung"
+  },
+  {
+   "code": "star.tam_ky_ha",
+   "en": "Three Wonders, Lower",
+   "vi": "Tam Kỳ Hạ"
+  },
+  {
+   "code": "star.dai_hao",
+   "en": "Great Depletion",
+   "vi": "Đại Hao"
+  },
+  {
+   "code": "star.co_than",
+   "en": "Lonely Spirit",
+   "vi": "Cô Thần"
+  },
+  {
+   "code": "star.qua_tu",
+   "en": "Widowhood",
+   "vi": "Quả Tú"
+  },
+  {
+   "code": "star.thien_la",
+   "en": "Heavenly Net",
+   "vi": "Thiên La"
+  },
+  {
+   "code": "star.dia_vong",
+   "en": "Earthly Snare",
+   "vi": "Địa Võng"
+  },
+  {
+   "code": "star.co_loan_sat",
+   "en": "Lone Phoenix Sha",
+   "vi": "Cô Loan Sát"
+  },
+  {
+   "code": "star.nhat_nhan",
+   "en": "Day Blade",
+   "vi": "Nhật Nhẫn"
+  },
+  {
+   "code": "star.cuu_quy_phong_hai",
+   "en": "Nine Ghosts Harm",
+   "vi": "Cửu Quý Phòng Hại"
+  },
+  {
+   "code": "star.thien_dia_chuyen_sat",
+   "en": "Heaven Earth Turning Sha",
+   "vi": "Thiên Địa Chuyển Sát"
+  },
+  {
+   "code": "star.tu_phe",
+   "en": "Four Wasted",
+   "vi": "Tứ Phế"
+  },
+  {
+   "code": "star.thien_xich_quy",
+   "en": "Heavenly Pardon",
+   "vi": "Thiên Xích Quý"
   }
  ]
 }
