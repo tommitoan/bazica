@@ -7,15 +7,19 @@ import (
 	"github.com/tommitoan/bazica/model"
 )
 
-// Supported Gregorian years, the same range as the calendar data.
+// Supported Gregorian years of the yearly table. The first is the year the
+// calendar data starts. The last is not tied to the calendar data: a yearly
+// pillar is plain sixty-year arithmetic and needs no table, so the table may run
+// past 2099, the last birth date. The bound keeps the answer finite (at most
+// about eight thousand rows).
 const (
 	minAnnualYear = 1900
-	maxAnnualYear = 2099
+	maxAnnualYear = 9999
 )
 
 // AnnualPillars returns the pillars of count consecutive years from fromYear.
 // The first year may not precede the year of the chart's year pillar, because
-// nominal age would not be positive, and the last year may not pass 2099.
+// nominal age would not be positive, and the last year may not pass 9999.
 func AnnualPillars(chart *model.BaziChart, fromYear, count int) (*model.AnnualPillars, error) {
 	if chart == nil {
 		return nil, fmt.Errorf("%w: chart is required", model.ErrInvalidYearRange)

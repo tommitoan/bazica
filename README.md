@@ -123,7 +123,7 @@ for _, y := range annual.AnnualPillars {
 }
 ```
 
-`fromYear` may not precede the year pillar's year and the years must lie within 1900 to 2099.
+`fromYear` may not precede the year pillar's year and the years must lie within 1900 to 9999. The yearly table is not limited to the 1900-2099 range of a birth date: each year's pillar is the sixty-year cycle, so it continues after 2099 (a luck pillar number is `null` once a year is past the twelfth luck pillar).
 
 ### Analysis conventions
 - **Nominal age**: the year of the year pillar is age 1. For a January birth before the Lunar New Year the year pillar belongs to the previous year, so ages count from there.
