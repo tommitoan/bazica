@@ -7,7 +7,22 @@ type LocalizedTerm struct {
 	Code string `json:"code"`
 	EN   string `json:"en"`
 	VI   string `json:"vi"`
+	// Nature classifies a star as NatureAuspicious, NatureInauspicious or
+	// NatureMixed. It is set on stars only and omitted from every other term.
+	// Schools differ on what is auspicious, and many stars cut both ways, so
+	// treat it as a hint for display, not as a judgement of the chart.
+	Nature string `json:"nature,omitempty"`
 }
+
+// Values of LocalizedTerm.Nature.
+const (
+	// NatureAuspicious marks a star that is generally read as favourable (cát).
+	NatureAuspicious = "auspicious"
+	// NatureInauspicious marks a star that is generally read as unfavourable (hung).
+	NatureInauspicious = "inauspicious"
+	// NatureMixed marks a star whose effect depends on the rest of the chart (tùy cục).
+	NatureMixed = "mixed"
+)
 
 // PillarAnalysis holds the derived facts of one natal pillar. The Day Master
 // pillar has IsDayMaster set and a nil TenGod.

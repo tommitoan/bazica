@@ -94,7 +94,7 @@ From v1.4.0 every chart also carries derived facts under an `analysis` key. The 
 | | `stem_stage_at_own_branch`, `stem_stage_at_month_branch`, `day_master_stage` | the twelve life stages |
 | | `hidden_stems` | stems hidden in the branch, main qi first, each with its Ten God and stage |
 | | `is_void`, `heaven_earth_clash` | void branch and clash flags |
-| | `stars` | the 58 verified stars, in a fixed order (empty list when none) |
+| | `stars` | the 58 verified stars, in a fixed order (empty list when none); each carries `nature` (see below) |
 | each luck pillar | `age_start`, `age_end` | nominal age range |
 | | `ten_god`, `nayin`, `stem_stage_at_own_branch`, `hidden_stems`, `heaven_earth_clash` | as above |
 | chart | `day_master`, `void_branches` | the Day Master and the two void branches |
@@ -128,6 +128,7 @@ for _, y := range annual.AnnualPillars {
 ### Analysis conventions
 - **Nominal age**: the year of the year pillar is age 1. For a January birth before the Lunar New Year the year pillar belongs to the previous year, so ages count from there.
 - **Stars**: only stars whose rules were verified against reference charts are reported (58 stars, checked on 298 recorded charts and 10,000 random births against an independent implementation). Other stars are never guessed. Several rules differ from the classical tables because they follow the reference page, for example Red Allure (`hong_diem`) reads both the day stem and the year stem, and Great Depletion (`dai_hao`) depends on gender.
+- **Star nature**: each star term has an optional `nature` key, set on stars only: `auspicious` (cát), `inauspicious` (hung) or `mixed` (tùy cục, the effect depends on the rest of the chart). It is a hint for display. Schools disagree about what is favourable and many stars cut both ways, so the value is not a judgement of the chart. The reference page labels stars only good or bad; the library follows it except for 10 stars it reads as mixed and one (`am_duong_sat`) it reads as inauspicious where the page says good. Other terms (Ten Gods, stages, elements, Nayin) never carry the key. It is additive: a client that ignores it keeps working.
 - **Moon General** (`thai_duong`): the general changes at each principal term, and the whole calendar day on which a term falls already has the new general. The reference page dates a few terms one day off, so on a term day the result can differ from the page by one day.
 - **Life palace**: Rat and Ox are counted before Tiger when the stem is derived, which differs from the classical month order.
 - **Heaven-clash/earth-clash**: directional. A cell is flagged when its stem overcomes another natal pillar's stem with the same polarity and their branches are opposite. Earth stems take part.

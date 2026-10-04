@@ -101,27 +101,32 @@
      {
       "code": "star.quoc_an",
       "en": "National Seal",
-      "vi": "Quốc Ấn"
+      "vi": "Quốc Ấn",
+      "nature": "auspicious"
      },
      {
       "code": "star.van_xuong",
       "en": "Literary Star",
-      "vi": "Văn Xương"
+      "vi": "Văn Xương",
+      "nature": "auspicious"
      },
      {
       "code": "star.kiep_sat",
       "en": "Robbery Sha",
-      "vi": "Kiếp Sát"
+      "vi": "Kiếp Sát",
+      "nature": "inauspicious"
      },
      {
       "code": "star.thien_duc_quy_nhan",
       "en": "Heavenly Virtue Noble",
-      "vi": "Thiên Đức Quý Nhân"
+      "vi": "Thiên Đức Quý Nhân",
+      "nature": "auspicious"
      },
      {
       "code": "star.khong_vong",
       "en": "Void",
-      "vi": "Không Vong"
+      "vi": "Không Vong",
+      "nature": "mixed"
      }
     ]
    }
@@ -227,37 +232,44 @@
      {
       "code": "star.thien_at_quy_nhan",
       "en": "Heavenly Noble",
-      "vi": "Thiên Ất Quý Nhân"
+      "vi": "Thiên Ất Quý Nhân",
+      "nature": "auspicious"
      },
      {
       "code": "star.van_xuong",
       "en": "Literary Star",
-      "vi": "Văn Xương"
+      "vi": "Văn Xương",
+      "nature": "auspicious"
      },
      {
       "code": "star.phuc_tinh",
       "en": "Fortune Star",
-      "vi": "Phúc Tinh"
+      "vi": "Phúc Tinh",
+      "nature": "auspicious"
      },
      {
       "code": "star.thai_cuc_quy_nhan",
       "en": "Supreme Noble",
-      "vi": "Thái Cực Quý Nhân"
+      "vi": "Thái Cực Quý Nhân",
+      "nature": "auspicious"
      },
      {
       "code": "star.tuong_tinh",
       "en": "General Star",
-      "vi": "Tướng Tinh"
+      "vi": "Tướng Tinh",
+      "nature": "auspicious"
      },
      {
       "code": "star.hong_diem",
       "en": "Red Allure",
-      "vi": "Hồng Diễm"
+      "vi": "Hồng Diễm",
+      "nature": "mixed"
      },
      {
       "code": "star.hoc_sy",
       "en": "Scholar",
-      "vi": "Học Sĩ"
+      "vi": "Học Sĩ",
+      "nature": "auspicious"
      }
     ]
    }
@@ -359,37 +371,44 @@
      {
       "code": "star.thien_at_quy_nhan",
       "en": "Heavenly Noble",
-      "vi": "Thiên Ất Quý Nhân"
+      "vi": "Thiên Ất Quý Nhân",
+      "nature": "auspicious"
      },
      {
       "code": "star.van_xuong",
       "en": "Literary Star",
-      "vi": "Văn Xương"
+      "vi": "Văn Xương",
+      "nature": "auspicious"
      },
      {
       "code": "star.phuc_tinh",
       "en": "Fortune Star",
-      "vi": "Phúc Tinh"
+      "vi": "Phúc Tinh",
+      "nature": "auspicious"
      },
      {
       "code": "star.thai_cuc_quy_nhan",
       "en": "Supreme Noble",
-      "vi": "Thái Cực Quý Nhân"
+      "vi": "Thái Cực Quý Nhân",
+      "nature": "auspicious"
      },
      {
       "code": "star.tuong_tinh",
       "en": "General Star",
-      "vi": "Tướng Tinh"
+      "vi": "Tướng Tinh",
+      "nature": "auspicious"
      },
      {
       "code": "star.hong_diem",
       "en": "Red Allure",
-      "vi": "Hồng Diễm"
+      "vi": "Hồng Diễm",
+      "nature": "mixed"
      },
      {
       "code": "star.hoc_sy",
       "en": "Scholar",
-      "vi": "Học Sĩ"
+      "vi": "Học Sĩ",
+      "nature": "auspicious"
      }
     ]
    }
@@ -498,42 +517,50 @@
      {
       "code": "star.thien_at_quy_nhan",
       "en": "Heavenly Noble",
-      "vi": "Thiên Ất Quý Nhân"
+      "vi": "Thiên Ất Quý Nhân",
+      "nature": "auspicious"
      },
      {
       "code": "star.van_xuong",
       "en": "Literary Star",
-      "vi": "Văn Xương"
+      "vi": "Văn Xương",
+      "nature": "auspicious"
      },
      {
       "code": "star.phuc_tinh",
       "en": "Fortune Star",
-      "vi": "Phúc Tinh"
+      "vi": "Phúc Tinh",
+      "nature": "auspicious"
      },
      {
       "code": "star.thai_cuc_quy_nhan",
       "en": "Supreme Noble",
-      "vi": "Thái Cực Quý Nhân"
+      "vi": "Thái Cực Quý Nhân",
+      "nature": "auspicious"
      },
      {
       "code": "star.tuong_tinh",
       "en": "General Star",
-      "vi": "Tướng Tinh"
+      "vi": "Tướng Tinh",
+      "nature": "auspicious"
      },
      {
       "code": "star.hong_diem",
       "en": "Red Allure",
-      "vi": "Hồng Diễm"
+      "vi": "Hồng Diễm",
+      "nature": "mixed"
      },
      {
       "code": "star.hoc_sy",
       "en": "Scholar",
-      "vi": "Học Sĩ"
+      "vi": "Học Sĩ",
+      "nature": "auspicious"
      },
      {
       "code": "star.cuu_quy_phong_hai",
       "en": "Nine Ghosts Harm",
-      "vi": "Cửu Quý Phòng Hại"
+      "vi": "Cửu Quý Phòng Hại",
+      "nature": "inauspicious"
      }
     ]
    }
