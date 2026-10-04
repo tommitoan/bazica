@@ -298,292 +298,350 @@
   {
    "code": "star.thien_at_quy_nhan",
    "en": "Heavenly Noble",
-   "vi": "Thiên Ất Quý Nhân"
+   "vi": "Thiên Ất Quý Nhân",
+   "nature": "auspicious"
   },
   {
    "code": "star.quoc_an",
    "en": "National Seal",
-   "vi": "Quốc Ấn"
+   "vi": "Quốc Ấn",
+   "nature": "auspicious"
   },
   {
    "code": "star.van_xuong",
    "en": "Literary Star",
-   "vi": "Văn Xương"
+   "vi": "Văn Xương",
+   "nature": "auspicious"
   },
   {
    "code": "star.phuc_tinh",
    "en": "Fortune Star",
-   "vi": "Phúc Tinh"
+   "vi": "Phúc Tinh",
+   "nature": "auspicious"
   },
   {
    "code": "star.thai_cuc_quy_nhan",
    "en": "Supreme Noble",
-   "vi": "Thái Cực Quý Nhân"
+   "vi": "Thái Cực Quý Nhân",
+   "nature": "auspicious"
   },
   {
    "code": "star.tue_loc",
    "en": "Year Prosperity",
-   "vi": "Tuế Lộc"
+   "vi": "Tuế Lộc",
+   "nature": "auspicious"
   },
   {
    "code": "star.kien_loc",
    "en": "Month Prosperity",
-   "vi": "Kiến Lộc"
+   "vi": "Kiến Lộc",
+   "nature": "auspicious"
   },
   {
    "code": "star.toa_loc",
    "en": "Day Prosperity",
-   "vi": "Tọa Lộc"
+   "vi": "Tọa Lộc",
+   "nature": "auspicious"
   },
   {
    "code": "star.quy_loc",
    "en": "Hour Prosperity",
-   "vi": "Quý Lộc"
+   "vi": "Quý Lộc",
+   "nature": "auspicious"
   },
   {
    "code": "star.am_loc",
    "en": "Hidden Prosperity",
-   "vi": "Âm Lộc"
+   "vi": "Âm Lộc",
+   "nature": "mixed"
   },
   {
    "code": "star.giap_loc",
    "en": "Flanking Prosperity",
-   "vi": "Giáp Lộc"
+   "vi": "Giáp Lộc",
+   "nature": "auspicious"
   },
   {
    "code": "star.duong_nhan",
    "en": "Goat Blade",
-   "vi": "Dương Nhận"
+   "vi": "Dương Nhận",
+   "nature": "mixed"
   },
   {
    "code": "star.phi_nhan",
    "en": "Flying Blade",
-   "vi": "Phi Nhận"
+   "vi": "Phi Nhận",
+   "nature": "inauspicious"
   },
   {
    "code": "star.kinh_duong",
    "en": "Ram Blade",
-   "vi": "Kình Dương"
+   "vi": "Kình Dương",
+   "nature": "mixed"
   },
   {
    "code": "star.kim_du",
    "en": "Golden Carriage",
-   "vi": "Kim Dư"
+   "vi": "Kim Dư",
+   "nature": "auspicious"
   },
   {
    "code": "star.hoc_duong",
    "en": "Study Hall",
-   "vi": "Học Đường"
+   "vi": "Học Đường",
+   "nature": "auspicious"
   },
   {
    "code": "star.vong_than",
    "en": "Lost Spirit",
-   "vi": "Vong Thần"
+   "vi": "Vong Thần",
+   "nature": "inauspicious"
   },
   {
    "code": "star.kiep_sat",
    "en": "Robbery Sha",
-   "vi": "Kiếp Sát"
+   "vi": "Kiếp Sát",
+   "nature": "inauspicious"
   },
   {
    "code": "star.dich_ma",
    "en": "Travelling Horse",
-   "vi": "Dịch Mã"
+   "vi": "Dịch Mã",
+   "nature": "mixed"
   },
   {
    "code": "star.tuong_tinh",
    "en": "General Star",
-   "vi": "Tướng Tinh"
+   "vi": "Tướng Tinh",
+   "nature": "auspicious"
   },
   {
    "code": "star.hoa_cai",
    "en": "Canopy",
-   "vi": "Hoa Cái"
+   "vi": "Hoa Cái",
+   "nature": "mixed"
   },
   {
    "code": "star.dao_hoa",
    "en": "Peach Blossom",
-   "vi": "Đào Hoa"
+   "vi": "Đào Hoa",
+   "nature": "mixed"
   },
   {
    "code": "star.tai_sat",
    "en": "Disaster Sha",
-   "vi": "Tai Sát"
+   "vi": "Tai Sát",
+   "nature": "inauspicious"
   },
   {
    "code": "star.hong_loan",
    "en": "Red Phoenix",
-   "vi": "Hồng Loan"
+   "vi": "Hồng Loan",
+   "nature": "auspicious"
   },
   {
    "code": "star.thien_hy",
    "en": "Heavenly Joy",
-   "vi": "Thiên Hỷ"
+   "vi": "Thiên Hỷ",
+   "nature": "auspicious"
   },
   {
    "code": "star.giao",
    "en": "Intersect",
-   "vi": "Giao"
+   "vi": "Giao",
+   "nature": "inauspicious"
   },
   {
    "code": "star.cau",
    "en": "Hook",
-   "vi": "Cấu"
+   "vi": "Cấu",
+   "nature": "inauspicious"
   },
   {
    "code": "star.nguyet_duc_quy_nhan",
    "en": "Monthly Virtue Noble",
-   "vi": "Nguyệt Đức Quý Nhân"
+   "vi": "Nguyệt Đức Quý Nhân",
+   "nature": "auspicious"
   },
   {
    "code": "star.thien_duc_quy_nhan",
    "en": "Heavenly Virtue Noble",
-   "vi": "Thiên Đức Quý Nhân"
+   "vi": "Thiên Đức Quý Nhân",
+   "nature": "auspicious"
   },
   {
    "code": "star.thien_y",
    "en": "Heavenly Doctor",
-   "vi": "Thiên Y"
+   "vi": "Thiên Y",
+   "nature": "auspicious"
   },
   {
    "code": "star.thap_ac_dai_bai",
    "en": "Ten Evil Great Defeat",
-   "vi": "Thập Ác Đại Bại"
+   "vi": "Thập Ác Đại Bại",
+   "nature": "inauspicious"
   },
   {
    "code": "star.khoi_cuong",
    "en": "Kui Gang",
-   "vi": "Khôi Cương"
+   "vi": "Khôi Cương",
+   "nature": "mixed"
   },
   {
    "code": "star.tien_than",
    "en": "Advancing Spirit",
-   "vi": "Tiến Thần"
+   "vi": "Tiến Thần",
+   "nature": "auspicious"
   },
   {
    "code": "star.kim_than",
    "en": "Golden Spirit",
-   "vi": "Kim Thần"
+   "vi": "Kim Thần",
+   "nature": "mixed"
   },
   {
    "code": "star.am_duong_sai_thac",
    "en": "Yin Yang Error",
-   "vi": "Âm Dương Sai Thác"
+   "vi": "Âm Dương Sai Thác",
+   "nature": "inauspicious"
   },
   {
    "code": "star.am_duong_sat",
    "en": "Yin Yang Sha",
-   "vi": "Âm Dương Sát"
+   "vi": "Âm Dương Sát",
+   "nature": "inauspicious"
   },
   {
    "code": "star.nhat_quy",
    "en": "Day Noble",
-   "vi": "Nhật Quý"
+   "vi": "Nhật Quý",
+   "nature": "auspicious"
   },
   {
    "code": "star.luc_tu",
    "en": "Six Elegances",
-   "vi": "Lục Tú"
+   "vi": "Lục Tú",
+   "nature": "auspicious"
   },
   {
    "code": "star.khong_vong",
    "en": "Void",
-   "vi": "Không Vong"
+   "vi": "Không Vong",
+   "nature": "mixed"
   },
   {
    "code": "star.hong_diem",
    "en": "Red Allure",
-   "vi": "Hồng Diễm"
+   "vi": "Hồng Diễm",
+   "nature": "mixed"
   },
   {
    "code": "star.hoc_sy",
    "en": "Scholar",
-   "vi": "Học Sĩ"
+   "vi": "Học Sĩ",
+   "nature": "auspicious"
   },
   {
    "code": "star.duc_quy_nhan",
    "en": "Virtue Noble",
-   "vi": "Đức Quý Nhân"
+   "vi": "Đức Quý Nhân",
+   "nature": "auspicious"
   },
   {
    "code": "star.tu_quy_nhan",
    "en": "Elegance Noble",
-   "vi": "Tú Quý Nhân"
+   "vi": "Tú Quý Nhân",
+   "nature": "auspicious"
   },
   {
    "code": "star.thai_duong",
    "en": "Moon General",
-   "vi": "Thái Dương"
+   "vi": "Thái Dương",
+   "nature": "auspicious"
   },
   {
    "code": "star.tam_ky_thuong",
    "en": "Three Wonders, Upper",
-   "vi": "Tam Kỳ Thượng"
+   "vi": "Tam Kỳ Thượng",
+   "nature": "auspicious"
   },
   {
    "code": "star.tam_ky_trung",
    "en": "Three Wonders, Middle",
-   "vi": "Tam Kỳ Trung"
+   "vi": "Tam Kỳ Trung",
+   "nature": "auspicious"
   },
   {
    "code": "star.tam_ky_ha",
    "en": "Three Wonders, Lower",
-   "vi": "Tam Kỳ Hạ"
+   "vi": "Tam Kỳ Hạ",
+   "nature": "auspicious"
   },
   {
    "code": "star.dai_hao",
    "en": "Great Depletion",
-   "vi": "Đại Hao"
+   "vi": "Đại Hao",
+   "nature": "inauspicious"
   },
   {
    "code": "star.co_than",
    "en": "Lonely Spirit",
-   "vi": "Cô Thần"
+   "vi": "Cô Thần",
+   "nature": "inauspicious"
   },
   {
    "code": "star.qua_tu",
    "en": "Widowhood",
-   "vi": "Quả Tú"
+   "vi": "Quả Tú",
+   "nature": "inauspicious"
   },
   {
    "code": "star.thien_la",
    "en": "Heavenly Net",
-   "vi": "Thiên La"
+   "vi": "Thiên La",
+   "nature": "inauspicious"
   },
   {
    "code": "star.dia_vong",
    "en": "Earthly Snare",
-   "vi": "Địa Võng"
+   "vi": "Địa Võng",
+   "nature": "inauspicious"
   },
   {
    "code": "star.co_loan_sat",
    "en": "Lone Phoenix Sha",
-   "vi": "Cô Loan Sát"
+   "vi": "Cô Loan Sát",
+   "nature": "inauspicious"
   },
   {
    "code": "star.nhat_nhan",
    "en": "Day Blade",
-   "vi": "Nhật Nhẫn"
+   "vi": "Nhật Nhẫn",
+   "nature": "inauspicious"
   },
   {
    "code": "star.cuu_quy_phong_hai",
    "en": "Nine Ghosts Harm",
-   "vi": "Cửu Quý Phòng Hại"
+   "vi": "Cửu Quý Phòng Hại",
+   "nature": "inauspicious"
   },
   {
    "code": "star.thien_dia_chuyen_sat",
    "en": "Heaven Earth Turning Sha",
-   "vi": "Thiên Địa Chuyển Sát"
+   "vi": "Thiên Địa Chuyển Sát",
+   "nature": "inauspicious"
   },
   {
    "code": "star.tu_phe",
    "en": "Four Wasted",
-   "vi": "Tứ Phế"
+   "vi": "Tứ Phế",
+   "nature": "inauspicious"
   },
   {
    "code": "star.thien_xich_quy",
    "en": "Heavenly Pardon",
-   "vi": "Thiên Xích Quý"
+   "vi": "Thiên Xích Quý",
+   "nature": "auspicious"
   }
  ]
 }

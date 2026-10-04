@@ -20,6 +20,8 @@
 // Every named concept is a model.LocalizedTerm: a stable Code, an English label
 // and a Vietnamese label. Switch on Code, not on a label. Fields that are
 // defined but not computed (strength and Useful God) are present and null.
+// Star terms also carry Nature (auspicious, inauspicious or mixed), a hint for
+// display rather than a judgement of the chart.
 //
 // # Conventions
 //
