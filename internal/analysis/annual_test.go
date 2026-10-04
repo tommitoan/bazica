@@ -11,6 +11,9 @@ func TestCycleStemBranchKnownYears(t *testing.T) {
 	// 1984 Jia-Zi, 1995 Yi-Hai, 2026 Bing-Wu, 1900 Geng-Zi, 2099 Ji-Wei.
 	for _, tc := range []struct{ year, stem, branch int }{
 		{1984, 1, 11}, {1995, 2, 10}, {2026, 3, 5}, {1900, 7, 11}, {2099, 6, 6},
+		// Past 2099 the cycle simply continues: 2100 is Geng-Shen like 2040, 2164 is Jia-Zi like 1984,
+		// and 9999 is Ji-Hai (8004 years after the Yi-Hai year 1995, a multiple of twelve and four more than a multiple of ten).
+		{2100, 7, 7}, {2164, 1, 11}, {9999, 6, 10},
 	} {
 		if s, b := cycleStemBranch(tc.year); s != tc.stem || b != tc.branch {
 			t.Errorf("cycleStemBranch(%d) = %d/%d, want %d/%d", tc.year, s, b, tc.stem, tc.branch)
@@ -19,7 +22,7 @@ func TestCycleStemBranchKnownYears(t *testing.T) {
 }
 
 func TestCycleRepeatsEverySixtyYears(t *testing.T) {
-	for year := 1900; year+60 <= 2099; year++ {
+	for year := 1900; year+60 <= 9999; year++ {
 		s1, b1 := cycleStemBranch(year)
 		s2, b2 := cycleStemBranch(year + 60)
 		if s1 != s2 || b1 != b2 {
