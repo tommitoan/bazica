@@ -125,9 +125,13 @@ func TestGetBaziChartRejectsInvalidGender(t *testing.T) {
 // Every pillar of every chart must be a valid Sexagenary pair (stem and branch
 // share polarity), and every field must be populated.
 func TestGetBaziChartInvariants(t *testing.T) {
-	step := 37*time.Hour + 11*time.Minute
+	step := 77*time.Hour + 11*time.Minute
+	first, last, err := SupportedYears()
+	if err != nil {
+		t.Fatal(err)
+	}
 	count := 0
-	for d := time.Date(1900, 1, 2, 0, 0, 0, 0, time.UTC); d.Year() < 2099; d = d.Add(step) {
+	for d := time.Date(first, 1, 2, 0, 0, 0, 0, time.UTC); d.Year() < last; d = d.Add(step) {
 		chart, err := GetBaziChart(d, time.UTC, int(d.Unix()%2))
 		if err != nil {
 			t.Fatalf("%s: %v", d.Format(time.RFC3339), err)
@@ -156,7 +160,7 @@ func TestGetBaziChartInvariants(t *testing.T) {
 		}
 		count++
 	}
-	if count < 15000 {
+	if count < 75000 {
 		t.Fatalf("only %d dates checked", count)
 	}
 }
@@ -167,8 +171,8 @@ func TestGetBaziChartErrors(t *testing.T) {
 		date    time.Time
 		wantErr error
 	}{
-		{"before supported range", time.Date(1899, 12, 31, 12, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
-		{"after supported range", time.Date(2100, 1, 1, 12, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
+		{"before supported range", time.Date(1699, 12, 31, 12, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
+		{"after supported range", time.Date(2400, 1, 1, 12, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

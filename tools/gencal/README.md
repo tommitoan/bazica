@@ -5,7 +5,9 @@ Generates bazica's two calendar tables from the JPL DE440 ephemeris through `sky
 - `gen_solar_terms.py` writes `solar-term.json` (the 24 solar terms per year).
 - `gen_lunar_new_year.py` writes `lunar-new-year.json` (the date of Lunar New Year per year).
 
-Both write the layout of the files in `data/`, byte for byte (see the layout tests).
+Both write the layout of the files in `data/`, byte for byte (see the layout tests). `data/solar-term.json`
+(1699-2400) and `data/lunar-new-year.json` (1700-2399, zone `china`) are exactly what these tools write; the
+tables of v1.4.3 that they replaced are kept in `testdata/calendar/` for comparison.
 
 A solar term is the instant the Sun's **apparent ecliptic longitude of date** reaches a
 multiple of 15 degrees. Times are UTC, rounded to the millisecond. Delta T comes from
@@ -37,12 +39,12 @@ OS-specific, only if the venv module is missing:
 
 ## Usage (solar terms)
 
-Reproduce and compare with a bundled table:
+Compare the generator with the table of v1.4.3 (the current `data/` file would compare with itself):
 
 ```bash
 ~/tommi-data/gencal-venv/bin/python gen_solar_terms.py validate \
   --ephemeris ~/tommi-data/ephemeris/de440.bsp \
-  --bundled ../../data/solar-term.json
+  --bundled ../../testdata/calendar/solar-term-v1.4.3.json
 ```
 
 Generate a range (one margin year on each side of the supported range is the caller's choice):
@@ -55,7 +57,7 @@ Generate a range (one margin year on each side of the supported range is the cal
 
 1699-2400 takes about one minute and gives 702 years, 969 KB.
 
-Tests (the table tests read `../../data/solar-term.json`; set `GENCAL_BUNDLED` to use another file,
+Tests (the comparison tests read the v1.4.3 tables in `../../testdata/calendar/`; set `GENCAL_BUNDLED` to use another file,
 `GENCAL_BUNDLED_LNY` for `lunar-new-year.json`, `GENCAL_EPHEMERIS` to use another ephemeris path; tests that need a missing file are skipped):
 
 ```bash
@@ -64,7 +66,7 @@ Tests (the table tests read `../../data/solar-term.json`; set `GENCAL_BUNDLED` t
 
 This folder is a Python tool inside a Go repository: it is not part of the Go module and adds no dependency.
 
-## Result against `data/solar-term.json` of v1.4.3 (4,848 terms, 1899-2100)
+## Result against the v1.4.3 solar-term table (4,848 terms, 1899-2100)
 
 | Period | Mean signed difference (generated - bundled) | Largest absolute |
 |---|---|---|
@@ -81,7 +83,8 @@ Median difference over all terms: 2.7 s. The difference is smooth in time, so it
 model difference, not noise: the bundled table follows a Delta T that agrees with skyfield's within
 about a second from 1980 and drifts away earlier and later.
 
-Rows of the bundled file that disagree by more (the table above leaves them out):
+Rows of the v1.4.3 file that disagreed by more (the table above leaves them out). The regenerated
+`data/solar-term.json` replaces all of them:
 
 - `winter_solstice` 1903 is `1903-12-23 00:00:03.866`; the generator gives `00:19:45.238`
   (19 minutes 41 seconds off).
@@ -102,7 +105,7 @@ Rules, applied to civil dates in a named zone:
 
 ```bash
 ~/tommi-data/gencal-venv/bin/python gen_lunar_new_year.py validate \
-  --ephemeris ~/tommi-data/ephemeris/de440.bsp --bundled ../../data/lunar-new-year.json
+  --ephemeris ~/tommi-data/ephemeris/de440.bsp --bundled ../../testdata/calendar/lunar-new-year-v1.4.3.json
 
 ~/tommi-data/gencal-venv/bin/python gen_lunar_new_year.py generate \
   --ephemeris ~/tommi-data/ephemeris/de440.bsp \
@@ -120,8 +123,8 @@ with `GENCAL_SLOW=1`.
 | `utc+8` | 199 of 200 (1916: new moon 00:05 on 4 February at UTC+8, 23:50 on 3 February at Beijing mean time) |
 | `utc+7` (Vietnam) | 191 of 200 (1903, 1935, 1965, 1968, 1969, 1985, 2007, 2030, 2053) |
 
-The bundled table therefore follows the Chinese calendar convention, not the Vietnamese one. Nothing in
-1900-2099 may change, so the generator uses `china`. A Vietnamese variant (UTC+7) would change nine of
+The v1.4.3 table therefore follows the Chinese calendar convention, not the Vietnamese one. The regenerated
+table keeps every date of 1900-2099, so the generator uses `china`. A Vietnamese variant (UTC+7) would change nine of
 those years and is out of scope.
 
 Only one year (1916) separates `china` from `utc+8` inside 1900-2099, so the pre-1929 Beijing mean time
@@ -145,7 +148,7 @@ date. Distance from midnight, in minutes, for the years within 15 minutes:
 | 1900-2099 | 1916 (9.5), 1954 (4.8), 1966 (14.0), 1988 (5.8), 2007 (14.3), 2027 (3.9), 2030 (7.5) |
 | 2100-2399 | 2215 (10.1), 2261 (8.1), 2299 (2.1), 2303 (8.5), 2333 (0.27), 2375 (11.2) |
 
-Years up to 2099 that appear here agree with the bundled table. Past 2100 Delta T is a prediction (see
+Years up to 2099 that appear here agree with the v1.4.3 table. Past 2100 Delta T is a prediction (see
 above), so 2299 and 2333 in particular can land on the other side of midnight; treat the date of those
 years as uncertain.
 

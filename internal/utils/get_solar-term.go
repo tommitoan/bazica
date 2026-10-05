@@ -61,6 +61,25 @@ func GetSolarTerm(dateTime time.Time) (string, int, int, error) {
 	return findSolarTerm(dateTime, terms[0], terms[1], terms[2])
 }
 
+// SolarTermYears returns the first and last year the embedded solar-term table
+// holds. A birth year y needs the years y-1, y and y+1.
+func SolarTermYears() (first, last int, err error) {
+	years, err := loadSolarTerms()
+	if err != nil {
+		return 0, 0, err
+	}
+	first, last = 0, 0
+	for year := range years {
+		if first == 0 || year < first {
+			first = year
+		}
+		if year > last {
+			last = year
+		}
+	}
+	return first, last, nil
+}
+
 type solarTermTime struct {
 	name string
 	time time.Time

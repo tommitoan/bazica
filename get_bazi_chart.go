@@ -18,8 +18,8 @@ import (
 //
 // Conventions: the day changes at 23:00 (the Rat hour), the year changes at the
 // Lunar New Year, and the month changes at the "initial" solar terms (jie).
-// Dates from 1900-01-01 to 2099-12-31 are supported; others return an error
-// wrapping model.ErrDateOutOfRange.
+// Dates inside the range returned by SupportedYears are supported; others return
+// an error wrapping model.ErrDateOutOfRange.
 func GetBaziChart(dateTime time.Time, loc *time.Location, gender int) (*model.BaziChart, error) {
 	if gender != model.GenderFemale && gender != model.GenderMale {
 		return nil, model.ErrInvalidGender
