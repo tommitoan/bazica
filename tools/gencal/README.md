@@ -1,8 +1,11 @@
 # gencal — calendar table generator for bazica
 
-Generates `solar-term.json` (the 24 solar terms per year) from the JPL DE440
-ephemeris through `skyfield`. The output has the same layout as bazica's
-`data/solar-term.json`, byte for byte (see `test_writer_reproduces_the_bundled_file_layout`).
+Generates bazica's two calendar tables from the JPL DE440 ephemeris through `skyfield`:
+
+- `gen_solar_terms.py` writes `solar-term.json` (the 24 solar terms per year).
+- `gen_lunar_new_year.py` writes `lunar-new-year.json` (the date of Lunar New Year per year).
+
+Both write the layout of the files in `data/`, byte for byte (see the layout tests).
 
 A solar term is the instant the Sun's **apparent ecliptic longitude of date** reaches a
 multiple of 15 degrees. Times are UTC, rounded to the millisecond. Delta T comes from
@@ -32,7 +35,7 @@ OS-specific, only if the venv module is missing:
 - Fedora only: `python3 -m venv` ships with `python3`; nothing to install
 - macOS only: use Python from python.org or Homebrew (`brew install python`)
 
-## Usage
+## Usage (solar terms)
 
 Reproduce and compare with a bundled table:
 
@@ -53,7 +56,7 @@ Generate a range (one margin year on each side of the supported range is the cal
 1699-2400 takes about one minute and gives 702 years, 969 KB.
 
 Tests (the table tests read `../../data/solar-term.json`; set `GENCAL_BUNDLED` to use another file,
-`GENCAL_EPHEMERIS` to use another ephemeris path; tests that need a missing file are skipped):
+`GENCAL_BUNDLED_LNY` for `lunar-new-year.json`, `GENCAL_EPHEMERIS` to use another ephemeris path; tests that need a missing file are skipped):
 
 ```bash
 ~/tommi-data/gencal-venv/bin/python -m pytest -q
@@ -86,6 +89,65 @@ Rows of the bundled file that disagree by more (the table above leaves them out)
   2081: +73 s). Earlier these rows held a December instant; the repair is close but approximate.
 - The margin year 1899 is up to 3.6 hours off for its first 22 terms (it is only used for births in
   January 1900, which need the December terms of 1899).
+
+## Lunar New Year (`gen_lunar_new_year.py`)
+
+Rules, applied to civil dates in a named zone:
+
+- A month starts on the local date of the new moon (conjunction in ecliptic longitude).
+- The month that contains the winter solstice is month 11.
+- Between two such months there are 12 or 13 months. With 13, the first month with no principal
+  term (a multiple of 30 degrees of solar longitude) is the leap month.
+- Lunar New Year is the first day of month 1. A leap month 11 or 12 pushes it one month later.
+
+```bash
+~/tommi-data/gencal-venv/bin/python gen_lunar_new_year.py validate \
+  --ephemeris ~/tommi-data/ephemeris/de440.bsp --bundled ../../data/lunar-new-year.json
+
+~/tommi-data/gencal-venv/bin/python gen_lunar_new_year.py generate \
+  --ephemeris ~/tommi-data/ephemeris/de440.bsp \
+  --first-year 1700 --last-year 2399 --zone china --out lunar-new-year.json
+```
+
+Validation takes about one minute and generating 1700-2399 about four. The full-range test only runs
+with `GENCAL_SLOW=1`.
+
+### Which time zone the bundled table follows
+
+| Zone | Dates reproduced (1900-2099) |
+|---|---|
+| `china`: UTC+8 from 1929-01-01, Beijing mean time (UTC+7:45:40) before | **200 of 200** |
+| `utc+8` | 199 of 200 (1916: new moon 00:05 on 4 February at UTC+8, 23:50 on 3 February at Beijing mean time) |
+| `utc+7` (Vietnam) | 191 of 200 (1903, 1935, 1965, 1968, 1969, 1985, 2007, 2030, 2053) |
+
+The bundled table therefore follows the Chinese calendar convention, not the Vietnamese one. Nothing in
+1900-2099 may change, so the generator uses `china`. A Vietnamese variant (UTC+7) would change nine of
+those years and is out of scope.
+
+Only one year (1916) separates `china` from `utc+8` inside 1900-2099, so the pre-1929 Beijing mean time
+rule rests on that single case there. For 1700-2399 the two zones also differ in 1896 only
+(`china` 13 February, `utc+8` 14 February). Phase 4 cross-checks these against an independent source.
+
+### Range 1700-2399 (zone `china`)
+
+All 700 dates have a gap of 353-355 or 383-385 days to the next one, and fall between 21 January and
+21 February (the Go integrity test for 1900-2099 stops at 20 February; widen it with the data). Sample:
+1700 `02-19`, 1800 `01-25`, 2100 `02-09`, 2399 `02-07`.
+
+### Years that are uncertain
+
+When the new moon of Lunar New Year falls close to local midnight, a small error in the time moves the
+date. Distance from midnight, in minutes, for the years within 15 minutes:
+
+| Period | Years (minutes from local midnight) |
+|---|---|
+| 1700-1899 | 1808 (7.9), 1893 (1.5), 1896 (2.6) |
+| 1900-2099 | 1916 (9.5), 1954 (4.8), 1966 (14.0), 1988 (5.8), 2007 (14.3), 2027 (3.9), 2030 (7.5) |
+| 2100-2399 | 2215 (10.1), 2261 (8.1), 2299 (2.1), 2303 (8.5), 2333 (0.27), 2375 (11.2) |
+
+Years up to 2099 that appear here agree with the bundled table. Past 2100 Delta T is a prediction (see
+above), so 2299 and 2333 in particular can land on the other side of midnight; treat the date of those
+years as uncertain.
 
 ## Accuracy beyond the bundled range
 
