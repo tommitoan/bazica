@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // moonGeneralBranch is the Rat-first branch of the Moon General that starts at

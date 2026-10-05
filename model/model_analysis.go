@@ -106,6 +106,9 @@ type ChartAnalysis struct {
 	// DayMasterStrength and UsefulGod are reserved and always null.
 	DayMasterStrength any `json:"day_master_strength"`
 	UsefulGod         any `json:"useful_god"`
+	// YearReference is display-only: the Lichun of the birth year and the year of the
+	// lunar calendar. Nothing else in the chart is calculated from it.
+	YearReference *YearReference `json:"year_reference"`
 }
 
 // LuckPillarAnalysis holds the derived facts of one luck pillar. Ages are

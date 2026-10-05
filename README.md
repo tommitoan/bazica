@@ -1,6 +1,6 @@
 [![CI](https://github.com/tommitoan/bazica/actions/workflows/ci.yml/badge.svg)](https://github.com/tommitoan/bazica/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/tag/tommitoan/bazica.svg?label=latest)](https://github.com/tommitoan/bazica/releases)
-[![Go Reference](https://pkg.go.dev/badge/github.com/tommitoan/bazica.svg)](https://pkg.go.dev/github.com/tommitoan/bazica)
+[![Go Reference](https://pkg.go.dev/badge/github.com/tommitoan/bazica/v2.svg)](https://pkg.go.dev/github.com/tommitoan/bazica/v2)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tommitoan/bazica)](https://goreportcard.com/report/github.com/tommitoan/bazica)
 [![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/main/LICENSE)
 
@@ -29,7 +29,7 @@ Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, d
 With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
 
 ```
-import "github.com/tommitoan/bazica"
+import "github.com/tommitoan/bazica/v2"
 ```
 
 to your code, and then `go [build|run|test]` will automatically fetch the necessary dependencies.
@@ -37,7 +37,7 @@ to your code, and then `go [build|run|test]` will automatically fetch the necess
 Otherwise, run the following Go command to install the `bazica` package:
 
 ```sh
-go get -u github.com/tommitoan/bazica@latest
+go get -u github.com/tommitoan/bazica/v2@latest
 ```
 
 ## Data
@@ -47,7 +47,7 @@ The solar term and Lunar New Year tables are embedded in the module (`go:embed`)
 The same tables are also published as JSON in the `data` folder if you want to use them elsewhere:
 
 - `data/solar-term.json`: the 24 solar terms for each year, in UTC.
-- `data/lunar-new-year.json`: the Lunar New Year date for each year.
+- `data/lunar-new-year.json`: the Lunar New Year date for each year. It feeds only the display-only `year_reference` block; no pillar is calculated from it.
 
 ## How to use
 
@@ -57,7 +57,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tommitoan/bazica"
+	"github.com/tommitoan/bazica/v2"
 	"time"
 )
 
@@ -83,6 +83,20 @@ func main() {
 	fmt.Println(string(jsonData))
 }
 ```
+## Version 2
+
+`v2.0.0` changes the module path to `github.com/tommitoan/bazica/v2` (Go requires the suffix from v2 on); no function or type was renamed or removed, so updating means changing the import path and running `go get github.com/tommitoan/bazica/v2@latest`. v1.5.0 stays available for anyone who wants the previous behaviour.
+
+**What changed in the results.** The year pillar now changes at the instant of Lichun instead of the Lunar New Year, the way solar-term Ba-zi calculators do. Charts for births outside the two windows below are unchanged (a test compares 650 of them with v1.5.0). For a birth between the Lunar New Year and Lichun, or between Lichun and the Lunar New Year (about 2 % of births, 7.4 days a year on average, 16 at most), these change:
+
+- the year pillar and everything derived from it (Ten God, hidden stems, life stage and Nayin of the year pillar, and the stars `tue_loc`, `hong_loan` and `thien_hy`);
+- the month stem (the month branch follows the solar term as before);
+- the direction and the sequence of the luck pillars, because the year stem's polarity decides the direction, and the first row of the yearly table with the nominal age.
+
+The day and hour pillars never change. The results were checked against a second implementation (lunar-javascript) for every such day of 1901-2099, both genders: four pillars, first luck pillar and luck direction (`testdata/calendar/lunarjs-window-1901-2099.json`).
+
+**What was added.** `analysis.year_reference` reports, for every chart and for display only, the Lichun time of the birth's civil year (in the birth zone), the year of the lunar calendar with its stem, branch, zodiac animal and Lunar New Year date, and `differs`, which is true when that lunar-calendar year is not the year pillar. Nothing is calculated from it; a test guards that.
+
 ## Analysis
 
 From v1.4.0 every chart also carries derived facts under an `analysis` key. The fields that existed in v1.3.0 are unchanged, and every added key is named `analysis`, so existing clients keep working.
@@ -98,6 +112,7 @@ From v1.4.0 every chart also carries derived facts under an `analysis` key. The 
 | each luck pillar | `age_start`, `age_end` | nominal age range |
 | | `ten_god`, `nayin`, `stem_stage_at_own_branch`, `hidden_stems`, `heaven_earth_clash` | as above |
 | chart | `day_master`, `void_branches` | the Day Master and the two void branches |
+| | `year_reference` | display only: the Lichun time of the birth year, the year of the lunar calendar (stem, branch, zodiac animal, Lunar New Year date) and `differs` (see "Version 2") |
 | | `thai_nguyen`, `thai_tuc`, `life_palace` | conception, gestation and life palace pillars with their Nayin |
 | | `element_counts` | unweighted counts of stems, branches and hidden stems per element |
 | | `day_master_strength`, `useful_god` | reserved, always `null` |
@@ -126,7 +141,7 @@ for _, y := range annual.AnnualPillars {
 `fromYear` may not precede the year pillar's year or the first supported birth year (see `SupportedYears`), and the years must not pass 9999. The yearly table is not limited to the range of a birth date: each year's pillar is the sixty-year cycle, so it continues after 2399 (a luck pillar number is `null` once a year is past the twelfth luck pillar).
 
 ### Analysis conventions
-- **Nominal age**: the year of the year pillar is age 1. For a January birth before the Lunar New Year the year pillar belongs to the previous year, so ages count from there.
+- **Nominal age**: the year of the year pillar is age 1. For a birth before Lichun the year pillar belongs to the previous year, so ages count from there. This is the Ba-zi count, not the everyday count from the Lunar New Year.
 - **Stars**: only stars whose rules were verified against reference charts are reported (58 stars, checked on 298 recorded charts and 10,000 random births against an independent implementation). Other stars are never guessed. Several rules differ from the classical tables because they follow the reference page, for example Red Allure (`hong_diem`) reads both the day stem and the year stem, and Great Depletion (`dai_hao`) depends on gender.
 - **Star nature**: each star term has an optional `nature` key, set on stars only: `auspicious` (cát), `inauspicious` (hung) or `mixed` (tùy cục, the effect depends on the rest of the chart). It is a hint for display. Schools disagree about what is favourable and many stars cut both ways, so the value is not a judgement of the chart. The reference page labels stars only good or bad; the library follows it except for 10 stars it reads as mixed and one (`am_duong_sat`) it reads as inauspicious where the page says good. Other terms (Ten Gods, stages, elements, Nayin) never carry the key. It is additive: a client that ignores it keeps working.
 - **Moon General** (`thai_duong`): the general changes at each principal term, and the whole calendar day on which a term falls already has the new general. The reference page dates a few terms one day off, so on a term day the result can differ from the page by one day.
@@ -138,14 +153,15 @@ for _, y := range annual.AnnualPillars {
 ### Data input range
 Birth dates from January 1, 1700, to December 31, 2399 are supported. `bazica.SupportedYears()` returns the first and last year, taken from the embedded calendar tables; dates outside the range return `model.ErrDateOutOfRange`.
 
-The two tables (`data/solar-term.json` and `data/lunar-new-year.json`) are generated by `tools/gencal` from the JPL DE440 ephemeris, which also says how and how accurately. Lunar New Year follows the Chinese calendar (UTC+8, and Beijing mean time before 1929). The accuracy of a solar term depends on Delta T, the difference between uniform time and Earth's rotation: it is reconstructed from observations up to the present, so terms are good to a few seconds from 1700 to 2025, and a prediction after that, so the uncertainty grows to minutes by 2399. A check against a second, independent package (a different method and its own Delta T) agrees within about a minute from 1700 to 2000; after 2100 the two Delta T predictions differ by 3 to 5 minutes, so a birth within about five minutes of a solar term is uncertain there, and so are the Lunar New Years of 2299 and 2333. A birth within that margin of a solar term, or of the Lunar New Year at local midnight, may get the neighbouring month or year pillar.
+The two tables (`data/solar-term.json` and `data/lunar-new-year.json`) are generated by `tools/gencal` from the JPL DE440 ephemeris, which also says how and how accurately. Lunar New Year follows the Chinese calendar (UTC+8, and Beijing mean time before 1929). The accuracy of a solar term depends on Delta T, the difference between uniform time and Earth's rotation: it is reconstructed from observations up to the present, so terms are good to a few seconds from 1700 to 2025, and a prediction after that, so the uncertainty grows to minutes by 2399. A check against a second, independent package (a different method and its own Delta T) agrees within about a minute from 1700 to 2000; after 2100 the two Delta T predictions differ by 3 to 5 minutes, so a birth within about five minutes of a solar term is uncertain there, and so are the Lunar New Years of 2299 and 2333. A birth within that margin of a solar term, Lichun included, may get the neighbouring month or year pillar. The Lunar New Years of 2299 and 2333 are as uncertain, and they only affect the display-only lunar-calendar year.
 
 Before about 1900 many places used local mean time. `bazica` reads the wall-clock time in the `loc` you pass, so pass the zone (or fixed offset) that was in use at the birth place.
 
 ### Conventions
 - **Day**: the day changes at 23:00 (the Rat hour), so a birth at 23:30 takes the pillar of the next day.
-- **Year**: the year changes at the Lunar New Year (`data/lunar-new-year.json`).
-- **Month**: the month changes at the "initial" solar terms (jie), such as Start of Spring and Awakening of Insects.
+- **Year**: the year changes at the instant of Lichun (Start of Spring), the same solar-term clock as the month; the comparison uses the exact instant, so the 23:00 day rule does not apply to it.
+- **Month**: the month changes at the "initial" solar terms (jie), such as Start of Spring and Awakening of Insects. The month stem follows from the year stem by the Five Tigers rule.
+- **Lunar-calendar year (reference)**: the year that changes at the Lunar New Year, reported under `analysis.year_reference` for display only. For a birth between the Lunar New Year and Lichun it differs from the year pillar.
 - **Time zone**: `dateTime` is read as wall-clock time in `loc`, so pass the birth place's zone. A nil `loc` keeps the zone `dateTime` already carries.
 - **Gender**: `0` is female and `1` is male (`model.GenderFemale`, `model.GenderMale`); it sets the direction of the luck pillars. Other values return `model.ErrInvalidGender`.
 

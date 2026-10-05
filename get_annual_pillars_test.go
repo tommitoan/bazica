@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func referenceModelChart(t *testing.T) *model.BaziChart {
@@ -134,7 +134,7 @@ func TestGetAnnualPillarsContinuesPast2099(t *testing.T) {
 	}
 }
 
-// A January birth before the Lunar New Year belongs to the previous year pillar,
+// A January birth before Lichun belongs to the previous year pillar,
 // so nominal age counts from that year and 1999 is the first valid year.
 func TestGetAnnualPillarsUsesTheYearPillarYear(t *testing.T) {
 	loc, err := time.LoadLocation("Asia/Ho_Chi_Minh")
@@ -157,6 +157,32 @@ func TestGetAnnualPillarsUsesTheYearPillarYear(t *testing.T) {
 	}
 }
 
+// A birth between the Lunar New Year and Lichun belongs to the Ba-zi year before the
+// civil year, so the yearly table and the nominal age start there. 1990-01-31 falls
+// after the Lunar New Year of 1990 (27 January) and before its Lichun (4 February).
+func TestGetAnnualPillarsForABirthBetweenTheLunarNewYearAndLichun(t *testing.T) {
+	loc := time.FixedZone("UTC+8", 8*3600)
+	chart, err := GetBaziChart(time.Date(1990, 1, 31, 12, 0, 0, 0, loc), loc, model.GenderMale)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := pillarChars(chart.FourPillar.YearPillar.HeavenlyStem, chart.FourPillar.YearPillar.EarthlyBranch); got != "己巳" {
+		t.Fatalf("year pillar = %s, want 己巳 (1989)", got)
+	}
+	if _, err := GetAnnualPillars(chart, 1988, 2); !errors.Is(err, model.ErrInvalidYearRange) {
+		t.Errorf("1988 precedes the year pillar: error = %v", err)
+	}
+	annual, err := GetAnnualPillars(chart, 1989, 3)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, wantAge := range []int{1, 2, 3} {
+		if got := annual.AnnualPillars[i].NominalAge; got != wantAge {
+			t.Errorf("age in %d = %d, want %d", annual.AnnualPillars[i].Year, got, wantAge)
+		}
+	}
+}
+
 // The yearly table starts at the first supported birth year, which follows the
 // calendar data.
 func TestGetAnnualPillarsAtTheFirstSupportedYear(t *testing.T) {
@@ -169,7 +195,7 @@ func TestGetAnnualPillarsAtTheFirstSupportedYear(t *testing.T) {
 	if err != nil {
 		t.Fatalf("1700 for 3 years: %v", err)
 	}
-	// 1700 is a Geng-Chen year and the birth falls after its Lunar New Year, so the nominal age starts at 1.
+	// 1700 is a Geng-Chen year and the birth falls after its Lichun, so the nominal age starts at 1.
 	if r := annual.AnnualPillars[0]; r.Year != 1700 || r.HeavenlyStem.Spelling != "geng" || r.EarthlyBranch.Spelling != "chen" || r.NominalAge != 1 {
 		t.Errorf("1700 = %d %s/%s age %d", r.Year, r.HeavenlyStem.Spelling, r.EarthlyBranch.Spelling, r.NominalAge)
 	}

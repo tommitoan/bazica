@@ -26,8 +26,8 @@
 // # Conventions
 //
 //   - Ages are nominal: the year of the year pillar counts as age 1. The year
-//     pillar's year is the Lunar New Year year, which for a January birth
-//     before the Lunar New Year is the year before the civil birth year.
+//     pillar changes at the instant of Lichun, so for a birth before Lichun it is
+//     the year before the civil birth year.
 //   - Stars are listed only when their rules have been verified against
 //     reference charts; other stars are never reported. The Moon General
 //     follows the calendar date of the birth: the whole day on which a

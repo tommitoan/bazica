@@ -9,8 +9,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/tommitoan/bazica/internal/utils"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/internal/fourpillars"
+	"github.com/tommitoan/bazica/v2/internal/utils"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // errInvalidPillar is returned for a pillar whose stem, branch or Nayin is not valid.
@@ -41,7 +42,15 @@ func AttachAt(chart *model.BaziChart, gender int, birth time.Time) error {
 	if err != nil {
 		return err
 	}
-	return attach(chart, gender, general)
+	if err := attach(chart, gender, general); err != nil {
+		return err
+	}
+	reference, err := fourpillars.GetYearReference(birth, chart.FourPillar.YearPillar)
+	if err != nil {
+		return err
+	}
+	chart.Analysis.YearReference = reference
+	return nil
 }
 
 func attach(chart *model.BaziChart, gender, general int) error {

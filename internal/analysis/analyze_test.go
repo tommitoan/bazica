@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tommitoan/bazica/internal/utils"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/internal/utils"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // chartOf builds a chart from (stem, branch) values in year, month, day, hour order.

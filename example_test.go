@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tommitoan/bazica"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func ExampleGetBaziChart() {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func TestCycleStemBranchKnownYears(t *testing.T) {
@@ -33,7 +33,7 @@ func TestCycleRepeatsEverySixtyYears(t *testing.T) {
 
 func TestYearPillarYear(t *testing.T) {
 	// The model's Year is the civil birth year; the pillar's own year is one less
-	// for a birth before the Lunar New Year.
+	// for a birth before Lichun.
 	pillar := func(civil, pillarYear int) *model.YearPillar {
 		s, b := cycleStemBranch(pillarYear)
 		return &model.YearPillar{Year: civil, HeavenlyStem: model.HeavenlyStem{Value: s}, EarthlyBranch: model.EarthlyBranch{Value: b}}
@@ -42,8 +42,8 @@ func TestYearPillarYear(t *testing.T) {
 		name          string
 		civil, pillar int
 	}{
-		{"birth after Lunar New Year", 1995, 1995},
-		{"January birth before Lunar New Year", 2000, 1999},
+		{"birth after Lichun", 1995, 1995},
+		{"January birth before Lichun", 2000, 1999},
 		{"first covered year", 1900, 1900},
 	} {
 		if got := yearPillarYear(pillar(tc.civil, tc.pillar)); got != tc.pillar {

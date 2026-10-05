@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // The released range is pinned on purpose: a change of the calendar tables that

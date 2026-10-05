@@ -3,9 +3,9 @@ package analysis
 import (
 	"fmt"
 
-	"github.com/tommitoan/bazica/internal/fourpillars"
-	"github.com/tommitoan/bazica/internal/utils"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/internal/fourpillars"
+	"github.com/tommitoan/bazica/v2/internal/utils"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // maxAnnualYear is the last Gregorian year of the yearly table. The first is the
@@ -73,7 +73,7 @@ func cycleStemBranch(year int) (stem, branch int) {
 
 // yearPillarYear returns the Gregorian year the year pillar stands for. The
 // model's YearPillar.Year is the civil year of the birth, which is one too high
-// for a birth before the Lunar New Year, so the pillar's own stem and branch
+// for a birth before Lichun, so the pillar's own stem and branch
 // decide between that year and the one before.
 func yearPillarYear(yp *model.YearPillar) int {
 	for _, year := range []int{yp.Year, yp.Year - 1} {

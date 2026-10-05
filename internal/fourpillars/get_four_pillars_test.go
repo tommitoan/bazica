@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func spellings(p *model.FourPillars) string {
@@ -25,7 +25,8 @@ func ganZhiNames(p *model.FourPillars) string {
 // The expected values come from an independent implementation: Julian-day
 // arithmetic for the day pillar, the Five Tigers/Five Rats rules for the month
 // and hour stems, and the latest "initial" solar term for the month branch.
-// Year pillars follow the Lunar New Year, as documented in the README.
+// The year pillar changes at Lichun, as documented in the README; the days between the
+// Lunar New Year and Lichun are pinned in year_boundary_test.go and the root package tests.
 func TestGetFourPillarsGolden(t *testing.T) {
 	tests := []struct {
 		name string
@@ -33,7 +34,7 @@ func TestGetFourPillarsGolden(t *testing.T) {
 		want string // year month day hour as stem/branch
 	}{
 		{"start of supported range", "1900-01-01 12:00", "ji/hai bing/zi jia/xu geng/wu"},
-		{"after Lunar New Year 1900", "1900-02-19 12:00", "geng/zi wu/yin gui/hai wu/wu"},
+		{"after Lichun and the Lunar New Year 1900", "1900-02-19 12:00", "geng/zi wu/yin gui/hai wu/wu"},
 		{"after Lunar New Year and Lichun 1995", "1995-02-10 12:00", "yi/hai wu/yin ren/shen bing/wu"},
 		{"shortly after Lunar New Year 1958", "1958-02-20 12:00", "wu/xu jia/yin wu/chen wu/wu"},
 		{"after Lunar New Year 1985", "1985-02-25 12:00", "yi/chou wu/yin yi/wei ren/wu"},

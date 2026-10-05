@@ -3,7 +3,7 @@ package utils
 import (
 	"testing"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 var lifeStages = []string{

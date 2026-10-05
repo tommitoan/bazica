@@ -1,6 +1,6 @@
 package analysis
 
-import "github.com/tommitoan/bazica/model"
+import "github.com/tommitoan/bazica/v2/model"
 
 // starTerms is the registry of the stars, keyed by code suffix.
 var starTerms = map[string]model.LocalizedTerm{

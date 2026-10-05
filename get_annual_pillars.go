@@ -1,8 +1,8 @@
 package bazica
 
 import (
-	"github.com/tommitoan/bazica/internal/analysis"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/internal/analysis"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // GetAnnualPillars returns the pillars of count consecutive Gregorian years
@@ -10,7 +10,7 @@ import (
 // luck pillar and heaven-clash/earth-clash flag against the natal pillars.
 //
 // The nominal age counts the year of the chart's year pillar as 1, so a chart
-// whose birth falls before the Lunar New Year starts at the previous year.
+// whose birth falls before Lichun starts at the previous year.
 // fromYear may not precede that year or the first supported birth year (see
 // SupportedYears), count must be positive, and the years must not pass 9999, which
 // goes past the last supported birth year because the yearly pillars repeat every

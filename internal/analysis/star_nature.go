@@ -1,6 +1,6 @@
 package analysis
 
-import "github.com/tommitoan/bazica/model"
+import "github.com/tommitoan/bazica/v2/model"
 
 // starNature classifies each star, in registry order, as auspicious (cát), inauspicious (hung)
 // or mixed (tùy cục: the effect depends on the rest of the chart). Schools differ, so the value
