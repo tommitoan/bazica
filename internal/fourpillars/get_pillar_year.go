@@ -56,9 +56,10 @@ func GetBaziYear(dateTime time.Time) (int, error) {
 
 // GetLunarYear returns the Gregorian year in which the lunar-calendar year of dateTime
 // begins. It is reference data only: the year pillar follows Lichun (GetBaziYear).
+// The lunar calendar changes year at midnight, so the civil date in the birth zone is
+// compared with the Lunar New Year date; the 23:00 rule of the day pillar does not apply.
 func GetLunarYear(dateTime time.Time) (int, error) {
-	// From 23:00 is new day (Rat hour)
-	solarYear, solarMonth, solarDay := utils.BirthCalendarDate(dateTime)
+	solarYear, solarMonth, solarDay := dateTime.Date()
 
 	lunarData, err := loadLunarNewYear()
 	if err != nil {

@@ -87,9 +87,10 @@ func main() {
 
 `v2.0.0` changes the module path to `github.com/tommitoan/bazica/v2` (Go requires the suffix from v2 on); no function or type was renamed or removed, so updating means changing the import path and running `go get github.com/tommitoan/bazica/v2@latest`. v1.5.0 stays available for anyone who wants the previous behaviour.
 
-**What changed in the results.** The year pillar now changes at the instant of Lichun instead of the Lunar New Year, the way solar-term Ba-zi calculators do. Charts for births outside the two windows below are unchanged (a test compares 650 of them with v1.5.0). For a birth between the Lunar New Year and Lichun, or between Lichun and the Lunar New Year (about 2 % of births, 7.4 days a year on average, 16 at most), these change:
+**What changed in the results.** The year pillar now changes at the instant of Lichun instead of the Lunar New Year, the way solar-term Ba-zi calculators do. Charts for births outside the two windows below are unchanged (a test compares 658 of them with v1.5.0). For a birth between the Lunar New Year and Lichun, or between Lichun and the Lunar New Year (about 2 % of births, 7.4 days a year on average, 16 at most), these change:
 
-- the year pillar and everything derived from it (Ten God, hidden stems, life stage and Nayin of the year pillar, and the stars `tue_loc`, `hong_loan` and `thien_hy`);
+- the year pillar and everything derived from it (Ten God, hidden stems, life stage and Nayin of the year pillar);
+- the stars: a star changes when its rule starts from the year pillar or when it lands in the year or month pillar, which covers most of the table. In a check of every such day of 1901-2099, both genders, **every** chart had at least one different star and 39 star terms were involved, so treat the stars of these births as new;
 - the month stem (the month branch follows the solar term as before);
 - the direction and the sequence of the luck pillars, because the year stem's polarity decides the direction, and the first row of the yearly table with the nominal age.
 
@@ -161,7 +162,7 @@ Before about 1900 many places used local mean time. `bazica` reads the wall-cloc
 - **Day**: the day changes at 23:00 (the Rat hour), so a birth at 23:30 takes the pillar of the next day.
 - **Year**: the year changes at the instant of Lichun (Start of Spring), the same solar-term clock as the month; the comparison uses the exact instant, so the 23:00 day rule does not apply to it.
 - **Month**: the month changes at the "initial" solar terms (jie), such as Start of Spring and Awakening of Insects. The month stem follows from the year stem by the Five Tigers rule.
-- **Lunar-calendar year (reference)**: the year that changes at the Lunar New Year, reported under `analysis.year_reference` for display only. For a birth between the Lunar New Year and Lichun it differs from the year pillar.
+- **Lunar-calendar year (reference)**: the year that changes at the Lunar New Year, reported under `analysis.year_reference` for display only. It follows the civil date (the lunar calendar changes year at midnight, so the 23:00 day rule does not apply to it). For a birth between the Lunar New Year and Lichun it differs from the year pillar.
 - **Time zone**: `dateTime` is read as wall-clock time in `loc`, so pass the birth place's zone. A nil `loc` keeps the zone `dateTime` already carries.
 - **Gender**: `0` is female and `1` is male (`model.GenderFemale`, `model.GenderMale`); it sets the direction of the luck pillars. Other values return `model.ErrInvalidGender`.
 

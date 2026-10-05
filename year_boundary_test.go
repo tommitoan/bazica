@@ -10,6 +10,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -24,31 +25,21 @@ func pillarChars(s model.HeavenlyStem, b model.EarthlyBranch) string {
 // luckForward reports whether the first luck pillar follows the month pillar in the sixty-cycle.
 func luckForward(t *testing.T, chart *model.BaziChart) bool {
 	t.Helper()
-	const stems, branches = "甲乙丙丁戊己庚辛壬癸", "子丑寅卯辰巳午未申酉戌亥"
-	index := func(gz string) int {
-		runes := []rune(gz)
-		var s, b int = -1, -1
-		for i, r := range stems {
-			if r == runes[0] {
-				s = i / 3
-			}
-		}
-		for i, r := range branches {
-			if r == runes[1] {
-				b = i / 3
-			}
-		}
-		for n := 0; n < 60; n++ {
-			if n%10 == s && n%12 == b {
+	stems, branches := []rune("甲乙丙丁戊己庚辛壬癸"), []rune("子丑寅卯辰巳午未申酉戌亥")
+	position := func(ganZhi string) int {
+		pair := []rune(ganZhi)
+		gan, zhi := slices.Index(stems, pair[0]), slices.Index(branches, pair[1])
+		for n := 0; gan >= 0 && zhi >= 0 && n < 60; n++ {
+			if n%10 == gan && n%12 == zhi {
 				return n
 			}
 		}
-		t.Fatalf("no position for %s", gz)
+		t.Fatalf("no position in the sixty-cycle for %s", ganZhi)
 		return 0
 	}
 	month := pillarChars(chart.FourPillar.MonthPillar.HeavenlyStem, chart.FourPillar.MonthPillar.EarthlyBranch)
 	first := chart.LuckPillars.LuckPillars[1]
-	return (index(pillarChars(first.HeavenlyStem, first.EarthlyBranch))-index(month)+60)%60 == 1
+	return (position(pillarChars(first.HeavenlyStem, first.EarthlyBranch))-position(month)+60)%60 == 1
 }
 
 // Days between the Lunar New Year and Lichun (in either order) of 1901-2099 give the
@@ -155,9 +146,12 @@ func TestWindowGoldens(t *testing.T) {
 	}
 }
 
-// Charts that fall outside the two windows are unchanged from v1.5.0. The fixture holds the
-// SHA-256 of each chart's canonical JSON as v1.5.0 produced it; fields added since then are
-// not part of the comparison (see canonicalChartJSON).
+// Charts that fall outside the two windows are unchanged from v1.5.0. The fixture holds 658
+// births (a 367-day step over 1700-2399, varying hour, zone and gender, without the days
+// between the Lunar New Year and Lichun) and the SHA-256 of each chart's canonical JSON
+// (keys sorted) as the v1.5.0 tag produced it; the same hashing in canonicalChartJSON
+// leaves out analysis.year_reference, which v1.5.0 did not have. If a later release changes
+// other output on purpose, rebuild the hashes from that release's predecessor the same way.
 func TestChartsOutsideTheWindowsAreUnchanged(t *testing.T) {
 	raw, err := os.ReadFile("testdata/calendar/v150-regression-outside-windows.json")
 	if err != nil {

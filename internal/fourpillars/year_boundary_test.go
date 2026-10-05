@@ -39,7 +39,11 @@ func TestYearAndMonthPillarsAreConsistentOverTheWholeRange(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The full walk takes about ten seconds under the race detector; -short samples every day.
 	step := 6 * time.Hour
+	if testing.Short() {
+		step = 24 * time.Hour
+	}
 	start := time.Date(first, 1, 1, 0, 0, 0, 0, time.UTC)
 	end := time.Date(last, 12, 31, 18, 0, 0, 0, time.UTC)
 

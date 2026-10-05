@@ -10,10 +10,8 @@ import (
 
 // GetYearReference returns the display-only year data of a birth: the Lichun of
 // its civil year in the birth zone and the year of the lunar calendar. Nothing
-// in the chart is calculated from it. The lunar-calendar year compares the
-// calendar date with the Lunar New Year (late Rat hour counted as the next day),
-// which is how the year pillar followed the lunar calendar before Lichun became the
-// boundary.
+// in the chart is calculated from it. The lunar-calendar year follows the civil
+// date, because the lunar calendar changes year at midnight, unlike the Ba-zi day.
 func GetYearReference(dateTime time.Time, yearPillar *model.YearPillar) (*model.YearReference, error) {
 	lichun, err := utils.StartOfSpring(dateTime.Year())
 	if err != nil {
