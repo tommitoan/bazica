@@ -98,6 +98,8 @@ The day and hour pillars never change. The results were checked against a second
 
 **What was added.** `analysis.year_reference` reports, for every chart and for display only, the Lichun time of the birth's civil year (in the birth zone), the year of the lunar calendar with its stem, branch, zodiac animal and Lunar New Year date, and `differs`, which is true when that lunar-calendar year is not the year pillar. Nothing is calculated from it; a test guards that.
 
+The lunar-calendar year follows the Lunar New Year table, which holds one date per year and follows the Chinese calendar (UTC+8), whatever `loc` you pass. Vietnam's calendar (UTC+7) places the Lunar New Year on another day in some years: in 1900-2099 these are 1903, 1935, 1965, 1968, 1969, 1985, 2007, 2030 and 2053 (`tools/gencal/README.md` has the comparison; later years were not checked). On that one day of such a year, `lunar_year` and `differs` can disagree with a Vietnamese almanac. No pillar is affected, because the year pillar follows Lichun.
+
 ## Analysis
 
 From v1.4.0 every chart also carries derived facts under an `analysis` key. The fields that existed in v1.3.0 are unchanged, and every added key is named `analysis`, so existing clients keep working.
