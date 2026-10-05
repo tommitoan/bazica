@@ -1,0 +1,3 @@
+skyfield==1.55
+numpy
+pytest
