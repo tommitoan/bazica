@@ -156,3 +156,24 @@ func TestGetAnnualPillarsUsesTheYearPillarYear(t *testing.T) {
 		t.Errorf("nominal ages = %d, %d, want 1, 2", annual.AnnualPillars[0].NominalAge, annual.AnnualPillars[1].NominalAge)
 	}
 }
+
+// The yearly table starts at the first supported birth year, which follows the
+// calendar data.
+func TestGetAnnualPillarsAtTheFirstSupportedYear(t *testing.T) {
+	ict := time.FixedZone("ICT", 7*3600)
+	chart, err := GetBaziChart(time.Date(1700, 6, 1, 12, 0, 0, 0, ict), ict, model.GenderMale)
+	if err != nil {
+		t.Fatal(err)
+	}
+	annual, err := GetAnnualPillars(chart, 1700, 3)
+	if err != nil {
+		t.Fatalf("1700 for 3 years: %v", err)
+	}
+	// 1700 is a Geng-Chen year and the birth falls after its Lunar New Year, so the nominal age starts at 1.
+	if r := annual.AnnualPillars[0]; r.Year != 1700 || r.HeavenlyStem.Spelling != "geng" || r.EarthlyBranch.Spelling != "chen" || r.NominalAge != 1 {
+		t.Errorf("1700 = %d %s/%s age %d", r.Year, r.HeavenlyStem.Spelling, r.EarthlyBranch.Spelling, r.NominalAge)
+	}
+	if _, err := GetAnnualPillars(chart, 1699, 3); !errors.Is(err, model.ErrInvalidYearRange) {
+		t.Errorf("1699 precedes the first supported year: error = %v, want ErrInvalidYearRange", err)
+	}
+}

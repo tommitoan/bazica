@@ -65,8 +65,9 @@ func TestGetSolarTermErrors(t *testing.T) {
 		date    time.Time
 		wantErr error
 	}{
-		{"year without data", time.Date(2101, 6, 1, 0, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
-		{"previous year without data", time.Date(1899, 6, 1, 0, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
+		{"year without data", time.Date(2401, 6, 1, 0, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
+		{"next year without data", time.Date(2400, 6, 1, 0, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
+		{"previous year without data", time.Date(1699, 6, 1, 0, 0, 0, 0, time.UTC), model.ErrDateOutOfRange},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {

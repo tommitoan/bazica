@@ -71,6 +71,35 @@ func GetLunarYear(dateTime time.Time) (int, error) {
 	return lunarYear, nil
 }
 
+// SupportedYears returns the first and last calendar year of a birth date the
+// embedded tables cover. A year y is covered when the solar-term table holds
+// y-1, y and y+1 and the Lunar New Year table holds y, so the range follows the
+// data and never has to be repeated as a constant.
+func SupportedYears() (first, last int, err error) {
+	solarFirst, solarLast, err := utils.SolarTermYears()
+	if err != nil {
+		return 0, 0, err
+	}
+	lunarData, err := loadLunarNewYear()
+	if err != nil {
+		return 0, 0, err
+	}
+	lunarFirst, lunarLast := 0, 0
+	for key := range lunarData.LunarNewYearDates {
+		var year int
+		if _, scanErr := fmt.Sscanf(key, "%d", &year); scanErr != nil {
+			return 0, 0, fmt.Errorf("%w: lunar-new-year.json: year %q", model.ErrDataUnavailable, key)
+		}
+		if lunarFirst == 0 || year < lunarFirst {
+			lunarFirst = year
+		}
+		if year > lunarLast {
+			lunarLast = year
+		}
+	}
+	return max(solarFirst+1, lunarFirst), min(solarLast-1, lunarLast), nil
+}
+
 // loadLunarNewYear decodes the embedded table once; the result is read-only.
 var loadLunarNewYear = sync.OnceValues(func() (*model.LunarNewYearData, error) {
 	var lunarData model.LunarNewYearData

@@ -61,3 +61,44 @@ func TestGetDayPillarAroundMidnightInOtherZones(t *testing.T) {
 		})
 	}
 }
+
+// The day count must stay exact over many centuries: it once relied on
+// time.Duration, which saturates at about 292 years from 1900 and froze the pillar.
+func TestGetDayPillarMatchesJulianDayAcrossCenturies(t *testing.T) {
+	checked := 0
+	for d := time.Date(1000, 1, 1, 12, 0, 0, 0, time.UTC); d.Year() <= 3000; d = d.AddDate(0, 0, 1) {
+		got, err := GetDayPillar(d)
+		if err != nil {
+			t.Fatal(err)
+		}
+		wantStem, wantBranch := refDayPillar(d)
+		if got.HeavenlyStem.Value != wantStem || got.EarthlyBranch.Value != wantBranch {
+			t.Fatalf("%s: got stem %d branch %d, want stem %d branch %d",
+				d.Format("2006-01-02"), got.HeavenlyStem.Value, got.EarthlyBranch.Value, wantStem, wantBranch)
+		}
+		checked++
+	}
+	if checked < 730000 {
+		t.Fatalf("checked only %d days", checked)
+	}
+}
+
+// Days on either side of the span where the old Duration-based count was right.
+func TestGetDayPillarJustOutsideTheOldSaturationSpan(t *testing.T) {
+	for _, d := range []time.Time{
+		time.Date(1607, 9, 21, 12, 0, 0, 0, time.UTC),
+		time.Date(1607, 9, 22, 12, 0, 0, 0, time.UTC),
+		time.Date(2192, 4, 11, 12, 0, 0, 0, time.UTC),
+		time.Date(2192, 4, 12, 12, 0, 0, 0, time.UTC),
+	} {
+		got, err := GetDayPillar(d)
+		if err != nil {
+			t.Fatal(err)
+		}
+		wantStem, wantBranch := refDayPillar(d)
+		if got.HeavenlyStem.Value != wantStem || got.EarthlyBranch.Value != wantBranch {
+			t.Errorf("%s: got stem %d branch %d, want stem %d branch %d",
+				d.Format("2006-01-02"), got.HeavenlyStem.Value, got.EarthlyBranch.Value, wantStem, wantBranch)
+		}
+	}
+}

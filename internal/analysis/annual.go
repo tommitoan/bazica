@@ -3,19 +3,17 @@ package analysis
 import (
 	"fmt"
 
+	"github.com/tommitoan/bazica/internal/fourpillars"
 	"github.com/tommitoan/bazica/internal/utils"
 	"github.com/tommitoan/bazica/model"
 )
 
-// Supported Gregorian years of the yearly table. The first is the year the
-// calendar data starts. The last is not tied to the calendar data: a yearly
-// pillar is plain sixty-year arithmetic and needs no table, so the table may run
-// past 2099, the last birth date. The bound keeps the answer finite (at most
-// about eight thousand rows).
-const (
-	minAnnualYear = 1900
-	maxAnnualYear = 9999
-)
+// maxAnnualYear is the last Gregorian year of the yearly table. The first is the
+// first year a birth date is supported (fourpillars.SupportedYears). The last is
+// not tied to the calendar data: a yearly pillar is plain sixty-year arithmetic
+// and needs no table, so the table may run past the last birth date. The bound
+// keeps the answer finite (at most about eight thousand rows).
+const maxAnnualYear = 9999
 
 // AnnualPillars returns the pillars of count consecutive years from fromYear.
 // The first year may not precede the year of the chart's year pillar, because
@@ -25,6 +23,10 @@ func AnnualPillars(chart *model.BaziChart, fromYear, count int) (*model.AnnualPi
 		return nil, fmt.Errorf("%w: chart is required", model.ErrInvalidYearRange)
 	}
 	pillars, err := natalPillarsOf(chart)
+	if err != nil {
+		return nil, err
+	}
+	minAnnualYear, _, err := fourpillars.SupportedYears()
 	if err != nil {
 		return nil, err
 	}

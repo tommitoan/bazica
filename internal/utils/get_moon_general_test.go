@@ -25,8 +25,8 @@ func TestGetMoonGeneralSwitchesOnThePrincipalTermDay(t *testing.T) {
 		{"after major cold 2006", time.Date(2006, 1, 20, 20, 0, 0, 0, ict), 0},
 		{"just before major cold 2006", time.Date(2006, 1, 19, 12, 0, 0, 0, ict), 1},
 		// The first and last supported days still find a preceding term in the previous year's table.
-		{"first supported day", time.Date(1900, 1, 1, 12, 0, 0, 0, ict), 1},
-		{"last supported day", time.Date(2099, 12, 31, 12, 0, 0, 0, ict), 1},
+		{"first supported day", time.Date(1700, 1, 1, 12, 0, 0, 0, ict), 1},
+		{"last supported day", time.Date(2399, 12, 31, 12, 0, 0, 0, ict), 1},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -42,7 +42,7 @@ func TestGetMoonGeneralSwitchesOnThePrincipalTermDay(t *testing.T) {
 }
 
 func TestGetMoonGeneralOutsideTheTables(t *testing.T) {
-	for _, date := range []time.Time{time.Date(1899, 6, 1, 0, 0, 0, 0, time.UTC), time.Date(2101, 6, 1, 0, 0, 0, 0, time.UTC)} {
+	for _, date := range []time.Time{time.Date(1699, 6, 1, 0, 0, 0, 0, time.UTC), time.Date(2401, 6, 1, 0, 0, 0, 0, time.UTC)} {
 		if _, err := GetMoonGeneral(date); !errors.Is(err, model.ErrDateOutOfRange) {
 			t.Errorf("GetMoonGeneral(%v) error = %v, want ErrDateOutOfRange", date, err)
 		}
