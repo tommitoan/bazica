@@ -3,8 +3,10 @@
 Environment variables (tests that need a missing file are skipped):
 
     GENCAL_EPHEMERIS  path to de440.bsp          (default ~/tommi-data/ephemeris/de440.bsp)
-    GENCAL_BUNDLED_LNY path to data/lunar-new-year.json (default ../../data/lunar-new-year.json)
-    GENCAL_SLOW       set to 1 to run the checks over the whole 1700-2399 range (about 4 minutes)
+    GENCAL_BUNDLED_LNY reference table to compare with (default: the v1.4.3 table kept in
+                       ../../testdata/calendar/lunar-new-year-v1.4.3.json)
+    GENCAL_SLOW       set to 1 to run the checks over the whole 1700-2399 range and to check that
+                      data/lunar-new-year.json is what the generator writes (about 8 minutes)
 """
 
 from __future__ import annotations
@@ -20,13 +22,15 @@ import pytest
 import gen_lunar_new_year as g
 
 EPHEMERIS = Path(os.environ.get("GENCAL_EPHEMERIS", Path.home() / "tommi-data/ephemeris/de440.bsp"))
+REPO = Path(__file__).resolve().parents[2]
 BUNDLED = Path(
-    os.environ.get("GENCAL_BUNDLED_LNY") or Path(__file__).resolve().parents[2] / "data" / "lunar-new-year.json"
+    os.environ.get("GENCAL_BUNDLED_LNY") or REPO / "testdata" / "calendar" / "lunar-new-year-v1.4.3.json"
 )
+CURRENT = REPO / "data" / "lunar-new-year.json"
 
 needs_ephemeris = pytest.mark.skipif(not EPHEMERIS.exists(), reason="de440.bsp not found")
 needs_bundled = pytest.mark.skipif(
-    not BUNDLED.exists(), reason="bundled lunar-new-year.json not found; set GENCAL_BUNDLED_LNY"
+    not BUNDLED.exists(), reason="reference lunar-new-year.json not found; set GENCAL_BUNDLED_LNY"
 )
 slow = pytest.mark.skipif(not os.environ.get("GENCAL_SLOW"), reason="set GENCAL_SLOW=1")
 
@@ -152,3 +156,14 @@ def test_first_release_range_has_valid_gaps_and_dates():
     gaps = [(b.day - a.day).days for a, b in zip(new_years, new_years[1:])]
     assert set(gaps) <= {353, 354, 355, 383, 384, 385}
     assert all(dt.date(n.year, 1, 21) <= n.day <= dt.date(n.year, 2, 21) for n in new_years)
+
+
+@needs_ephemeris
+@slow
+@pytest.mark.skipif(not CURRENT.exists(), reason="data/lunar-new-year.json not found")
+def test_data_file_is_what_the_generator_writes(tmp_path):
+    current = json.loads(CURRENT.read_text(encoding="utf-8"))["lunarNewYearDates"]
+    years = sorted(int(y) for y in current)
+    out = tmp_path / "lunar-new-year.json"
+    g.write_json(g.to_json_document(g.compute_lunar_new_years(EPHEMERIS, years[0], years[-1], CHINA)), out)
+    assert out.read_text(encoding="utf-8") == CURRENT.read_text(encoding="utf-8")

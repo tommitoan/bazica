@@ -59,6 +59,20 @@ func TestGetFourPillarsGolden(t *testing.T) {
 		{"Yin day master ji", "2020-03-07 12:00", "geng/zi ji/mao ji/you geng/wu"},
 		{"Yin day master xin", "2020-03-09 12:00", "geng/zi ji/mao xin/hai jia/wu"},
 		{"end of supported range", "2099-12-31 23:30", "ji/wei bing/zi gui/mao ren/zi"},
+		// The cases below lie outside 1900-2099. They were derived with the independent
+		// low-precision calculator used for the reference-page samples (Julian-day day
+		// pillar, Sun longitude series for year and month) on days far from any boundary.
+		{"first supported day", "1700-01-01 12:00", "ji/mao bing/zi bing/wu jia/wu"},
+		{"after Lunar New Year 1700", "1700-03-15 12:00", "geng/chen ji/mao ji/wei geng/wu"},
+		{"autumn 1750", "1750-09-20 12:00", "geng/wu yi/you geng/yin ren/wu"},
+		{"summer 1800", "1800-06-15 12:00", "geng/shen ren/wu yi/hai ren/wu"},
+		{"autumn 1850", "1850-09-20 12:00", "geng/xu yi/you jia/xu geng/wu"},
+		{"mid December 1899", "1899-12-15 12:00", "ji/hai bing/zi ding/si bing/wu"},
+		{"before Lunar New Year 2100", "2100-01-10 12:00", "ji/wei ding/chou ren/zi bing/wu"},
+		{"after Lunar New Year 2100", "2100-03-15 12:00", "geng/shen ji/mao bing/chen jia/wu"},
+		{"summer 2250", "2250-08-20 12:00", "geng/yin jia/shen geng/zi ren/wu"},
+		{"summer 2399", "2399-06-10 12:00", "ji/wei geng/wu geng/yin ren/wu"},
+		{"last day of the supported range, late Rat hour", "2399-12-31 23:30", "ji/wei bing/zi yi/mao bing/zi"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -124,9 +138,9 @@ func TestGetFourPillarsErrors(t *testing.T) {
 		date    time.Time
 		wantErr error
 	}{
-		{"before supported range", time.Date(1899, 6, 1, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
-		{"after supported range", time.Date(2100, 6, 1, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
-		{"first month of 2100", time.Date(2100, 1, 15, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
+		{"before supported range", time.Date(1699, 6, 1, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
+		{"after supported range", time.Date(2400, 6, 1, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
+		{"first month of 2400", time.Date(2400, 1, 15, 12, 0, 0, 0, loc), model.ErrDateOutOfRange},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {

@@ -135,10 +135,12 @@ func TestAnalysisIsAttachedForPillarsAcrossTheCalendar(t *testing.T) {
 		t.Skipf("timezone database unavailable: %v", err)
 	}
 	for _, d := range []time.Time{
+		time.Date(1700, 1, 1, 0, 30, 0, 0, loc),
 		time.Date(1900, 1, 1, 0, 30, 0, 0, loc),
 		time.Date(1984, 7, 4, 23, 30, 0, 0, loc),
 		time.Date(2023, 2, 4, 9, 55, 0, 0, loc),
 		time.Date(2099, 12, 31, 22, 59, 0, 0, loc),
+		time.Date(2399, 12, 31, 22, 59, 0, 0, loc),
 	} {
 		for gender := 0; gender <= 1; gender++ {
 			chart, err := GetBaziChart(d, loc, gender)

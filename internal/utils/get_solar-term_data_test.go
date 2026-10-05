@@ -24,7 +24,11 @@ func TestSolarTermDataIntegrity(t *testing.T) {
 		time.July, time.July, time.August, time.August, time.September, time.September,
 		time.October, time.October, time.November, time.November, time.December, time.December,
 	}
-	for year := 1899; year <= 2100; year++ {
+	first, last, err := SolarTermYears()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for year := first; year <= last; year++ {
 		terms, ok := years[year]
 		if !ok {
 			t.Errorf("%d: missing", year)
@@ -46,21 +50,40 @@ func TestSolarTermDataIntegrity(t *testing.T) {
 	}
 }
 
+// lunarYears returns the first and last year of the Lunar New Year table.
+func lunarYears(t *testing.T, data model.LunarNewYearData) (first, last int) {
+	t.Helper()
+	for key := range data.LunarNewYearDates {
+		year, err := strconv.Atoi(key)
+		if err != nil {
+			t.Fatalf("bad year key %q", key)
+		}
+		if first == 0 || year < first {
+			first = year
+		}
+		if year > last {
+			last = year
+		}
+	}
+	return first, last
+}
+
 // Lunar years last 12 or 13 lunations, which is 353-355 or 383-385 days.
 func TestLunarNewYearGaps(t *testing.T) {
 	var data model.LunarNewYearData
 	if err := json.Unmarshal(dataTables.LunarNewYear, &data); err != nil {
 		t.Fatal(err)
 	}
+	first, last := lunarYears(t, data)
 	dates := map[int]time.Time{}
-	for year := 1900; year <= 2099; year++ {
+	for year := first; year <= last; year++ {
 		d, err := time.Parse("2006-01-02", strconv.Itoa(year)+"-"+data.LunarNewYearDates[strconv.Itoa(year)])
 		if err != nil {
 			t.Fatalf("%d: %v", year, err)
 		}
 		dates[year] = d
 	}
-	for year := 1900; year < 2099; year++ {
+	for year := first; year < last; year++ {
 		gap := int(dates[year+1].Sub(dates[year]).Hours() / 24)
 		if !(gap >= 353 && gap <= 355) && !(gap >= 383 && gap <= 385) {
 			t.Errorf("%d to %d: %d days between Lunar New Years", year, year+1, gap)
@@ -90,7 +113,8 @@ func TestLunarNewYearDataIntegrity(t *testing.T) {
 	if err := json.Unmarshal(dataTables.LunarNewYear, &data); err != nil {
 		t.Fatal(err)
 	}
-	for year := 1900; year <= 2099; year++ {
+	first, last := lunarYears(t, data)
+	for year := first; year <= last; year++ {
 		v, ok := data.LunarNewYearDates[strconv.Itoa(year)]
 		if !ok {
 			t.Errorf("%d: missing", year)
@@ -101,8 +125,8 @@ func TestLunarNewYearDataIntegrity(t *testing.T) {
 			t.Errorf("%d: bad date %q", year, v)
 			continue
 		}
-		if d.YearDay() < 21 || d.YearDay() > 51 { // Jan 21 - Feb 20
-			t.Errorf("%d: Lunar New Year %s is outside Jan 21 - Feb 20", year, v)
+		if d.YearDay() < 21 || d.YearDay() > 52 { // Jan 21 - Feb 21
+			t.Errorf("%d: Lunar New Year %s is outside Jan 21 - Feb 21", year, v)
 		}
 	}
 }

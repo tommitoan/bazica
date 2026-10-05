@@ -4,8 +4,9 @@ The ephemeris and the bundled table are looked up through environment variables
 so the suite runs on any machine; tests that need them are skipped when missing.
 
     GENCAL_EPHEMERIS  path to de440.bsp          (default ~/tommi-data/ephemeris/de440.bsp)
-    GENCAL_BUNDLED    path to data/solar-term.json of bazica (default: ../../data/solar-term.json
-                      when this folder is tools/gencal inside the bazica repository)
+    GENCAL_BUNDLED    reference table to compare with (default: the v1.4.3 table kept in
+                      ../../testdata/calendar/solar-term-v1.4.3.json)
+    GENCAL_SLOW       set to 1 to check that data/solar-term.json is what the generator writes
 """
 
 from __future__ import annotations
@@ -20,13 +21,13 @@ import pytest
 import gen_solar_terms as g
 
 EPHEMERIS = Path(os.environ.get("GENCAL_EPHEMERIS", Path.home() / "tommi-data/ephemeris/de440.bsp"))
-BUNDLED = Path(
-    os.environ.get("GENCAL_BUNDLED") or Path(__file__).resolve().parents[2] / "data" / "solar-term.json"
-)
+REPO = Path(__file__).resolve().parents[2]
+BUNDLED = Path(os.environ.get("GENCAL_BUNDLED") or REPO / "testdata" / "calendar" / "solar-term-v1.4.3.json")
+CURRENT = REPO / "data" / "solar-term.json"
 
 needs_ephemeris = pytest.mark.skipif(not EPHEMERIS.exists(), reason="de440.bsp not found")
 needs_bundled = pytest.mark.skipif(
-    not BUNDLED.exists(), reason="bundled solar-term.json not found; set GENCAL_BUNDLED"
+    not BUNDLED.exists(), reason="reference solar-term.json not found; set GENCAL_BUNDLED"
 )
 
 
@@ -148,3 +149,13 @@ def test_first_release_range_has_24_distinct_terms_in_every_year():
     grouped = g.terms_by_year(g.find_solar_terms(EPHEMERIS, 1699, 2400))
     assert sorted(grouped) == list(range(1699, 2401))
     assert all(set(year_terms) == set(g.TERM_NAMES) for year_terms in grouped.values())
+
+
+@needs_ephemeris
+@pytest.mark.skipif(not os.environ.get("GENCAL_SLOW") or not CURRENT.exists(), reason="set GENCAL_SLOW=1")
+def test_data_file_is_what_the_generator_writes(tmp_path):
+    current = json.loads(CURRENT.read_text(encoding="utf-8"))
+    years = sorted(int(y) for y in current)
+    out = tmp_path / "solar-term.json"
+    g.write_json(g.to_json_document(g.terms_by_year(g.find_solar_terms(EPHEMERIS, years[0], years[-1]))), out)
+    assert out.read_text(encoding="utf-8") == CURRENT.read_text(encoding="utf-8")
