@@ -1,8 +1,8 @@
 package luckpillars
 
 import (
-	"github.com/tommitoan/bazica/internal/utils"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/internal/utils"
+	"github.com/tommitoan/bazica/v2/model"
 	"time"
 )
 

@@ -1,6 +1,6 @@
 package analysis
 
-import "github.com/tommitoan/bazica/model"
+import "github.com/tommitoan/bazica/v2/model"
 
 // Element indices follow the generating cycle: Wood, Fire, Earth, Metal, Water.
 var (

@@ -44,7 +44,8 @@ type LuckPillar struct {
 	Analysis *LuckPillarAnalysis `json:"analysis"`
 }
 
-// YearPillar is the pillar of the lunar year the birth belongs to; Year is the Gregorian year.
+// YearPillar is the pillar of the Ba-zi year the birth belongs to, which changes at
+// Lichun; Year is the civil Gregorian year of the birth.
 type YearPillar struct {
 	HeavenlyStem  HeavenlyStem    `json:"heavenly_stem"`
 	EarthlyBranch EarthlyBranch   `json:"earthly_branch"`

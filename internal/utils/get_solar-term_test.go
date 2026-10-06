@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func TestGetSolarTerm(t *testing.T) {
@@ -75,5 +75,25 @@ func TestGetSolarTermErrors(t *testing.T) {
 				t.Errorf("error = %v, want %v", err, tc.wantErr)
 			}
 		})
+	}
+}
+
+// Lichun is Start of Spring in early February; the table covers the years the library supports.
+func TestStartOfSpring(t *testing.T) {
+	got, err := StartOfSpring(2026)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.UTC().Format("2006-01-02") != "2026-02-03" && got.UTC().Format("2006-01-02") != "2026-02-04" {
+		t.Errorf("Lichun 2026 = %s, want 3 or 4 February", got.UTC())
+	}
+	if first, last, err := SolarTermYears(); err != nil {
+		t.Fatal(err)
+	} else {
+		for _, year := range []int{first - 1, last + 1, 1500, 3000} {
+			if _, err := StartOfSpring(year); !errors.Is(err, model.ErrDateOutOfRange) {
+				t.Errorf("StartOfSpring(%d) error = %v, want ErrDateOutOfRange", year, err)
+			}
+		}
 	}
 }

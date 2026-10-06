@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	dataTables "github.com/tommitoan/bazica/data"
-	"github.com/tommitoan/bazica/model"
+	dataTables "github.com/tommitoan/bazica/v2/data"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // The solar-term table was regenerated from the JPL DE440 ephemeris. These tests

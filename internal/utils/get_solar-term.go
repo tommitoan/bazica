@@ -3,8 +3,8 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tommitoan/bazica/data"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/data"
+	"github.com/tommitoan/bazica/v2/model"
 	"slices"
 	"strconv"
 	"sync"
@@ -59,6 +59,25 @@ func GetSolarTerm(dateTime time.Time) (string, int, int, error) {
 		terms[i] = t
 	}
 	return findSolarTerm(dateTime, terms[0], terms[1], terms[2])
+}
+
+// StartOfSpring returns the instant of Lichun (Start of Spring) in the given
+// Gregorian year. It is the moment the Ba-zi year changes.
+func StartOfSpring(year int) (time.Time, error) {
+	years, err := loadSolarTerms()
+	if err != nil {
+		return time.Time{}, err
+	}
+	terms, ok := years[year]
+	if !ok {
+		return time.Time{}, fmt.Errorf("%w: no solar term data for %d", model.ErrDateOutOfRange, year)
+	}
+	for _, term := range terms {
+		if term.name == model.StartOfSpring {
+			return term.time, nil
+		}
+	}
+	return time.Time{}, fmt.Errorf("%w: no %s in the solar term data for %d", model.ErrDataUnavailable, model.StartOfSpring, year)
 }
 
 // SolarTermYears returns the first and last year the embedded solar-term table

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func spellings(p *model.FourPillars) string {
@@ -25,7 +25,8 @@ func ganZhiNames(p *model.FourPillars) string {
 // The expected values come from an independent implementation: Julian-day
 // arithmetic for the day pillar, the Five Tigers/Five Rats rules for the month
 // and hour stems, and the latest "initial" solar term for the month branch.
-// Year pillars follow the Lunar New Year, as documented in the README.
+// The year pillar changes at Lichun, as documented in the README; the days between the
+// Lunar New Year and Lichun are pinned in year_boundary_test.go and the root package tests.
 func TestGetFourPillarsGolden(t *testing.T) {
 	tests := []struct {
 		name string
@@ -33,12 +34,12 @@ func TestGetFourPillarsGolden(t *testing.T) {
 		want string // year month day hour as stem/branch
 	}{
 		{"start of supported range", "1900-01-01 12:00", "ji/hai bing/zi jia/xu geng/wu"},
-		{"after Lunar New Year 1900", "1900-02-19 12:00", "geng/zi wu/yin gui/hai wu/wu"},
+		{"after Lichun and the Lunar New Year 1900", "1900-02-19 12:00", "geng/zi wu/yin gui/hai wu/wu"},
 		{"after Lunar New Year and Lichun 1995", "1995-02-10 12:00", "yi/hai wu/yin ren/shen bing/wu"},
-		{"shortly after Lunar New Year 1958", "1958-02-20 12:00", "wu/xu jia/yin wu/chen wu/wu"},
-		{"after Lunar New Year 1985", "1985-02-25 12:00", "yi/chou wu/yin yi/wei ren/wu"},
-		{"before Lunar New Year 1990", "1990-01-25 12:00", "ji/si ding/chou geng/yin ren/wu"},
-		{"before Lunar New Year 2001", "2001-01-23 12:00", "geng/chen ji/chou bing/xu jia/wu"},
+		{"shortly after Lichun and the Lunar New Year 1958", "1958-02-20 12:00", "wu/xu jia/yin wu/chen wu/wu"},
+		{"after Lichun and the Lunar New Year 1985", "1985-02-25 12:00", "yi/chou wu/yin yi/wei ren/wu"},
+		{"before Lichun and the Lunar New Year 1990", "1990-01-25 12:00", "ji/si ding/chou geng/yin ren/wu"},
+		{"before Lichun and the Lunar New Year 2001", "2001-01-23 12:00", "geng/chen ji/chou bing/xu jia/wu"},
 		{"early January belongs to the Rat month", "2024-01-03 12:00", "gui/mao jia/zi bing/yin jia/wu"},
 		{"Ox month after Minor Cold", "2024-01-10 12:00", "gui/mao yi/chou gui/you wu/wu"},
 		{"Ox month in a repaired data year", "2057-01-10 12:00", "bing/zi xin/chou ding/mao bing/wu"},
@@ -63,13 +64,13 @@ func TestGetFourPillarsGolden(t *testing.T) {
 		// low-precision calculator used for the reference-page samples (Julian-day day
 		// pillar, Sun longitude series for year and month) on days far from any boundary.
 		{"first supported day", "1700-01-01 12:00", "ji/mao bing/zi bing/wu jia/wu"},
-		{"after Lunar New Year 1700", "1700-03-15 12:00", "geng/chen ji/mao ji/wei geng/wu"},
+		{"after Lichun and the Lunar New Year 1700", "1700-03-15 12:00", "geng/chen ji/mao ji/wei geng/wu"},
 		{"autumn 1750", "1750-09-20 12:00", "geng/wu yi/you geng/yin ren/wu"},
 		{"summer 1800", "1800-06-15 12:00", "geng/shen ren/wu yi/hai ren/wu"},
 		{"autumn 1850", "1850-09-20 12:00", "geng/xu yi/you jia/xu geng/wu"},
 		{"mid December 1899", "1899-12-15 12:00", "ji/hai bing/zi ding/si bing/wu"},
-		{"before Lunar New Year 2100", "2100-01-10 12:00", "ji/wei ding/chou ren/zi bing/wu"},
-		{"after Lunar New Year 2100", "2100-03-15 12:00", "geng/shen ji/mao bing/chen jia/wu"},
+		{"before Lichun and the Lunar New Year 2100", "2100-01-10 12:00", "ji/wei ding/chou ren/zi bing/wu"},
+		{"after Lichun and the Lunar New Year 2100", "2100-03-15 12:00", "geng/shen ji/mao bing/chen jia/wu"},
 		{"summer 2250", "2250-08-20 12:00", "geng/yin jia/shen geng/zi ren/wu"},
 		{"summer 2399", "2399-06-10 12:00", "ji/wei geng/wu geng/yin ren/wu"},
 		{"last day of the supported range, late Rat hour", "2399-12-31 23:30", "ji/wei bing/zi yi/mao bing/zi"},

@@ -1,6 +1,6 @@
 package analysis
 
-import "github.com/tommitoan/bazica/model"
+import "github.com/tommitoan/bazica/v2/model"
 
 // Pillar positions in a chart.
 const (

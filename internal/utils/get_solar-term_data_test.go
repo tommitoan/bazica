@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	dataTables "github.com/tommitoan/bazica/data"
-	"github.com/tommitoan/bazica/model"
+	dataTables "github.com/tommitoan/bazica/v2/data"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // Guards the bundled calendar data: every year must list the 24 terms in

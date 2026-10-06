@@ -1,6 +1,6 @@
 package analysis
 
-import "github.com/tommitoan/bazica/model"
+import "github.com/tommitoan/bazica/v2/model"
 
 // tenGod classifies stem against the Day Master. The element relation picks the
 // pair of gods (same element, generated, controlled, controlling, generating)

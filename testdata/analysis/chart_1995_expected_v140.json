@@ -1743,6 +1743,34 @@
    }
   },
   "day_master_strength": null,
-  "useful_god": null
+  "useful_god": null,
+  "year_reference": {
+   "lichun": {
+    "time": "1995-02-04T14:12:50.245+07:00",
+    "birth_before_lichun": false
+   },
+   "lunar_year": {
+    "year": 1995,
+    "heavenly_stem": {
+     "name": "Yin Wood",
+     "value": 2,
+     "character": "乙",
+     "spelling": "yi"
+    },
+    "earthly_branch": {
+     "name": "Pig",
+     "value": 10,
+     "character": "亥",
+     "spelling": "hai"
+    },
+    "gan_zhi": {
+     "name": "Volcanic fire",
+     "element_name": "Fire",
+     "element_value": 2
+    },
+    "new_year_date": "1995-01-31"
+   },
+   "differs": false
+  }
  }
 }

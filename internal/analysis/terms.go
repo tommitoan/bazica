@@ -1,6 +1,6 @@
 package analysis
 
-import "github.com/tommitoan/bazica/model"
+import "github.com/tommitoan/bazica/v2/model"
 
 // The tables below are the bilingual term registry. Codes are stable identifiers;
 // the Nayin English labels equal the names returned by utils.GetGanzhi.

@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/internal/utils"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/internal/utils"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func starCodesOf(analysis *model.PillarAnalysis) []string {

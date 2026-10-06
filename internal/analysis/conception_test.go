@@ -3,7 +3,7 @@ package analysis
 import (
 	"testing"
 
-	"github.com/tommitoan/bazica/internal/utils"
+	"github.com/tommitoan/bazica/v2/internal/utils"
 )
 
 func TestThaiNguyenAndThaiTucKnownChart(t *testing.T) {

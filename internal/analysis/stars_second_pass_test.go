@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 // pillarsHaving returns the pillar positions of an evaluation that carry a star.

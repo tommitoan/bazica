@@ -1,6 +1,6 @@
 package utils
 
-import "github.com/tommitoan/bazica/model"
+import "github.com/tommitoan/bazica/v2/model"
 
 // heavenlyStems is indexed by stem value - 1.
 var heavenlyStems = [...]model.HeavenlyStem{

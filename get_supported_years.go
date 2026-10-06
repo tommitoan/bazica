@@ -1,6 +1,6 @@
 package bazica
 
-import "github.com/tommitoan/bazica/internal/fourpillars"
+import "github.com/tommitoan/bazica/v2/internal/fourpillars"
 
 // SupportedYears returns the first and last calendar year of a birth date that
 // GetBaziChart accepts: from 1 January of the first year to 31 December of the

@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func starCodes(terms []model.LocalizedTerm) []string {

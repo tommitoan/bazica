@@ -3,45 +3,63 @@ package fourpillars
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tommitoan/bazica/data"
-	"github.com/tommitoan/bazica/internal/utils"
-	"github.com/tommitoan/bazica/model"
+	"github.com/tommitoan/bazica/v2/data"
+	"github.com/tommitoan/bazica/v2/internal/utils"
+	"github.com/tommitoan/bazica/v2/model"
 	"strings"
 	"sync"
 	"time"
 )
 
+// GetYearPillar returns the Ba-zi year pillar, which changes at the instant of
+// Lichun (Start of Spring), the same solar-term clock that drives the month
+// pillar. YearPillar.Year is the civil year of the birth.
 func GetYearPillar(dateTime time.Time) (*model.YearPillar, error) {
-	// convert solar date time to get lunar year
-	lunarYear, err := GetLunarYear(dateTime)
+	baziYear, err := GetBaziYear(dateTime)
 	if err != nil {
 		return nil, err
 	}
 
 	var yearPillar model.YearPillar
 	yearPillar.Year = dateTime.Year()
-
-	stemValue := lunarYear%10 - 3
-	if stemValue < 1 {
-		stemValue = stemValue + 10
-	}
-	stem := utils.CalculateHeavenlyStem(stemValue)
-	yearPillar.HeavenlyStem = stem
-
-	// calculate earthly branch (1900 is Rat year)
-	branchValue := (lunarYear - 5) % 12
-	if branchValue < 1 {
-		branchValue = branchValue + 12
-	}
-	branch := utils.CalculateEarthlyBranch(branchValue)
-	yearPillar.EarthlyBranch = branch
-
+	yearPillar.HeavenlyStem, yearPillar.EarthlyBranch = yearStemBranch(baziYear)
 	return &yearPillar, nil
 }
 
+// yearStemBranch returns the stem and branch of a Gregorian year (1984 was a
+// Jia-Zi year, 1900 a Geng-Zi year).
+func yearStemBranch(year int) (model.HeavenlyStem, model.EarthlyBranch) {
+	stemValue := year%10 - 3
+	if stemValue < 1 {
+		stemValue = stemValue + 10
+	}
+	branchValue := (year - 5) % 12
+	if branchValue < 1 {
+		branchValue = branchValue + 12
+	}
+	return utils.CalculateHeavenlyStem(stemValue), utils.CalculateEarthlyBranch(branchValue)
+}
+
+// GetBaziYear returns the Gregorian year the year pillar stands for: the year
+// of the latest Lichun at dateTime. The comparison uses the instant, like the
+// month pillar, so the late-Rat-hour day rule does not apply to it.
+func GetBaziYear(dateTime time.Time) (int, error) {
+	lichun, err := utils.StartOfSpring(dateTime.Year())
+	if err != nil {
+		return 0, err
+	}
+	if dateTime.Before(lichun) {
+		return dateTime.Year() - 1, nil
+	}
+	return dateTime.Year(), nil
+}
+
+// GetLunarYear returns the Gregorian year in which the lunar-calendar year of dateTime
+// begins. It is reference data only: the year pillar follows Lichun (GetBaziYear).
+// The lunar calendar changes year at midnight, so the civil date in the birth zone is
+// compared with the Lunar New Year date; the 23:00 rule of the day pillar does not apply.
 func GetLunarYear(dateTime time.Time) (int, error) {
-	// From 23:00 is new day (Rat hour)
-	solarYear, solarMonth, solarDay := utils.BirthCalendarDate(dateTime)
+	solarYear, solarMonth, solarDay := dateTime.Date()
 
 	lunarData, err := loadLunarNewYear()
 	if err != nil {
