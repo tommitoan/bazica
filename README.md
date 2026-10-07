@@ -1,88 +1,133 @@
 [![CI](https://github.com/tommitoan/bazica/actions/workflows/ci.yml/badge.svg)](https://github.com/tommitoan/bazica/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/tag/tommitoan/bazica.svg?label=latest)](https://github.com/tommitoan/bazica/releases)
 [![Go Reference](https://pkg.go.dev/badge/github.com/tommitoan/bazica/v2.svg)](https://pkg.go.dev/github.com/tommitoan/bazica/v2)
-[![Go Report Card](https://goreportcard.com/badge/github.com/tommitoan/bazica)](https://goreportcard.com/report/github.com/tommitoan/bazica)
-[![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/main/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tommitoan/bazica/v2)](https://goreportcard.com/report/github.com/tommitoan/bazica/v2)
+[![License](https://img.shields.io/badge/license-MIT-cyan)](https://github.com/tommitoan/bazica/blob/master/LICENSE)
 
 <p align="center">
-  <img style="float: right;" src="./Images/bazica-gopher.png" width=400>
+  <img src="./Images/bazica-gopher.png" width=400 alt="Bazica gopher">
 </p>
 
-# Bazica (Ba-zi Chart Calculator) 
-Convert Solar Calendar to Bazi Chart (Chinese astrology) with the year, month, day and hour of birth information (in Go)
+# Bazica (Ba-zi Chart Calculator)
+
+**English** · [Tiếng Việt](README.vi.md)
+
+Bazica is a Go library that turns a Gregorian birth time into a Ba-zi (Four Pillars of Destiny, Chinese astrology) chart: the year, month, day and hour pillars, the luck pillars, the yearly pillars, and a layer of derived facts (Ten Gods, life stages, hidden stems, Nayin, stars and more). Every label comes in English and Vietnamese.
 
 <div align="center">
-  <img alt="Demo" src="./Images/bazica-screen.png" />
+  <img alt="bazica-web: enter a birth time, read the pillars, the luck pillars and a card for every year" src="./Images/bazica-web-demo.gif" width="820" />
+  <br>
+  <sub>The companion web app, <a href="https://github.com/tommitoan/bazica-web">bazica-web</a>, built on this library.</sub>
 </div>
 
 <h3 align="center">
-  <a href="https://bazica.onrender.com/" target="_blank">Live Demo</a>
+  <a href="https://bazi.tommitoan.com/" target="_blank">Live Demo</a>
 </h3>
 
-## Getting started with bazica 
+## Highlights
+
+- **Four pillars** with the year pillar changing at the instant of Lichun (Start of Spring) and the month at the solar terms, from 1700 to 2399.
+- **Luck pillars** (Da Yun) with their direction, start time, years and nominal ages.
+- **Yearly pillars** (`GetAnnualPillars`) with Ten God, life stage, the luck pillar a year falls in, and a clash flag.
+- **Analysis** on every chart: Ten Gods, twelve life stages, hidden stems, Nayin, void branches, heaven-clash/earth-clash, 58 verified stars, conception, gestation and life palace pillars, and element counts.
+- **Bilingual terms with stable codes**: every named concept is `{code, en, vi}`, so a UI can switch language without recalculating.
+- **No data files to ship**: the solar term and Lunar New Year tables are embedded in the module. The tables are generated from the JPL DE440 ephemeris by `tools/gencal`.
+- **Careful testing**: results are compared with a second implementation and with recorded reference charts (see "Accuracy and checks").
+
+## Getting started
+
 ### Prerequisites
 
 - **[Go](https://go.dev/)**: 1.21 or newer. CI runs the tests on Go 1.21 and on the two most recent [releases](https://go.dev/doc/devel/release).
 
-### Importing Bazica
+### Installing
 
-With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
-
+```sh
+go get github.com/tommitoan/bazica/v2@latest
 ```
+
+and import it:
+
+```go
 import "github.com/tommitoan/bazica/v2"
 ```
 
-to your code, and then `go [build|run|test]` will automatically fetch the necessary dependencies.
+The module path ends in `/v2` (Go requires the suffix from v2 on). A plain `github.com/tommitoan/bazica` import stays on v1.5.0; see "Version 2" below for what changed.
 
-Otherwise, run the following Go command to install the `bazica` package:
-
-```sh
-go get -u github.com/tommitoan/bazica/v2@latest
-```
-
-## Data
-
-The solar term and Lunar New Year tables are embedded in the module (`go:embed`), so nothing has to be copied into your project and the library works from any working directory, including a vendored build or a container image with only the binary.
-
-The same tables are also published as JSON in the `data` folder if you want to use them elsewhere:
-
-- `data/solar-term.json`: the 24 solar terms for each year, in UTC.
-- `data/lunar-new-year.json`: the Lunar New Year date for each year. It feeds only the display-only `year_reference` block; no pillar is calculated from it.
-
-## How to use
+### A first chart
 
 ```go
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/tommitoan/bazica/v2"
+	"log"
 	"time"
+
+	"github.com/tommitoan/bazica/v2"
+	"github.com/tommitoan/bazica/v2/model"
 )
 
 func main() {
-	// Calculate current ba-zi chart
-	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
-	now := time.Now()
-	gender := 0 // 0 = female & 1 = male
-	
-	/* Example: 
-	Time to calculate: 1990-12-31 6:30 - Timezone: HoChiMinh / Vietnam - Gender: Male
-	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
-	now := time.Date(1990, time.Month(12), 31, 6, 30, 0, 0, loc)
-	gender := 1
-	*/
-
-	chart, err := bazica.GetBaziChart(now, loc, gender)
+	// 1990-12-31 06:30, Ho Chi Minh City, male.
+	loc, err := time.LoadLocation("Asia/Ho_Chi_Minh")
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
-	jsonData, _ := json.Marshal(chart)
-	fmt.Println(string(jsonData))
+	birth := time.Date(1990, time.December, 31, 6, 30, 0, 0, loc)
+
+	chart, err := bazica.GetBaziChart(birth, loc, model.GenderMale)
+	if err != nil {
+		log.Fatal(err) // for example model.ErrDateOutOfRange
+	}
+
+	p := chart.FourPillar
+	fmt.Println("year: ", p.YearPillar.HeavenlyStem.Name, p.YearPillar.EarthlyBranch.Name)
+	fmt.Println("month:", p.MonthPillar.HeavenlyStem.Name, p.MonthPillar.EarthlyBranch.Name)
+	fmt.Println("day:  ", p.DayPillar.HeavenlyStem.Name, p.DayPillar.EarthlyBranch.Name)
+	fmt.Println("hour: ", p.HourPillar.HeavenlyStem.Name, p.HourPillar.EarthlyBranch.Name)
+	fmt.Println("day master:", chart.Analysis.DayMaster.HeavenlyStem.Name, "/", chart.Analysis.DayMaster.Element.VI)
+
+	for _, lp := range chart.LuckPillars.LuckPillars[:3] {
+		fmt.Printf("luck pillar %d: %s %s, %d-%d\n", lp.Number, lp.HeavenlyStem.Name, lp.EarthlyBranch.Name, lp.YearStart, lp.YearEnd)
+	}
+
+	annual, err := bazica.GetAnnualPillars(chart, 2026, 2)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, y := range annual.AnnualPillars {
+		fmt.Println(y.Year, y.NominalAge, y.HeavenlyStem.Name, y.EarthlyBranch.Name, y.TenGod.EN)
+	}
 }
 ```
+
+Output:
+
+```
+year:  Yang Metal Horse
+month: Yang Earth Rat
+day:   Yang Metal Horse
+hour:  Yin Earth Rabbit
+day master: Yang Metal / Kim
+luck pillar 0: Yang Earth Rat, 1990-1991
+luck pillar 1: Yin Earth Ox, 1992-2001
+luck pillar 2: Yang Metal Tiger, 2002-2011
+2026 37 Yang Fire Horse Seven Killings
+2027 38 Yin Fire Goat Direct Officer
+```
+
+`GetBaziChart` returns a `*model.BaziChart` that marshals to JSON (`json.Marshal(chart)`), so it also works as the back end of an API. Luck pillar `0` is the birth month pillar, which applies until the first luck pillar starts. Runnable examples with tested output are in `example_test.go` and on [pkg.go.dev](https://pkg.go.dev/github.com/tommitoan/bazica/v2).
+
+### Birth range and data
+
+Birth dates from January 1, 1700, to December 31, 2399 are supported. `bazica.SupportedYears()` returns the first and last year, taken from the embedded calendar tables; dates outside the range return `model.ErrDateOutOfRange`.
+
+The solar term and Lunar New Year tables are embedded in the module (`go:embed`), so nothing has to be copied into your project and the library works from any working directory, including a vendored build or a container image with only the binary. The same tables are published as JSON in the `data` folder if you want to use them elsewhere:
+
+- `data/solar-term.json`: the 24 solar terms for each year, in UTC.
+- `data/lunar-new-year.json`: the Lunar New Year date for each year. It feeds only the display-only `year_reference` block; no pillar is calculated from it.
+
 ## Version 2
 
 `v2.0.0` changes the module path to `github.com/tommitoan/bazica/v2` (Go requires the suffix from v2 on); no function or type was renamed or removed, so updating means changing the import path and running `go get github.com/tommitoan/bazica/v2@latest`. v1.5.0 stays available for anyone who wants the previous behaviour.
@@ -144,6 +189,7 @@ for _, y := range annual.AnnualPillars {
 `fromYear` may not precede the year pillar's year or the first supported birth year (see `SupportedYears`), and the years must not pass 9999. The yearly table is not limited to the range of a birth date: each year's pillar is the sixty-year cycle, so it continues after 2399 (a luck pillar number is `null` once a year is past the twelfth luck pillar).
 
 ### Analysis conventions
+
 - **Nominal age**: the year of the year pillar is age 1. For a birth before Lichun the year pillar belongs to the previous year, so ages count from there. This is the Ba-zi count, not the everyday count from the Lunar New Year.
 - **Stars**: only stars whose rules were verified against reference charts are reported (58 stars, checked on 298 recorded charts and 10,000 random births against an independent implementation). Other stars are never guessed. Several rules differ from the classical tables because they follow the reference page, for example Red Allure (`hong_diem`) reads both the day stem and the year stem, and Great Depletion (`dai_hao`) depends on gender.
 - **Star nature**: each star term has an optional `nature` key, set on stars only: `auspicious` (cát), `inauspicious` (hung) or `mixed` (tùy cục, the effect depends on the rest of the chart). It is a hint for display. Schools disagree about what is favourable and many stars cut both ways, so the value is not a judgement of the chart. The reference page labels stars only good or bad; the library follows it except for 10 stars it reads as mixed and one (`am_duong_sat`) it reads as inauspicious where the page says good. Other terms (Ten Gods, stages, elements, Nayin) never carry the key. It is additive: a client that ignores it keeps working.
@@ -152,15 +198,8 @@ for _, y := range annual.AnnualPillars {
 - **Heaven-clash/earth-clash**: directional. A cell is flagged when its stem overcomes another natal pillar's stem with the same polarity and their branches are opposite. Earth stems take part.
 - **Strength and Useful God**: not computed.
 
-## Note
-### Data input range
-Birth dates from January 1, 1700, to December 31, 2399 are supported. `bazica.SupportedYears()` returns the first and last year, taken from the embedded calendar tables; dates outside the range return `model.ErrDateOutOfRange`.
+## Conventions
 
-The two tables (`data/solar-term.json` and `data/lunar-new-year.json`) are generated by `tools/gencal` from the JPL DE440 ephemeris, which also says how and how accurately. Lunar New Year follows the Chinese calendar (UTC+8, and Beijing mean time before 1929). The accuracy of a solar term depends on Delta T, the difference between uniform time and Earth's rotation: it is reconstructed from observations up to the present, so terms are good to a few seconds from 1700 to 2025, and a prediction after that, so the uncertainty grows to minutes by 2399. A check against a second, independent package (a different method and its own Delta T) agrees within about a minute from 1700 to 2000; after 2100 the two Delta T predictions differ by 3 to 5 minutes, so a birth within about five minutes of a solar term is uncertain there, and so are the Lunar New Years of 2299 and 2333. A birth within that margin of a solar term, Lichun included, may get the neighbouring month or year pillar. The Lunar New Years of 2299 and 2333 are as uncertain, and they only affect the display-only lunar-calendar year.
-
-Before about 1900 many places used local mean time. `bazica` reads the wall-clock time in the `loc` you pass, so pass the zone (or fixed offset) that was in use at the birth place.
-
-### Conventions
 - **Day**: the day changes at 23:00 (the Rat hour), so a birth at 23:30 takes the pillar of the next day.
 - **Year**: the year changes at the instant of Lichun (Start of Spring), the same solar-term clock as the month; the comparison uses the exact instant, so the 23:00 day rule does not apply to it.
 - **Month**: the month changes at the "initial" solar terms (jie), such as Start of Spring and Awakening of Insects. The month stem follows from the year stem by the Five Tigers rule.
@@ -168,12 +207,37 @@ Before about 1900 many places used local mean time. `bazica` reads the wall-cloc
 - **Time zone**: `dateTime` is read as wall-clock time in `loc`, so pass the birth place's zone. A nil `loc` keeps the zone `dateTime` already carries.
 - **Gender**: `0` is female and `1` is male (`model.GenderFemale`, `model.GenderMale`); it sets the direction of the luck pillars. Other values return `model.ErrInvalidGender`.
 
-If you require calculations for dates outside this range, please consider alternative libraries or solutions.
+### Accuracy and checks
 
-###  Ho Chi Minh City 1975
-Ho Chi Minh City (formerly Saigon) has gone through time zone changes throughout history. Notably:  
-Before 1975: South Vietnam (including Saigon) used UTC+8.  
+The two tables (`data/solar-term.json` and `data/lunar-new-year.json`) are generated by `tools/gencal` from the JPL DE440 ephemeris, which also says how and how accurately. Lunar New Year follows the Chinese calendar (UTC+8, and Beijing mean time before 1929). The accuracy of a solar term depends on Delta T, the difference between uniform time and Earth's rotation: it is reconstructed from observations up to the present, so terms are good to a few seconds from 1700 to 2025, and a prediction after that, so the uncertainty grows to minutes by 2399. A check against a second, independent package (a different method and its own Delta T) agrees within about a minute from 1700 to 2000; after 2100 the two Delta T predictions differ by 3 to 5 minutes, so a birth within about five minutes of a solar term is uncertain there, and so are the Lunar New Years of 2299 and 2333. A birth within that margin of a solar term, Lichun included, may get the neighbouring month or year pillar. The Lunar New Years of 2299 and 2333 are as uncertain, and they only affect the display-only lunar-calendar year.
+
+Before about 1900 many places used local mean time. `bazica` reads the wall-clock time in the `loc` you pass, so pass the zone (or fixed offset) that was in use at the birth place.
+
+If you require calculations for dates outside the supported range, please consider alternative libraries or solutions.
+
+### Ho Chi Minh City 1975
+
+Ho Chi Minh City (formerly Saigon) has gone through time zone changes throughout history. Notably:
+Before 1975: South Vietnam (including Saigon) used UTC+8.
 After 1975: The unified Vietnam adopted UTC+7.
+
+## The web app
+
+[bazica-web](https://github.com/tommitoan/bazica-web) is a Go server and a static page built on this library. It has no Ba-zi logic of its own: it validates the request and calls `GetBaziChart` and `GetAnnualPillars`. The page shows the four pillars with their full facts, the Five Elements diagram, the star map, the luck pillars and a card for each of sixty years, in Vietnamese or English, with shareable chart links and an optional PDF export.
+
+<div align="center">
+  <img alt="The yearly cards of bazica-web: sixty years, six to a row, the viewed year highlighted" src="./Images/bazica-web-yearly-cards.png" width="820" />
+</div>
+
+## Development
+
+```sh
+go test -race -cover ./...
+gofmt -l .
+go vet ./...
+```
+
+`tools/gencal` regenerates the two calendar tables; its README explains the method and the checks.
 
 ## References
 
@@ -181,20 +245,8 @@ This project drew inspiration and information from the following sources:
 
 * **[Thời Gian](https://www.thoigian.com.vn/)** - A comprehensive resource for understanding the Vietnamese calendar system.
 * **[Chinese Fortune Calendar](https://www.chinesefortunecalendar.com/)** - Provided insights into the Chinese calendar, calculations, and cultural significance.
+* **[Understand the Chinese Lunar and Xia calendar in Ba-zi](https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/)** - A discussion of the lunar and Hsia (seasonal, solar term) calendars used to read the Four Pillars. Bazica follows the solar-term calendar for both the year and the month since v2.0.0; v1 changed the year at the Lunar New Year.
 
+## License
 
-### Document
-https://www.geomancy.net/forums/topic/10229-understand-the-chinese-lunar-and-xia-calendar-in-ba-zi-four-pillars-used-by-various-masters-and-why-not-to-totally-depend-on-just-the-xia-hsia-seasonal-solar-calendar-alone/
-
-The article above discusses the Lunar and Hsia (seasonal, solar term) calendars used to read the Four Pillars. Bazica uses a mix of both: the year follows the lunar calendar and the month follows the solar terms. An example chart:
-
-```
-Date time: 2024-07-05 22:00 UTC+7 (Vietnam)  
-
-Year: Yang Wood - Dragon (Lunar Calendar Year)  
-Month: Yang Metal - Horse (Solar-Term Calendar Month)  
-Day: Yang Metal - Horse (Lunar Calendar Day)   
-Hour: Yin Wood - Pig (Zodiac Hour)
-```
-
-
+MIT, see [LICENSE](LICENSE).
