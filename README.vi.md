@@ -165,7 +165,13 @@ Từ v1.4.0 mỗi lá số còn mang các dữ kiện suy ra dưới khóa `anal
 | | `year_reference` | chỉ để hiển thị: thời điểm Lập Xuân của năm sinh, năm âm lịch (Can, Chi, con giáp, ngày Tết) và `differs` (xem "Phiên bản 2") |
 | | `thai_nguyen`, `thai_tuc`, `life_palace` | Thai Nguyên, Thai Tức và Mệnh Cung cùng Nạp Âm của chúng |
 | | `element_counts` | số lượng Thiên Can, Địa Chi và Can ẩn theo từng hành, chưa gán trọng số |
+| | `weighted_elements` | tám điểm chia theo can lộ và tàng can có trọng số, kèm mức, điểm từng Thập Thần và nguồn đóng góp |
+| | `pattern_candidates` | ứng viên khí của nguyệt lệnh kèm chứng cứ can lộ; chưa phải cách cục chốt |
 | | `day_master_strength`, `useful_god` | để dành, luôn là `null` |
+
+`weighted_elements.scheme` là `hidden_stems_v1`: mỗi can lộ được 1 điểm; mỗi chi được 1 điểm chia theo thứ tự tàng can là 1, 0,7/0,3 hoặc 0,6/0,3/0,1. `level_scheme` là `score_levels_v1`: mức 0–4 có ngưỡng 0,5; 1,5; 2,5; 3,5. Mức này là quy ước hiển thị, không phải phán định thân vượng nhược hay dụng thần. Nhật can tính 1 điểm vào hành của mình nhưng không có Thập Thần; tổng điểm Thập Thần là 7. Mỗi hành luôn trả đủ hai Thập Thần, kể cả nhánh có điểm 0. Danh sách đóng góp theo trụ cho phép truy ngược phép tính.
+
+`pattern_candidates` xét tàng can của chi tháng có lộ ở can năm, tháng hoặc giờ không. Nếu không có can nào lộ, bản khí được ghi như một ứng viên yếu hơn. Nhiều khí cùng lộ thì giữ nhiều ứng viên. Ứng viên Tỷ/Kiếp cần xét cách đặc biệt. Trường này chưa giải quyết hợp hóa, biến cách hoặc chốt cách cục; cùng với `weighted_elements`, nó chưa đủ để xác định `useful_god`.
 
 Mỗi khái niệm có tên (Thập Thần, Trường Sinh, hành, âm dương, Nạp Âm, sao) là một đối tượng có `code` cố định cùng nhãn tiếng Anh và tiếng Việt:
 

@@ -200,6 +200,8 @@ func canonicalChartJSON(t *testing.T, chart *model.BaziChart) string {
 	}
 	if analysis, ok := generic["analysis"].(map[string]any); ok {
 		delete(analysis, "year_reference")
+		delete(analysis, "weighted_elements")
+		delete(analysis, "pattern_candidates")
 	}
 	canon, err := json.Marshal(generic)
 	if err != nil {
