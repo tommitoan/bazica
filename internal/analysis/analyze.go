@@ -202,11 +202,13 @@ func analyzeChart(pillars [4]natalPillar) (*model.ChartAnalysis, error) {
 			Element:      elementTerms[stemElement(day.stem.Value)],
 			Polarity:     polarityTerm(day.stem.Value),
 		},
-		VoidBranches:  []model.EarthlyBranch{utils.CalculateEarthlyBranch(void[0]), utils.CalculateEarthlyBranch(void[1])},
-		ThaiNguyen:    thaiNguyenPillar,
-		ThaiTuc:       thaiTucPillar,
-		LifePalace:    lifePalacePillar,
-		ElementCounts: counts,
+		VoidBranches:      []model.EarthlyBranch{utils.CalculateEarthlyBranch(void[0]), utils.CalculateEarthlyBranch(void[1])},
+		ThaiNguyen:        thaiNguyenPillar,
+		ThaiTuc:           thaiTucPillar,
+		LifePalace:        lifePalacePillar,
+		ElementCounts:     counts,
+		WeightedElements:  weightedElements(pillars),
+		PatternCandidates: patternCandidates(pillars),
 	}, nil
 }
 

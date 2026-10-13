@@ -163,7 +163,13 @@ From v1.4.0 every chart also carries derived facts under an `analysis` key. The 
 | | `year_reference` | display only: the Lichun time of the birth year, the year of the lunar calendar (stem, branch, zodiac animal, Lunar New Year date) and `differs` (see "Version 2") |
 | | `thai_nguyen`, `thai_tuc`, `life_palace` | conception, gestation and life palace pillars with their Nayin |
 | | `element_counts` | unweighted counts of stems, branches and hidden stems per element |
+| | `weighted_elements` | eight points split across exposed stems and weighted hidden stems, with levels, Ten God subtotals and source contributions |
+| | `pattern_candidates` | preliminary month-branch qi candidates, including exposure evidence; these are not final patterns |
 | | `day_master_strength`, `useful_god` | reserved, always `null` |
+
+`weighted_elements.scheme` is `hidden_stems_v1`: each exposed stem scores 1; each branch scores 1, split across its ordered hidden stems as 1, 0.7/0.3 or 0.6/0.3/0.1. `level_scheme` is `score_levels_v1`: levels 0–4 use cutoffs 0.5, 1.5, 2.5 and 3.5. These levels are a display convention, not a strength or useful-god judgement. The Day Master's own exposed stem is included in its element score as `day_master: 1`, but has no Ten God; all Ten God subtotals therefore sum to 7. Both Ten Gods belonging to an element are always present, including a zero score. Each element includes its per-pillar contributions so clients can audit the result.
+
+`pattern_candidates` examines the month branch's hidden stems and reports any revealed among the year, month and hour stems. If none are revealed it reports the main qi as a weaker candidate. Multiple revealed qi remain multiple candidates. A peer candidate requires a separate special-pattern review. The field does not resolve combinations, transformations or final pattern selection. Neither it nor `weighted_elements` determines `useful_god` by itself.
 
 Every named concept (Ten God, life stage, element, polarity, Nayin, star) is an object with a stable `code` and an English and a Vietnamese label:
 

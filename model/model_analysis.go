@@ -92,6 +92,51 @@ type ElementCounts struct {
 	HiddenStems ElementCount `json:"hidden_stems"`
 }
 
+// WeightedElements allocates one point to each exposed stem and one point to
+// each branch, split among its hidden stems. Ten God totals exclude the Day
+// Master's exposed stem, which is recorded separately.
+type WeightedElements struct {
+	Scheme      string                     `json:"scheme"`
+	LevelScheme string                     `json:"level_scheme"`
+	Total       float64                    `json:"total"`
+	Elements    map[string]WeightedElement `json:"elements"`
+}
+
+type WeightedElement struct {
+	Score         float64               `json:"score"`
+	Level         int                   `json:"level"`
+	DayMaster     float64               `json:"day_master"`
+	TenGods       []WeightedTenGod      `json:"ten_gods"`
+	Contributions []ElementContribution `json:"contributions"`
+}
+
+type WeightedTenGod struct {
+	TenGod LocalizedTerm `json:"ten_god"`
+	Score  float64       `json:"score"`
+}
+
+type ElementContribution struct {
+	Pillar        string         `json:"pillar"`
+	Source        string         `json:"source"`
+	HeavenlyStem  HeavenlyStem   `json:"heavenly_stem"`
+	EarthlyBranch *EarthlyBranch `json:"earthly_branch,omitempty"`
+	Element       LocalizedTerm  `json:"element"`
+	TenGod        *LocalizedTerm `json:"ten_god"`
+	Score         float64        `json:"score"`
+}
+
+// PatternCandidate is a preliminary month-qi candidate, not a final pattern.
+// Exposure and order are observable; combinations and transformations still
+// require a separate interpretation before naming a definitive structure.
+type PatternCandidate struct {
+	TenGod     LocalizedTerm `json:"ten_god"`
+	HiddenStem HeavenlyStem  `json:"hidden_stem"`
+	QiRank     int           `json:"qi_rank"`
+	ExposedAt  []string      `json:"exposed_at"`
+	Basis      string        `json:"basis"`
+	Regular    bool          `json:"regular"`
+}
+
 // ChartAnalysis holds chart-level derived facts.
 type ChartAnalysis struct {
 	DayMaster DayMaster `json:"day_master"`
@@ -99,10 +144,12 @@ type ChartAnalysis struct {
 	VoidBranches []EarthlyBranch `json:"void_branches"`
 	// ThaiNguyen is the conception pillar (Tai Yuan); ThaiTuc is the
 	// gestation pillar (Tai Xi); LifePalace is the life palace (Ming Gong).
-	ThaiNguyen    AuxiliaryPillar `json:"thai_nguyen"`
-	ThaiTuc       AuxiliaryPillar `json:"thai_tuc"`
-	LifePalace    AuxiliaryPillar `json:"life_palace"`
-	ElementCounts ElementCounts   `json:"element_counts"`
+	ThaiNguyen        AuxiliaryPillar    `json:"thai_nguyen"`
+	ThaiTuc           AuxiliaryPillar    `json:"thai_tuc"`
+	LifePalace        AuxiliaryPillar    `json:"life_palace"`
+	ElementCounts     ElementCounts      `json:"element_counts"`
+	WeightedElements  WeightedElements   `json:"weighted_elements"`
+	PatternCandidates []PatternCandidate `json:"pattern_candidates"`
 	// DayMasterStrength and UsefulGod are reserved and always null.
 	DayMasterStrength any `json:"day_master_strength"`
 	UsefulGod         any `json:"useful_god"`
