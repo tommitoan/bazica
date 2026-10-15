@@ -41,9 +41,10 @@ var MidpointTerms = []string{
 	model.WinterSolstice,
 }
 
-// GetSolarTerm returns the solar term containing dateTime together with the
-// minutes elapsed since the preceding initial term and the minutes remaining
-// until the next one.
+// GetSolarTerm returns the term used to identify the Ba-zi month together with
+// the minutes elapsed since the preceding initial term and the minutes remaining
+// until the next one. Before Minor Cold, the returned name is Major Snow, the
+// term that opened the month, even though Winter Solstice occurred afterward.
 func GetSolarTerm(dateTime time.Time) (string, int, int, error) {
 	years, err := loadSolarTerms()
 	if err != nil {
@@ -59,6 +60,57 @@ func GetSolarTerm(dateTime time.Time) (string, int, int, error) {
 		terms[i] = t
 	}
 	return findSolarTerm(dateTime, terms[0], terms[1], terms[2])
+}
+
+// SolarTermWindow identifies the consecutive 24-term boundaries containing an instant.
+type SolarTermWindow struct {
+	Name      string
+	StartedAt time.Time
+	NextName  string
+	NextAt    time.Time
+}
+
+// GetSolarTermWindow finds the actual 24-term interval containing dateTime.
+// Unlike GetSolarTerm, it returns Winter Solstice before Minor Cold in January.
+func GetSolarTermWindow(dateTime time.Time) (SolarTermWindow, error) {
+	years, err := loadSolarTerms()
+	if err != nil {
+		return SolarTermWindow{}, err
+	}
+	year := dateTime.Year()
+	current, ok := years[year]
+	if !ok {
+		return SolarTermWindow{}, fmt.Errorf("%w: no solar term data for %d", model.ErrDateOutOfRange, year)
+	}
+	previous, ok := years[year-1]
+	if !ok {
+		return SolarTermWindow{}, fmt.Errorf("%w: no solar term data for %d", model.ErrDateOutOfRange, year-1)
+	}
+	next, ok := years[year+1]
+	if !ok {
+		return SolarTermWindow{}, fmt.Errorf("%w: no solar term data for %d", model.ErrDateOutOfRange, year+1)
+	}
+
+	if dateTime.Before(current[0].time) {
+		return solarTermWindow(previous[len(previous)-1], current[0], dateTime.Location()), nil
+	}
+	for i := range current {
+		if i+1 < len(current) && !dateTime.Before(current[i+1].time) {
+			continue
+		}
+		if i+1 < len(current) {
+			return solarTermWindow(current[i], current[i+1], dateTime.Location()), nil
+		}
+		return solarTermWindow(current[i], next[0], dateTime.Location()), nil
+	}
+	return SolarTermWindow{}, fmt.Errorf("%w: no solar term at %s", model.ErrDataUnavailable, dateTime)
+}
+
+func solarTermWindow(current, next solarTermTime, loc *time.Location) SolarTermWindow {
+	return SolarTermWindow{
+		Name: current.name, StartedAt: current.time.In(loc),
+		NextName: next.name, NextAt: next.time.In(loc),
+	}
 }
 
 // StartOfSpring returns the instant of Lichun (Start of Spring) in the given
@@ -145,7 +197,7 @@ func parseSolarTerms(y model.SolarTermYear) ([]solarTermTime, error) {
 
 const solarTermLayout = "2006-01-02 15:04:05.999999999-07:00"
 
-// findSolarTerm locates the solar term containing t. It returns the term name,
+// findSolarTerm locates the month term containing t. It returns the term name,
 // the minutes elapsed since the preceding "initial" term (jie) and the minutes
 // remaining until the next one; both bound the current Ba-zi month.
 func findSolarTerm(t time.Time, terms, nextYear, previousYear []solarTermTime) (string, int, int, error) {

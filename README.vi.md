@@ -27,6 +27,7 @@ Bazica là thư viện Go đổi giờ sinh theo dương lịch thành lá số 
 ## Điểm nổi bật
 
 - **Bốn trụ**: trụ năm đổi đúng thời điểm Lập Xuân, trụ tháng đổi theo các tiết khí, cho các năm 1700-2399.
+- **Tiết khí lúc sinh**: `analysis.birth_solar_term` trả tên song ngữ, thời điểm bắt đầu và tiết kế tiếp trong đủ 24 tiết khí; thời gian dùng múi giờ của lá số.
 - **Đại vận** với chiều thuận/nghịch, thời điểm khởi vận, các năm và tuổi ước tính (tuổi mụ theo Bát Tự).
 - **Lưu niên** (`GetAnnualPillars`) kèm Thập Thần, Trường Sinh, đại vận chứa năm đó và cờ xung.
 - **Phân tích** trên mọi lá số: Thập Thần, mười hai Trường Sinh, Tàng Can, Nạp Âm, Không Vong, thiên khắc địa xung, 58 sao đã kiểm chứng, Thai Nguyên, Thai Tức, Mệnh Cung và số lượng từng hành.
@@ -211,6 +212,7 @@ for _, y := range annual.AnnualPillars {
 - **Ngày**: ngày đổi lúc 23:00 (giờ Tý), nên người sinh lúc 23:30 lấy trụ của ngày kế tiếp.
 - **Năm**: năm đổi đúng thời điểm Lập Xuân, cùng đồng hồ tiết khí với tháng; phép so sánh dùng thời điểm chính xác, nên quy tắc ngày đổi lúc 23:00 không áp dụng cho nó.
 - **Tháng**: tháng đổi ở các tiết "đầu tháng" (tiết, jie), như Lập Xuân và Kinh Trập. Thiên Can của tháng suy từ Thiên Can của năm theo quy tắc Ngũ Hổ Độn.
+- **Tiết khí lúc sinh**: `analysis.birth_solar_term` là khoảng giữa hai mốc liên tiếp của **đủ 24 tiết**, tính đúng thời khắc chuyển. Đây là dữ liệu hiển thị; một trung khí như Đông Chí không tự mở tháng trụ. Đầu tháng 1 có thể ở tiết Đông Chí nhưng tháng trụ vẫn là tháng mở từ Đại Tuyết.
 - **Năm âm lịch (để tham chiếu)**: năm đổi ở Tết Nguyên Đán, báo trong `analysis.year_reference` chỉ để hiển thị. Nó theo ngày dương lịch (âm lịch đổi năm vào nửa đêm, nên quy tắc 23:00 không áp dụng). Với người sinh giữa Tết và Lập Xuân, nó khác trụ năm.
 - **Múi giờ**: `dateTime` được đọc là giờ đồng hồ tại `loc`, nên hãy truyền múi giờ của nơi sinh. `loc` nil sẽ giữ múi giờ mà `dateTime` đã mang.
 - **Giới tính**: `0` là nữ và `1` là nam (`model.GenderFemale`, `model.GenderMale`); nó quyết định chiều của đại vận. Giá trị khác trả về `model.ErrInvalidGender`.

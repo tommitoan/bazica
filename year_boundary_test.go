@@ -149,9 +149,9 @@ func TestWindowGoldens(t *testing.T) {
 // Charts that fall outside the two windows are unchanged from v1.5.0. The fixture holds 658
 // births (a 367-day step over 1700-2399, varying hour, zone and gender, without the days
 // between the Lunar New Year and Lichun) and the SHA-256 of each chart's canonical JSON
-// (keys sorted) as the v1.5.0 tag produced it; the same hashing in canonicalChartJSON
-// leaves out analysis.year_reference, which v1.5.0 did not have. If a later release changes
-// other output on purpose, rebuild the hashes from that release's predecessor the same way.
+// (keys sorted) as the v1.5.0 tag produced it; canonicalChartJSON leaves out
+// analysis fields added after that fixture. If a later release changes other output
+// on purpose, rebuild the hashes from that release's predecessor the same way.
 func TestChartsOutsideTheWindowsAreUnchanged(t *testing.T) {
 	raw, err := os.ReadFile("testdata/calendar/v150-regression-outside-windows.json")
 	if err != nil {
@@ -202,6 +202,7 @@ func canonicalChartJSON(t *testing.T, chart *model.BaziChart) string {
 		delete(analysis, "year_reference")
 		delete(analysis, "weighted_elements")
 		delete(analysis, "pattern_candidates")
+		delete(analysis, "birth_solar_term")
 	}
 	canon, err := json.Marshal(generic)
 	if err != nil {

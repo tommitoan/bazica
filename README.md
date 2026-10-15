@@ -27,6 +27,7 @@ Bazica is a Go library that turns a Gregorian birth time into a Ba-zi (Four Pill
 ## Highlights
 
 - **Four pillars** with the year pillar changing at the instant of Lichun (Start of Spring) and the month at the solar terms, from 1700 to 2399.
+- **Birth solar term**: `analysis.birth_solar_term` reports bilingual names, the start instant and the next of all 24 terms in the chart's time zone.
 - **Luck pillars** (Da Yun) with their direction, start time, years and nominal ages.
 - **Yearly pillars** (`GetAnnualPillars`) with Ten God, life stage, the luck pillar a year falls in, and a clash flag.
 - **Analysis** on every chart: Ten Gods, twelve life stages, hidden stems, Nayin, void branches, heaven-clash/earth-clash, 58 verified stars, conception, gestation and life palace pillars, and element counts.
@@ -209,6 +210,7 @@ for _, y := range annual.AnnualPillars {
 - **Day**: the day changes at 23:00 (the Rat hour), so a birth at 23:30 takes the pillar of the next day.
 - **Year**: the year changes at the instant of Lichun (Start of Spring), the same solar-term clock as the month; the comparison uses the exact instant, so the 23:00 day rule does not apply to it.
 - **Month**: the month changes at the "initial" solar terms (jie), such as Start of Spring and Awakening of Insects. The month stem follows from the year stem by the Five Tigers rule.
+- **Birth solar term**: `analysis.birth_solar_term` is the interval between consecutive instants among all 24 terms. It is display-only; a midpoint term such as Winter Solstice does not open a new month pillar. Early January can fall in Winter Solstice while the month pillar still belongs to the month opened at Major Snow.
 - **Lunar-calendar year (reference)**: the year that changes at the Lunar New Year, reported under `analysis.year_reference` for display only. It follows the civil date (the lunar calendar changes year at midnight, so the 23:00 day rule does not apply to it). For a birth between the Lunar New Year and Lichun it differs from the year pillar.
 - **Time zone**: `dateTime` is read as wall-clock time in `loc`, so pass the birth place's zone. A nil `loc` keeps the zone `dateTime` already carries.
 - **Gender**: `0` is female and `1` is male (`model.GenderFemale`, `model.GenderMale`); it sets the direction of the luck pillars. Other values return `model.ErrInvalidGender`.

@@ -2,11 +2,17 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, main, dev]
   pull_request:
+    branches: [master, main, dev]
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -26,3 +32,5 @@ jobs:
         run: go vet ./...
       - name: Test
         run: go test -race -cover ./...
+      - name: Build
+        run: go build ./...

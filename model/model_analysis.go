@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 // LocalizedTerm is a named concept with a stable code and its English and
 // Vietnamese labels. Code is an ASCII identifier such as "ten_god.friend";
 // clients should switch on Code, never on a label.
@@ -150,12 +152,24 @@ type ChartAnalysis struct {
 	ElementCounts     ElementCounts      `json:"element_counts"`
 	WeightedElements  WeightedElements   `json:"weighted_elements"`
 	PatternCandidates []PatternCandidate `json:"pattern_candidates"`
+	// BirthSolarTerm is the 24-term interval containing the birth instant. It is
+	// display-only and is nil when analysis is attached without a birth time.
+	BirthSolarTerm *BirthSolarTerm `json:"birth_solar_term"`
 	// DayMasterStrength and UsefulGod are reserved and always null.
 	DayMasterStrength any `json:"day_master_strength"`
 	UsefulGod         any `json:"useful_god"`
 	// YearReference is display-only: the Lichun of the birth year and the year of the
 	// lunar calendar. Nothing else in the chart is calculated from it.
 	YearReference *YearReference `json:"year_reference"`
+}
+
+// BirthSolarTerm describes the solar term containing the birth instant and the
+// next term. Times are expressed in the birth's time zone.
+type BirthSolarTerm struct {
+	Term      LocalizedTerm `json:"term"`
+	StartedAt time.Time     `json:"started_at"`
+	NextTerm  LocalizedTerm `json:"next_term"`
+	NextAt    time.Time     `json:"next_at"`
 }
 
 // LuckPillarAnalysis holds the derived facts of one luck pillar. Ages are
