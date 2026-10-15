@@ -38,6 +38,10 @@ func Attach(chart *model.BaziChart, gender int) error {
 // AttachAt is Attach for a known birth time: the calendar date of birth in its
 // own location also decides the Moon General (Thai Duong).
 func AttachAt(chart *model.BaziChart, gender int, birth time.Time) error {
+	window, err := utils.GetSolarTermWindow(birth)
+	if err != nil {
+		return err
+	}
 	general, err := utils.GetMoonGeneral(birth)
 	if err != nil {
 		return err
@@ -50,6 +54,18 @@ func AttachAt(chart *model.BaziChart, gender int, birth time.Time) error {
 		return err
 	}
 	chart.Analysis.YearReference = reference
+	term, ok := solarTermTerms[window.Name]
+	if !ok {
+		return fmt.Errorf("%w: unknown solar term %q", model.ErrDataUnavailable, window.Name)
+	}
+	nextTerm, ok := solarTermTerms[window.NextName]
+	if !ok {
+		return fmt.Errorf("%w: unknown solar term %q", model.ErrDataUnavailable, window.NextName)
+	}
+	chart.Analysis.BirthSolarTerm = &model.BirthSolarTerm{
+		Term: term, StartedAt: window.StartedAt,
+		NextTerm: nextTerm, NextAt: window.NextAt,
+	}
 	return nil
 }
 

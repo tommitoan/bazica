@@ -69,8 +69,8 @@ func stripKeys(node any, keys ...string) {
 func TestAnalysisMatchesTheSharedFixture(t *testing.T) {
 	got := referenceChart(t)
 	want := loadFixture(t, "chart_1995_expected_v140.json")
-	// The shared v1.4.0 fixture predates the additive weighted analysis.
-	stripKeys(got, "weighted_elements", "pattern_candidates")
+	// The shared v1.4.0 fixture predates these additive analysis fields.
+	stripKeys(got, "weighted_elements", "pattern_candidates", "birth_solar_term")
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("chart differs from fixture near:\n%s", firstDifference(mustJSON(t, got), mustJSON(t, want)))

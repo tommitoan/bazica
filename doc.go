@@ -13,7 +13,8 @@
 //   - each luck pillar: nominal age range, Ten God, Nayin, life stage, hidden
 //     stems and the clash flag;
 //   - the chart: the Day Master, the void branches, the conception (Thai Nguyen),
-//     gestation (Thai Tuc) and life palace pillars, and unweighted element counts.
+//     gestation (Thai Tuc) and life palace pillars, unweighted element counts,
+//     and the 24-term interval containing the birth instant.
 //
 // GetAnnualPillars returns the yearly pillars with the same terms and flags.
 //
@@ -28,6 +29,9 @@
 //   - Ages are nominal: the year of the year pillar counts as age 1. The year
 //     pillar changes at the instant of Lichun, so for a birth before Lichun it is
 //     the year before the civil birth year.
+//   - BirthSolarTerm is display-only. It reports the current and next of all 24
+//     solar terms at their exact instants; the month pillar still changes only
+//     at the 12 initial terms (jie).
 //   - Stars are listed only when their rules have been verified against
 //     reference charts; other stars are never reported. The Moon General
 //     follows the calendar date of the birth: the whole day on which a

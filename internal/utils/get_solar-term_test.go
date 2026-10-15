@@ -40,6 +40,63 @@ func TestGetSolarTerm(t *testing.T) {
 	}
 }
 
+func TestGetSolarTermWindow(t *testing.T) {
+	loc := time.FixedZone("Vietnam", 7*60*60)
+	cases := []struct {
+		name, want, next string
+		birth            time.Time
+	}{
+		{"Grain in Ear", model.GrainInEar, model.SummerSolstice, time.Date(1995, 6, 8, 11, 15, 0, 0, loc)},
+		{"before first term", model.WinterSolstice, model.MinorCold, time.Date(2024, 1, 3, 12, 0, 0, 0, time.UTC)},
+		{"end of year", model.WinterSolstice, model.MinorCold, time.Date(2024, 12, 31, 12, 0, 0, 0, time.UTC)},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			window, err := GetSolarTermWindow(tc.birth)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if window.Name != tc.want || window.NextName != tc.next {
+				t.Errorf("terms = %s/%s, want %s/%s", window.Name, window.NextName, tc.want, tc.next)
+			}
+			if tc.birth.Before(window.StartedAt) || !tc.birth.Before(window.NextAt) {
+				t.Errorf("birth %s outside [%s, %s)", tc.birth, window.StartedAt, window.NextAt)
+			}
+			if window.StartedAt.Location() != tc.birth.Location() || window.NextAt.Location() != tc.birth.Location() {
+				t.Error("term times do not use the birth location")
+			}
+		})
+	}
+}
+
+func TestGetSolarTermWindowAtEveryBoundary(t *testing.T) {
+	years, err := loadSolarTerms()
+	if err != nil {
+		t.Fatal(err)
+	}
+	terms := years[2024]
+	if len(terms) != 24 {
+		t.Fatalf("2024 has %d terms, want 24", len(terms))
+	}
+	for _, term := range terms {
+		before, err := GetSolarTermWindow(term.time.Add(-time.Millisecond))
+		if err != nil {
+			t.Fatal(err)
+		}
+		at, err := GetSolarTermWindow(term.time)
+		if err != nil {
+			t.Fatal(err)
+		}
+		after, err := GetSolarTermWindow(term.time.Add(time.Millisecond))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if before.NextName != term.name || at.Name != term.name || after.Name != term.name {
+			t.Errorf("%s boundary: before=%s/%s at=%s after=%s", term.name, before.Name, before.NextName, at.Name, after.Name)
+		}
+	}
+}
+
 // The two durations around a date must add up to the length of the Ba-zi month.
 func TestGetSolarTermMonthLength(t *testing.T) {
 	for _, d := range []time.Time{

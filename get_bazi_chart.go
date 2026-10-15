@@ -18,8 +18,8 @@ import (
 //
 // Conventions: the day changes at 23:00 (the Rat hour), the year changes at the
 // instant of Lichun (Start of Spring), and the month changes at the "initial" solar
-// terms (jie). Analysis.YearReference carries display-only data, the Lichun time and
-// the year of the lunar calendar; nothing is calculated from it.
+// terms (jie). Analysis.YearReference and Analysis.BirthSolarTerm carry
+// display-only calendar data; neither changes the pillars or luck periods.
 // Dates inside the range returned by SupportedYears are supported; others return
 // an error wrapping model.ErrDateOutOfRange.
 func GetBaziChart(dateTime time.Time, loc *time.Location, gender int) (*model.BaziChart, error) {
