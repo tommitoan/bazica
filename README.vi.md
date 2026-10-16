@@ -15,9 +15,9 @@
 Bazica là thư viện Go đổi giờ sinh theo dương lịch thành lá số Bát Tự (Tứ Trụ, tử vi phương Đông): trụ năm, tháng, ngày, giờ, các đại vận, các lưu niên, cùng một lớp dữ kiện suy ra (Thập Thần, Trường Sinh, Tàng Can, Nạp Âm, các sao và nhiều hơn nữa). Mọi nhãn đều có cả tiếng Anh và tiếng Việt.
 
 <div align="center">
-  <img alt="bazica-web: nhập giờ sinh, xem các trụ, đại vận và một thẻ cho từng năm" src="./Images/bazica-web-demo.gif" width="820" />
+  <img alt="Ứng dụng web Bazica: nhập giờ sinh, xem các trụ, sơ đồ Ngũ Hành và các đại vận" src="./Images/webapp-chart-flow.gif" width="820" />
   <br>
-  <sub>Ứng dụng web đi kèm, <a href="https://github.com/tommitoan/bazica-web">bazica-web</a>, xây trên thư viện này.</sub>
+  <sub>Ứng dụng web tại <a href="https://bazi.tommitoan.com/">bazi.tommitoan.com</a>, xây trên thư viện này.</sub>
 </div>
 
 <h3 align="center">
@@ -233,10 +233,32 @@ Sau 1975: Việt Nam thống nhất dùng UTC+7.
 
 ## Ứng dụng web
 
-[bazica-web](https://github.com/tommitoan/bazica-web) là một máy chủ Go cùng một trang tĩnh xây trên thư viện này. Nó không có logic Bát Tự riêng: nó kiểm tra yêu cầu rồi gọi `GetBaziChart` và `GetAnnualPillars`. Trang hiển thị bốn trụ cùng đầy đủ dữ kiện, sơ đồ Ngũ Hành, bản đồ Thần Sát, các đại vận và một thẻ cho từng năm trong sáu mươi năm, bằng tiếng Việt hoặc tiếng Anh, có liên kết chia sẻ lá số và xuất PDF tùy chọn.
+Thư viện này chạy phía sau [bazi.tommitoan.com](https://bazi.tommitoan.com/), một trang lập lá số Bát Tự miễn phí bằng tiếng Việt và tiếng Anh. Mã nguồn của ứng dụng web là riêng tư, và nó không có logic Bát Tự riêng: nó kiểm tra yêu cầu rồi gọi `GetBaziChart` và `GetAnnualPillars`, nên mọi thứ nó hiển thị đều là một trường đã được mô tả trong trang này. Muốn xem dữ liệu được dùng ra sao, đây là cách nhanh nhất.
+
+Trang hiển thị:
+
+- bốn trụ cùng đầy đủ dữ kiện và mọi thần sát, mỗi sao một dòng;
+- sơ đồ Ngũ Hành, với một thanh cho từng hành, tô màu theo điểm có trọng số (`weighted_elements`): đỏ dưới 0.5, xanh nhạt đậm dần qua từng mốc, và xanh gần như đen ở 4.5;
+- các đại vận và một thẻ cho từng năm trong sáu mươi năm, năm đang xem được tô nổi;
+- liên kết chia sẻ lá số và xuất PDF tùy chọn;
+- giao diện tối và giao diện sáng kiểu giấy cũ, theo cài đặt hệ thống hoặc theo một nút bấm.
 
 <div align="center">
-  <img alt="Các thẻ lưu niên của bazica-web: sáu mươi năm, sáu thẻ mỗi hàng, năm đang xem được tô nổi" src="./Images/bazica-web-yearly-cards.png" width="820" />
+  <img alt="Đầu lá số, các thanh Ngũ Hành và các đại vận ở giao diện tối, và các thanh Ngũ Hành ở giao diện sáng" src="./Images/webapp-reading.jpg" width="820" />
+</div>
+
+<div align="center">
+  <img alt="Bấm nút giao diện: trang chuyển từ tối sang sáng rồi quay lại" src="./Images/webapp-themes.gif" width="820" />
+</div>
+
+<div align="center">
+  <img alt="Các thẻ lưu niên: sáu mươi năm, sáu thẻ mỗi hàng, năm đang xem được tô nổi" src="./Images/bazica-web-yearly-cards.png" width="820" />
+</div>
+
+Cùng giao diện ấy tiếp tục ở trang của tác giả: [tommitoan.com/fengshui](https://tommitoan.com/fengshui/) kể câu chuyện của một lá số trong một lần cuộn, từ ngôi sao rơi đến bốn trụ, rồi dẫn sang ứng dụng web.
+
+<div align="center">
+  <img alt="Cuộn qua trang Phong thuỷ: một ngôi sao rơi, một con người ra đời và lớn lên" src="./Images/feng-shui-journey.gif" width="820" />
 </div>
 
 ## Phát triển

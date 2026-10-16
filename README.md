@@ -15,9 +15,9 @@
 Bazica is a Go library that turns a Gregorian birth time into a Ba-zi (Four Pillars of Destiny, Chinese astrology) chart: the year, month, day and hour pillars, the luck pillars, the yearly pillars, and a layer of derived facts (Ten Gods, life stages, hidden stems, Nayin, stars and more). Every label comes in English and Vietnamese.
 
 <div align="center">
-  <img alt="bazica-web: enter a birth time, read the pillars, the luck pillars and a card for every year" src="./Images/bazica-web-demo.gif" width="820" />
+  <img alt="The Bazica web app: enter a birth time, read the pillars, the element map and the luck pillars" src="./Images/webapp-chart-flow.gif" width="820" />
   <br>
-  <sub>The companion web app, <a href="https://github.com/tommitoan/bazica-web">bazica-web</a>, built on this library.</sub>
+  <sub>The web app at <a href="https://bazi.tommitoan.com/">bazi.tommitoan.com</a>, built on this library.</sub>
 </div>
 
 <h3 align="center">
@@ -231,10 +231,32 @@ After 1975: The unified Vietnam adopted UTC+7.
 
 ## The web app
 
-[bazica-web](https://github.com/tommitoan/bazica-web) is a Go server and a static page built on this library. It has no Ba-zi logic of its own: it validates the request and calls `GetBaziChart` and `GetAnnualPillars`. The page shows the four pillars with their full facts, the Five Elements diagram, the star map, the luck pillars and a card for each of sixty years, in Vietnamese or English, with shareable chart links and an optional PDF export.
+This library powers [bazi.tommitoan.com](https://bazi.tommitoan.com/), a free Ba-zi chart page in Vietnamese and English. The web app's source is private, and it has no Ba-zi logic of its own: it validates the request and calls `GetBaziChart` and `GetAnnualPillars`, so everything it shows is a field documented on this page. If you want to see what the data looks like in use, this is the quickest way.
+
+What the page shows:
+
+- the four pillars with their full facts and every star, one per line;
+- the Five Elements diagram, with a bar for each element coloured by its weighted score (`weighted_elements`): red below 0.5, a pale green that deepens at each level cutoff, and a nearly black green at 4.5;
+- the luck pillars and a card for each of sixty years, with the viewed year highlighted;
+- shareable chart links and an optional PDF export;
+- a dark look and a light, aged-paper look, following the system setting or a button.
 
 <div align="center">
-  <img alt="The yearly cards of bazica-web: sixty years, six to a row, the viewed year highlighted" src="./Images/bazica-web-yearly-cards.png" width="820" />
+  <img alt="The top of a chart, the element bars and the luck pillars in the dark look, and the element bars in the light look" src="./Images/webapp-reading.jpg" width="820" />
+</div>
+
+<div align="center">
+  <img alt="Pressing the theme button: the page changes from the dark look to the light look and back" src="./Images/webapp-themes.gif" width="820" />
+</div>
+
+<div align="center">
+  <img alt="The yearly cards: sixty years, six to a row, the viewed year highlighted" src="./Images/bazica-web-yearly-cards.png" width="820" />
+</div>
+
+The same look continues on the author's site: [tommitoan.com/fengshui](https://tommitoan.com/fengshui/) tells the story of a chart as one scroll, from a falling star to the four pillars, and leads to the web app.
+
+<div align="center">
+  <img alt="A scroll through the Feng Shui page: a star falls, a person is born and grows" src="./Images/feng-shui-journey.gif" width="820" />
 </div>
 
 ## Development
